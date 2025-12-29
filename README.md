@@ -1,107 +1,102 @@
-# 🤖 2111framework
+# 🚀 2111framework v2.0
 
-Claude Code framework с агентами, skills и интеграцией официальных плагинов Anthropic.
+**Denis's Claude Code Development Framework**
 
-## 🚀 Quick Setup
+**Repository:** https://github.com/Enthusiasm-c/2111framework
+**Version:** 2.0.0
+**Updated:** December 29, 2024
 
-### Step 1: Установи плагины (в Claude Code терминале)
-```bash
-/plugin marketplace add anthropics/claude-code
-/plugin install frontend-design
-```
+---
 
-### Step 2: Установи фреймворк
-```bash
-git clone https://github.com/Enthusiasm-c/2111framework.git
-cd 2111framework
-./install.sh
-```
+## 📦 MCP Servers
 
-### Step 3: Настрой /agents
-См. `CLAUDE_CODE_AGENT.md` для рекомендуемого конфига.
+### Core Stack:
 
-## 📦 Что включено
+1. **Context7** - Up-to-date library docs
+2. **shadcn** - UI components
+3. **21st.dev Magic** - AI UI generation ⭐ NEW
+4. **Docker** - Containers (optional)
 
-**Official Plugins (Anthropic):**
-- `frontend-design` — distinctive UI, никакого generic AI дизайна
+### Built-in:
 
-**Agents (workflow):**
-- Architect, Developer, QA, Security, Docs
+5. **Claude Chrome Extension** - Browser automation
 
-**Skills (knowledge bases):**
-- Syrve API, NeonDB, Vercel, Telegram
-- Next.js, TypeScript, React, shadcn/ui
-- Security, Performance, Accessibility
-- MCP guides (Context7, Playwright, shadcn)
+---
 
-**Project Contexts:**
-- Ave AI, NotaApp, FIGHTSTARS
-
-## 💻 Использование
+## 🎯 Quick Start
 
 ```bash
-# UI работа (frontend-design активируется автоматически)
-"Создай dashboard для ресторанной аналитики"
+# Install MCP servers
+claude mcp add context7 npx @context7/mcp-server
+claude mcp add shadcn npx @modelcontextprotocol/server-shadcn
+claude mcp add 21st-magic npx -y @21st-dev/magic@latest
 
-# С контекстом проекта
-"Прочитай ~/.claude/projects/ave-ai.md
- Добавь график продаж на dashboard"
+# Install Chrome Extension
+# https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn
 
-# Со специфичным skill
-"Прочитай ~/.claude/skills/integrations/syrve-api.md
- Реализуй синхронизацию поставщиков"
-```
-
-## 📁 Структура после установки
-
-```
-~/.claude/
-├── agents/        # Workflow агенты
-│   ├── architect.md
-│   ├── developer.md
-│   ├── qa.md
-│   ├── security.md
-│   └── docs.md
-├── skills/        # Технические справочники
-│   ├── integrations/
-│   ├── tech-stack/
-│   ├── code-quality/
-│   └── mcp-usage/
-└── projects/      # Контексты проектов
-    ├── ave-ai.md
-    ├── notaapp.md
-    └── fightstars.md
-```
-
-## 🔌 Plugins vs Skills
-
-| Аспект | Plugins | Skills (MD файлы) |
-|--------|---------|-------------------|
-| Источник | Anthropic | Твой фреймворк |
-| Загрузка | Автоматически | По запросу |
-| Редактирование | Нет | Да |
-| Обновления | От Anthropic | Ты контролируешь |
-| Пример | frontend-design | syrve-api.md |
-
-**Используй вместе:**
-- Plugins для общего (UI quality)
-- Skills для специфичного (Syrve API, проекты)
-
-## 📖 Документация
-
-- `PLUGINS_SETUP.md` — Полный гайд по плагинам
-- `CLAUDE_CODE_AGENT.md` — Конфигурация /agents
-- `skills/` — Все технические справочники
-- `projects/` — Контексты проектов
-
-## 🔄 Обновление
-
-```bash
-cd 2111framework
-git pull
-./install.sh
+# Enable Chrome
+claude --chrome
 ```
 
 ---
 
-Built for solo developers working with Claude Code 🚀
+## 🆕 What's New in v2.0
+
+### Added:
+- ✅ **21st.dev Magic MCP** - AI-powered UI generation
+- ✅ **Claude Chrome Extension** - Official browser automation
+
+### Removed:
+- ❌ **Playwright MCP** (deprecated)
+
+### Migration:
+See [`MIGRATION_V2.md`](./MIGRATION_V2.md)
+
+---
+
+## 🔧 MCP Servers
+
+### Context7 ⭐⭐⭐⭐⭐
+Latest documentation for libraries
+
+```bash
+"Using Context7, show Next.js 14 syntax"
+```
+
+### shadcn ⭐⭐⭐⭐⭐
+Generate UI components
+
+```bash
+"Add shadcn data table"
+```
+
+### 21st.dev Magic ⭐⭐⭐⭐⭐ NEW!
+AI UI component generation
+
+```bash
+"Generate a modern login form with social auth buttons"
+"Create a pricing table with 3 tiers"
+```
+
+**Setup:** Get API key from https://21st.dev/magic
+
+### Claude Chrome Extension ⭐⭐⭐⭐⭐
+Browser testing & automation
+
+```bash
+claude --chrome
+"Open localhost:3000 and test login"
+```
+
+---
+
+## 📚 Resources
+
+- **GitHub:** https://github.com/Enthusiasm-c/2111framework
+- **21st.dev:** https://21st.dev/magic
+- **Chrome Extension:** https://code.claude.com/docs/en/chrome
+
+---
+
+**Built with ❤️ by Denis**
+**Version:** 2.0.0
