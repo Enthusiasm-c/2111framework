@@ -1,9 +1,9 @@
-# 🚀 2111framework v2.0
+# 🚀 2111framework v2.1
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.0.0
+**Version:** 2.1.0
 **Updated:** December 29, 2024
 
 ---
@@ -14,8 +14,8 @@
 
 1. **Context7** - Up-to-date library docs
 2. **shadcn** - UI components
-3. **21st.dev Magic** - AI UI generation ⭐ NEW
-4. **Docker** - Containers (optional)
+3. **21st.dev Magic** - AI UI generation
+4. **GitHub** - Issues, PRs, CI/CD ⭐ NEW
 
 ### Built-in:
 
@@ -40,14 +40,19 @@ claude --chrome
 
 ---
 
-## 🆕 What's New in v2.0
+## 🆕 What's New in v2.1
 
 ### Added:
-- ✅ **21st.dev Magic MCP** - AI-powered UI generation
-- ✅ **Claude Chrome Extension** - Official browser automation
+- ✅ **GitHub MCP** - Issues, PRs, CI/CD from terminal
+- ✅ **Database Migrations skill** - Safe schema changes with Drizzle
+- ✅ **Monitoring skill** - Sentry error tracking patterns
+- ✅ **Telegram Mini App testing** - Extended QA Agent
+- ✅ **Advanced Telegram patterns** - CloudStorage, Auth, Haptic
+- ✅ **Extended Docs Agent** - ADR, Runbooks, Mermaid diagrams
 
-### Removed:
-- ❌ **Playwright MCP** (deprecated)
+### v2.0 (Previous):
+- 21st.dev Magic MCP - AI UI generation
+- Claude Chrome Extension - Browser automation
 
 ### Migration:
 See [`MIGRATION_V2.md`](./MIGRATION_V2.md)
@@ -80,6 +85,19 @@ AI UI component generation
 
 **Setup:** Get API key from https://21st.dev/magic
 
+### GitHub MCP ⭐⭐⭐⭐⭐ NEW!
+Issues, PRs, CI/CD from terminal
+
+```bash
+# Install
+claude mcp add github npx -y @modelcontextprotocol/server-github
+
+# Usage
+"Create issue: OCR accuracy drops on blurry photos"
+"Show open PRs in Enthusiasm-c/notaapp"
+"Check CI status for latest commit"
+```
+
 ### Claude Chrome Extension ⭐⭐⭐⭐⭐
 Browser testing & automation
 
@@ -87,6 +105,24 @@ Browser testing & automation
 claude --chrome
 "Open localhost:3000 and test login"
 ```
+
+---
+
+## 📂 New Skills in v2.1
+
+| Skill | Path | Description |
+|-------|------|-------------|
+| Database Migrations | `skills/tech-stack/database-migrations.md` | Drizzle ORM workflow |
+| Monitoring | `skills/integrations/monitoring-sentry.md` | Sentry + logging |
+| GitHub MCP | `skills/mcp-usage/github-mcp-guide.md` | GitHub from terminal |
+| Telegram Advanced | `skills/integrations/telegram-bot-patterns.md` | CloudStorage, Auth |
+
+## 👥 Extended Agents
+
+| Agent | What's New |
+|-------|-----------|
+| QA | Telegram Mini App testing, pre-release checklist |
+| Docs | Troubleshooting, ADR, Runbooks, Mermaid diagrams |
 
 ---
 
@@ -99,4 +135,4 @@ claude --chrome
 ---
 
 **Built with ❤️ by Denis**
-**Version:** 2.0.0
+**Version:** 2.1.0
