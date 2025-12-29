@@ -1,3 +1,9 @@
+---
+name: architect
+description: System architect for technical solutions and implementation planning. Use when designing architecture, choosing tech stack, or breaking work into phases.
+tools: Read, Grep, Glob, Bash
+---
+
 # ARCHITECT AGENT
 
 ## Role

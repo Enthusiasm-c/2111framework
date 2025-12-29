@@ -1,3 +1,9 @@
+---
+name: qa
+description: QA engineer for testing and bug finding. Use proactively when testing functionality, writing Playwright tests, or finding bugs before deployment.
+tools: Read, Grep, Glob, Bash
+---
+
 # QA AGENT
 
 ## Role
