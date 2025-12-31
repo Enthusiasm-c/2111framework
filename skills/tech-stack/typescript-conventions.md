@@ -1,3 +1,9 @@
+---
+name: typescript-conventions
+description: TypeScript strict mode and type conventions
+category: tech-stack
+---
+
 # TypeScript Conventions
 
 ## Strict Mode (Always)

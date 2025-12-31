@@ -1,3 +1,9 @@
+---
+name: context7-best-practices
+description: Context7 MCP server for fetching fresh library documentation
+category: mcp-usage
+---
+
 # Context7 MCP - Best Practices
 
 Context7 is an MCP server from Upstash that pulls fresh documentation and code examples directly into LLM context during prompts.
@@ -92,10 +98,10 @@ Add react-query for data fetching with proper typing. use context7"
 Then use context7 to get the latest TanStack Table patterns for sorting."
 ```
 
-### With Playwright MCP
+### With Chrome Extension
 ```
-"Use context7 to get latest Playwright test patterns for Next.js.
-Then use Playwright MCP to run a test manually."
+"Use context7 to get latest testing patterns for Next.js.
+Then use Chrome Extension (claude --chrome) to test manually."
 ```
 
 ## Common Workflows

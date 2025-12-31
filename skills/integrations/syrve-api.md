@@ -1,3 +1,9 @@
+---
+name: syrve-api
+description: Syrve POS API integration reference
+category: integrations
+---
+
 # Syrve POS API Integration
 
 Complete reference based on validated implementation.

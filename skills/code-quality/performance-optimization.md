@@ -1,3 +1,9 @@
+---
+name: performance-optimization
+description: Complete performance optimization guide for Next.js 14+
+category: code-quality
+---
+
 # Web Performance Optimization
 
 Complete guide for Next.js 14+ applications.

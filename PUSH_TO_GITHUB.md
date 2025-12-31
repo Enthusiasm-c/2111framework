@@ -88,7 +88,7 @@ git push -u origin main
 - Telegram bot patterns
 - Context7 MCP guide
 - shadcn MCP guide (from your Context7 data)
-- Playwright MCP guide (from your Context7 data)
+- Chrome Extension guide
 - Project templates
 
 ✅ **Scripts:**

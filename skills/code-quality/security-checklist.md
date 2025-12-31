@@ -1,3 +1,9 @@
+---
+name: security-checklist
+description: Complete security audit checklist for web applications
+category: code-quality
+---
+
 # Security Checklist
 
 Complete security audit checklist for web applications.

@@ -1,144 +1,144 @@
-# 🔌 Claude Code Plugins Setup
+# Claude Code Plugins Setup
 
-Интеграция официальных плагинов Anthropic с 2111framework.
+Integration of official Anthropic plugins with 2111framework.
 
-## 🚀 Quick Setup
+## Quick Setup
 
-Выполни в Claude Code терминале:
+Run in Claude Code terminal:
 
 ```bash
-# 1. Добавить официальный маркетплейс Anthropic
+# 1. Add official Anthropic marketplace
 /plugin marketplace add anthropics/claude-code
 
-# 2. Установить ключевые плагины
+# 2. Install key plugins
 /plugin install frontend-design
 /plugin install skill-creator
 
-# 3. Проверить установку
+# 3. Verify installation
 /plugin
 ```
 
-## 📦 Рекомендуемые плагины
+## Recommended Plugins
 
-### Обязательные
+### Required
 
-| Плагин | Что делает | Почему нужен |
-|--------|-----------|--------------|
-| `frontend-design` | Distinctive UI вместо generic | Твои продукты user-facing |
-| `skill-creator` | Создание своих skills | Для кастомизации фреймворка |
+| Plugin | What It Does | Why Needed |
+|--------|-------------|------------|
+| `frontend-design` | Distinctive UI instead of generic | Your products are user-facing |
+| `skill-creator` | Create custom skills | For framework customization |
 
-### Опциональные
+### Optional
 
-| Плагин | Что делает |
-|--------|-----------|
-| `pr-review` | Автоматический code review |
-| `feature-dev` | Структурированная разработка фич |
+| Plugin | What It Does |
+|--------|-------------|
+| `pr-review` | Automatic code review |
+| `feature-dev` | Structured feature development |
 
-## 🎨 frontend-design Plugin
+## frontend-design Plugin
 
-### Что решает
+### Problem It Solves
 
-**Проблема:** Claude без инструкций делает "AI slop":
-- Inter/Roboto шрифты
-- Фиолетовые градиенты
-- Скучные стандартные layouts
+**Problem:** Claude without instructions creates "AI slop":
+- Inter/Roboto fonts
+- Purple gradients
+- Boring standard layouts
 
-**Решение:** Skill автоматически активируется и заставляет Claude:
-1. Выбирать BOLD aesthetic direction
-2. Использовать уникальные шрифты
-3. Создавать memorable дизайн
-4. Писать production-ready код
+**Solution:** Skill automatically activates and makes Claude:
+1. Choose BOLD aesthetic direction
+2. Use unique fonts
+3. Create memorable design
+4. Write production-ready code
 
-### Как использовать
+### How to Use
 
-**Автоматически** — просто проси создать UI:
+**Automatically** — just ask to create UI:
 
 ```
-Создай dashboard для ресторанной аналитики.
+Create a dashboard for restaurant analytics.
 Dark theme, mobile-first.
 ```
 
-Claude сам применит frontend-design skill.
+Claude will automatically apply frontend-design skill.
 
-**Явно** — если хочешь убедиться:
+**Explicitly** — if you want to ensure:
 
 ```
 Use the frontend design skill.
 Create a settings page for Telegram Mini App.
 ```
 
-### Примеры промптов
+### Example Prompts
 
 ```
-# Для Ave AI
+# For Ave AI
 Create an analytics dashboard for restaurant sales.
 Show daily revenue chart, top products, inventory alerts.
 Dark theme, modern aesthetic, mobile-first.
 
-# Для NotaApp  
+# For NotaApp
 Design an invoice review screen for Telegram Mini App.
 Show photo preview, extracted data form, submit button.
 Clean, professional, touch-friendly.
 
-# Для FIGHTSTARS
+# For FIGHTSTARS
 Build a player profile card component.
 Show avatar, stats, achievements, ranking.
 Gaming aesthetic, bold colors, micro-animations.
 ```
 
-## 🏗️ Интеграция с 2111framework
+## Integration with 2111framework
 
-### Структура после установки
+### Structure After Installation
 
 ```
 Claude Code
-├── /plugins (встроенные)
+├── /plugins (built-in)
 │   ├── frontend-design    ← UI quality
-│   └── skill-creator      ← создание skills
+│   └── skill-creator      ← creating skills
 │
-└── ~/.claude/ (твой фреймворк)
-    ├── agents/            ← workflow агенты
-    ├── skills/            ← технические справочники
-    └── projects/          ← контексты проектов
+└── ~/.claude/ (your framework)
+    ├── agents/            ← workflow agents
+    ├── skills/            ← technical references
+    └── projects/          ← project contexts
 ```
 
-### Когда что использовать
+### When to Use What
 
-| Задача | Что использует Claude |
-|--------|----------------------|
-| Создать UI компонент | `frontend-design` plugin (auto) |
-| Интеграция с Syrve | `~/.claude/skills/integrations/syrve-api.md` |
-| Планирование фичи | `~/.claude/agents/architect.md` |
-| Контекст проекта | `~/.claude/projects/ave-ai.md` |
+| Task | What Claude Uses |
+|------|------------------|
+| Create UI component | `frontend-design` plugin (auto) |
+| Syrve integration | `~/.claude/skills/integrations/syrve-api.md` |
+| Feature planning | `~/.claude/agents/architect.md` |
+| Project context | `~/.claude/projects/ave-ai.md` |
 
-### Пример полного workflow
+### Example Full Workflow
 
 ```bash
-# 1. Загрузить контекст проекта
-"Прочитай ~/.claude/projects/ave-ai.md"
+# 1. Load project context
+"Read ~/.claude/projects/ave-ai.md"
 
-# 2. Спланировать фичу (architect agent)
-"Прочитай ~/.claude/agents/architect.md
- Спланируй добавление графика продаж по дням"
+# 2. Plan feature (architect agent)
+"Read ~/.claude/agents/architect.md
+ Plan adding a daily sales chart"
 
-# 3. Реализовать UI (frontend-design plugin активируется автоматически)
-"Реализуй Phase 1: создай компонент SalesChart"
+# 3. Implement UI (frontend-design plugin activates automatically)
+"Implement Phase 1: create SalesChart component"
 
-# 4. Интеграция с данными (skill)
-"Прочитай ~/.claude/skills/integrations/syrve-api.md
- Подключи реальные данные из Syrve"
+# 4. Data integration (skill)
+"Read ~/.claude/skills/integrations/syrve-api.md
+ Connect real data from Syrve"
 ```
 
-## ⚙️ Настройка Claude Code /agents
+## Claude Code /agents Configuration
 
-Добавь в Claude Code базовый контекст:
+Add base context to Claude Code:
 
 ```bash
-# В Claude Code
+# In Claude Code
 /agents
 ```
 
-Создай агента с твоим стеком:
+Create agent with your stack:
 
 ```markdown
 # Denis Development Agent
@@ -166,46 +166,46 @@ Claude Code
 - FIGHTSTARS: gaming app
 ```
 
-## 🔄 Синхронизация
+## Synchronization
 
 ### Plugins (Anthropic)
-- Обновляются автоматически
+- Update automatically
 - Managed by Anthropic
-- Не редактируемые
+- Not editable
 
-### Framework (твой)
-- Полный контроль
-- Редактируй как хочешь
-- Храни в GitHub
+### Framework (yours)
+- Full control
+- Edit as you like
+- Store in GitHub
 
-## 📋 Чеклист установки
+## Installation Checklist
 
 - [ ] `/plugin marketplace add anthropics/claude-code`
 - [ ] `/plugin install frontend-design`
 - [ ] `/plugin install skill-creator`
-- [ ] Настроить `/agents` с базовым контекстом
-- [ ] Клонировать 2111framework: `git clone https://github.com/Enthusiasm-c/2111framework.git`
-- [ ] Запустить `./install.sh`
-- [ ] Создать `~/.claude/projects/` с контекстами проектов
+- [ ] Configure `/agents` with base context
+- [ ] Clone 2111framework: `git clone https://github.com/Enthusiasm-c/2111framework.git`
+- [ ] Run `./install.sh`
+- [ ] Create `~/.claude/projects/` with project contexts
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-### Plugin не активируется
+### Plugin Not Activating
 ```bash
-# Проверить установку
+# Check installation
 /plugin
 
-# Переустановить
+# Reinstall
 /plugin uninstall frontend-design
 /plugin install frontend-design
 ```
 
-### Skill не применяется к UI
-Добавь явно в промпт:
+### Skill Not Applied to UI
+Add explicitly in prompt:
 ```
 Use the frontend design skill.
-[твой запрос]
+[your request]
 ```
 
-### Конфликт с MD skills
-Plugins и MD skills работают вместе. Plugins для общего (UI quality), MD skills для специфичного (Syrve API).
+### Conflict with MD Skills
+Plugins and MD skills work together. Plugins for general (UI quality), MD skills for specific (Syrve API).

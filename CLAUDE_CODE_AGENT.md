@@ -1,6 +1,6 @@
 # Claude Code /agents Configuration
 
-Скопируй этот контент в Claude Code через команду `/agents`.
+Copy this content into Claude Code via the `/agents` command.
 
 ---
 

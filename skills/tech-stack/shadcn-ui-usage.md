@@ -1,3 +1,9 @@
+---
+name: shadcn-ui-usage
+description: Complete guide for shadcn/ui component library
+category: tech-stack
+---
+
 # shadcn/ui - Complete Usage Guide
 
 ## Installation & Setup

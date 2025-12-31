@@ -1,3 +1,9 @@
+---
+name: shadcn-mcp-guide
+description: Official shadcn MCP server for component installation
+category: mcp-usage
+---
+
 # shadcn MCP - Usage Guide
 
 Official shadcn MCP server bridges your AI assistant with the shadcn registry + CLI.

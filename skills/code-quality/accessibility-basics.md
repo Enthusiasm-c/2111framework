@@ -1,3 +1,9 @@
+---
+name: accessibility-basics
+description: Essential guide for WCAG 2.1/2.2 compliance
+category: code-quality
+---
+
 # Web Accessibility (a11y) Basics
 
 Essential guide for WCAG 2.1/2.2 compliance.

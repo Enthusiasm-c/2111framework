@@ -1,3 +1,9 @@
+---
+name: database-migrations
+description: Safe schema changes with Drizzle ORM for NeonDB + Next.js
+category: tech-stack
+---
+
 # Database Migrations (Drizzle ORM)
 
 Safe schema changes for NeonDB + Next.js serverless.

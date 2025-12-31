@@ -1,3 +1,9 @@
+---
+name: nextjs-app-router
+description: Next.js App Router conventions and project structure
+category: tech-stack
+---
+
 # Next.js App Router Conventions
 
 ## Project Structure

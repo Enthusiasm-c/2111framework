@@ -1,3 +1,9 @@
+---
+name: neondb-best-practices
+description: NeonDB serverless PostgreSQL best practices for Next.js + Vercel
+category: integrations
+---
+
 # NeonDB Serverless PostgreSQL
 
 Best practices for Next.js + Vercel serverless.

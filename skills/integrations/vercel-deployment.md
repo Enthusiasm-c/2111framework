@@ -1,3 +1,9 @@
+---
+name: vercel-deployment
+description: Complete guide for Next.js 14+ deployment on Vercel
+category: integrations
+---
+
 # Vercel Deployment Guide
 
 Complete guide for Next.js 14+ on Vercel.

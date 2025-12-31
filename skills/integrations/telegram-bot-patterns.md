@@ -1,3 +1,9 @@
+---
+name: telegram-bot-patterns
+description: Complete patterns for Telegram Mini Apps in Next.js
+category: integrations
+---
+
 # Telegram Bot & Mini Apps Development
 
 Complete patterns for Telegram Mini Apps in Next.js.

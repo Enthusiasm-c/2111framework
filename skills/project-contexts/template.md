@@ -1,3 +1,9 @@
+---
+name: project-context-template
+description: Template for creating project context files
+category: project-contexts
+---
+
 # Project: [Your Project Name]
 
 Type: [Next.js web app / Mobile app / API]

@@ -1,3 +1,9 @@
+---
+name: github-mcp-guide
+description: GitHub MCP server for managing repos, issues, PRs from Claude Code
+category: mcp-usage
+---
+
 # GitHub MCP Server
 
 Manage GitHub repos, issues, PRs directly from Claude Code.

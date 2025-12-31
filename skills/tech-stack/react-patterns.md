@@ -1,3 +1,9 @@
+---
+name: react-patterns
+description: React hooks and component best practices
+category: tech-stack
+---
+
 # React Best Practices
 
 ## Hooks

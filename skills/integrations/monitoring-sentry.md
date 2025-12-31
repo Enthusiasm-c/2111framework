@@ -1,3 +1,9 @@
+---
+name: monitoring-sentry
+description: Sentry error tracking setup for Next.js 14+ with Vercel
+category: integrations
+---
+
 # Monitoring & Error Tracking
 
 Sentry setup for Next.js 14+ with Vercel deployment.
