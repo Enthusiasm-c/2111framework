@@ -1,31 +1,19 @@
-# 🚀 2111framework v2.1
+# 2111framework v2.3
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.1.0
-**Updated:** December 29, 2024
+**Version:** 2.3.0
+**Updated:** January 3, 2025
 
 ---
 
-## 📦 MCP Servers
-
-### Core Stack:
-
-1. **Context7** - Up-to-date library docs
-2. **shadcn** - UI components
-3. **21st.dev Magic** - AI UI generation
-4. **GitHub** - Issues, PRs, CI/CD ⭐ NEW
-
-### Built-in:
-
-5. **Claude Chrome Extension** - Browser automation
-
----
-
-## 🎯 Quick Start
+## Quick Start
 
 ```bash
+# Clone framework
+git clone https://github.com/Enthusiasm-c/2111framework.git ~/.claude/2111framework
+
 # Install MCP servers
 claude mcp add context7 npx @context7/mcp-server
 claude mcp add shadcn npx @modelcontextprotocol/server-shadcn
@@ -40,99 +28,128 @@ claude --chrome
 
 ---
 
-## 🆕 What's New in v2.1
+## What's New in v2.3
 
 ### Added:
-- ✅ **GitHub MCP** - Issues, PRs, CI/CD from terminal
-- ✅ **Database Migrations skill** - Safe schema changes with Drizzle
-- ✅ **Monitoring skill** - Sentry error tracking patterns
-- ✅ **Telegram Mini App testing** - Extended QA Agent
-- ✅ **Advanced Telegram patterns** - CloudStorage, Auth, Haptic
-- ✅ **Extended Docs Agent** - ADR, Runbooks, Mermaid diagrams
+- **Code Reviewer & Simplifier agent** (`agents/review.md`)
+  - Dual role: Code Review + Code Simplification
+  - Review checklist (bugs, TypeScript, security, performance)
+  - 5 Simplification Principles with before/after examples
+  - 3 Common Refactoring Patterns
 
-### v2.0 (Previous):
-- 21st.dev Magic MCP - AI UI generation
-- Claude Chrome Extension - Browser automation
+### Changed:
+- **Architect agent extended** (90 → 309 lines)
+  - 5-step Analysis Framework
+  - Risk Assessment matrix
+  - Tech Stack Specifics
+  - Better example (Syrve Product Sync)
 
-### Migration:
-See [`MIGRATION_V2.md`](./MIGRATION_V2.md)
+### v2.2:
+- Chrome Extension guide
+- YAML frontmatter to all skills
+- All docs in English
+- Playwright removed
 
----
-
-## 🔧 MCP Servers
-
-### Context7 ⭐⭐⭐⭐⭐
-Latest documentation for libraries
-
-```bash
-"Using Context7, show Next.js 14 syntax"
-```
-
-### shadcn ⭐⭐⭐⭐⭐
-Generate UI components
-
-```bash
-"Add shadcn data table"
-```
-
-### 21st.dev Magic ⭐⭐⭐⭐⭐ NEW!
-AI UI component generation
-
-```bash
-"Generate a modern login form with social auth buttons"
-"Create a pricing table with 3 tiers"
-```
-
-**Setup:** Get API key from https://21st.dev/magic
-
-### GitHub MCP ⭐⭐⭐⭐⭐ NEW!
-Issues, PRs, CI/CD from terminal
-
-```bash
-# Install
-claude mcp add github npx -y @modelcontextprotocol/server-github
-
-# Usage
-"Create issue: OCR accuracy drops on blurry photos"
-"Show open PRs in Enthusiasm-c/notaapp"
-"Check CI status for latest commit"
-```
-
-### Claude Chrome Extension ⭐⭐⭐⭐⭐
-Browser testing & automation
-
-```bash
-claude --chrome
-"Open localhost:3000 and test login"
-```
+### v2.1:
+- GitHub MCP guide
+- Database Migrations skill
+- Monitoring skill (Sentry)
+- Extended QA & Docs agents
 
 ---
 
-## 📂 New Skills in v2.1
+## MCP Servers
 
-| Skill | Path | Description |
+| Server | Purpose | Command |
+|--------|---------|---------|
+| Context7 | Library documentation | `claude mcp add context7 npx @context7/mcp-server` |
+| shadcn | UI components | `claude mcp add shadcn npx @modelcontextprotocol/server-shadcn` |
+| 21st.dev Magic | AI UI generation | `claude mcp add 21st-magic npx -y @21st-dev/magic@latest` |
+| Chrome Extension | Browser testing | Built-in, install from Chrome Web Store |
+
+---
+
+## Agents
+
+| Agent | File | Description |
 |-------|------|-------------|
-| Database Migrations | `skills/tech-stack/database-migrations.md` | Drizzle ORM workflow |
-| Monitoring | `skills/integrations/monitoring-sentry.md` | Sentry + logging |
-| GitHub MCP | `skills/mcp-usage/github-mcp-guide.md` | GitHub from terminal |
-| Telegram Advanced | `skills/integrations/telegram-bot-patterns.md` | CloudStorage, Auth |
-
-## 👥 Extended Agents
-
-| Agent | What's New |
-|-------|-----------|
-| QA | Telegram Mini App testing, pre-release checklist |
-| Docs | Troubleshooting, ADR, Runbooks, Mermaid diagrams |
+| Architect | `agents/architect.md` | System design, tech stack, implementation phases |
+| Review | `agents/review.md` | Code review + simplification |
+| QA | `agents/qa.md` | Testing, bug finding, Chrome Extension |
+| Docs | `agents/docs.md` | Documentation, READMEs, ADRs |
+| Dev | `agents/dev.md` | Feature implementation |
+| Security | `agents/security.md` | Vulnerability audits |
 
 ---
 
-## 📚 Resources
+## Skills
 
-- **GitHub:** https://github.com/Enthusiasm-c/2111framework
+### MCP Usage
+| Skill | Description |
+|-------|-------------|
+| `chrome-extension-guide.md` | Browser automation for frontend testing |
+| `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
+| `context7-patterns.md` | Library documentation lookup |
+| `21st-magic-patterns.md` | AI UI component generation |
+
+### Integrations
+| Skill | Description |
+|-------|-------------|
+| `syrve-api.md` | Restaurant POS integration |
+| `neondb-best-practices.md` | PostgreSQL serverless patterns |
+| `telegram-bot-patterns.md` | Mini Apps, CloudStorage, Auth |
+| `monitoring-sentry.md` | Error tracking setup |
+
+### Tech Stack
+| Skill | Description |
+|-------|-------------|
+| `nextjs-app-router.md` | Next.js 14+ patterns |
+| `typescript-conventions.md` | Type safety, Zod validation |
+| `database-migrations.md` | Drizzle ORM workflow |
+
+### Code Quality
+| Skill | Description |
+|-------|-------------|
+| `code-review-checklist.md` | Review guidelines |
+| `typescript-best-practices.md` | Clean TypeScript |
+
+---
+
+## Usage Examples
+
+### Architecture Planning
+```
+Read agents/architect.md
+Plan a Syrve product sync feature for Ave AI
+```
+
+### Code Review
+```
+Read agents/review.md
+Review and simplify src/components/Dashboard.tsx
+```
+
+### Frontend Testing
+```
+Read skills/mcp-usage/chrome-extension-guide.md
+Test the login flow on localhost:3000
+```
+
+### UI Generation
+```
+Using 21st.dev Magic, create a restaurant dashboard with sales charts
+```
+
+---
+
+## Resources
+
+- **CHANGELOG:** [`CHANGELOG.md`](./CHANGELOG.md)
+- **Migration:** [`MIGRATION_V2.md`](./MIGRATION_V2.md)
+- **Plugins:** [`PLUGINS_SETUP.md`](./PLUGINS_SETUP.md)
 - **21st.dev:** https://21st.dev/magic
-- **Chrome Extension:** https://code.claude.com/docs/en/chrome
+- **Chrome Extension:** https://chromewebstore.google.com/detail/claude
 
 ---
 
-**Built with ❤️ by Denis**
-**Version:** 2.1.0
+**Version:** 2.3.0
