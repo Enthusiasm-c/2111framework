@@ -1,5 +1,41 @@
 # Changelog
 
+## [2.3.0] - 2025-01-03
+
+### Added
+- **Code Reviewer & Simplifier agent** (`review.md`) - Dual-role agent for code review and refactoring
+  - Review checklist (bugs, TypeScript, security, performance)
+  - 5 Simplification Principles with before/after examples
+  - 3 Common Refactoring Patterns
+  - When NOT to Simplify guidelines
+
+### Changed
+- **Architect agent extended** (90 → 309 lines)
+  - 5-step Analysis Framework
+  - Risk Assessment matrix
+  - Tech Stack Specifics section
+  - Better example (Syrve Product Sync)
+  - Critical Guidelines
+
+---
+
+## [2.2.0] - 2025-01-03
+
+### Added
+- **Chrome Extension guide** (`chrome-extension-guide.md`) - Complete browser testing guide
+- **YAML frontmatter** to all 16 skill files
+
+### Changed
+- All documentation translated to English
+- QA agent updated to use Chrome Extension
+- Framework standardized
+
+### Removed
+- Playwright MCP guide (deprecated)
+- Backup folder
+
+---
+
 ## [2.1.0] - 2024-12-29
 
 ### Added
