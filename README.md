@@ -1,10 +1,10 @@
-# 2111framework v2.3
+# 2111framework v2.4
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.3.0
-**Updated:** January 3, 2025
+**Version:** 2.4.0
+**Updated:** January 5, 2025
 
 ---
 
@@ -28,21 +28,19 @@ claude --chrome
 
 ---
 
-## What's New in v2.3
+## What's New in v2.4
 
 ### Added:
-- **Code Reviewer & Simplifier agent** (`agents/review.md`)
-  - Dual role: Code Review + Code Simplification
-  - Review checklist (bugs, TypeScript, security, performance)
-  - 5 Simplification Principles with before/after examples
-  - 3 Common Refactoring Patterns
+- **Syrve Cloud API skills suite** (5 files, 1400+ lines)
+  - `syrve-api.md` - Auth, organizations, dictionaries (expanded)
+  - `syrve-delivery.md` - Delivery orders, couriers, zones
+  - `syrve-menu.md` - Nomenclature, stop-lists, combos
+  - `syrve-customers.md` - Loyalty, wallets, coupons
+  - `syrve-webhooks.md` - Event subscriptions, handlers
 
-### Changed:
-- **Architect agent extended** (90 → 309 lines)
-  - 5-step Analysis Framework
-  - Risk Assessment matrix
-  - Tech Stack Specifics
-  - Better example (Syrve Product Sync)
+### v2.3:
+- Code Reviewer & Simplifier agent
+- Architect agent extended (309 lines)
 
 ### v2.2:
 - Chrome Extension guide
@@ -95,7 +93,11 @@ claude --chrome
 ### Integrations
 | Skill | Description |
 |-------|-------------|
-| `syrve-api.md` | Restaurant POS integration |
+| `syrve-api.md` | Syrve Cloud API - auth, orgs, dictionaries |
+| `syrve-delivery.md` | Syrve delivery orders, couriers, zones |
+| `syrve-menu.md` | Syrve menu, stop-lists, combos |
+| `syrve-customers.md` | Syrve loyalty, wallets, coupons |
+| `syrve-webhooks.md` | Syrve event subscriptions |
 | `neondb-best-practices.md` | PostgreSQL serverless patterns |
 | `telegram-bot-patterns.md` | Mini Apps, CloudStorage, Auth |
 | `monitoring-sentry.md` | Error tracking setup |
@@ -152,4 +154,4 @@ Using 21st.dev Magic, create a restaurant dashboard with sales charts
 
 ---
 
-**Version:** 2.3.0
+**Version:** 2.4.0

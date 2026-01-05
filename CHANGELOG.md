@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.4.0] - 2025-01-05
+
+### Added
+- **Syrve Cloud API skills suite** - Complete delivery platform integration
+  - `syrve-api.md` - Expanded from 61 to 355 lines (auth, orgs, dictionaries, addresses)
+  - `syrve-delivery.md` - Delivery orders, couriers, zones, status updates
+  - `syrve-menu.md` - Nomenclature, stop-lists, combos, sync strategy
+  - `syrve-customers.md` - Loyalty programs, wallets, coupons
+  - `syrve-webhooks.md` - Event subscriptions, Next.js handlers
+
+### Changed
+- README updated with Syrve skills documentation
+
+---
+
 ## [2.3.0] - 2025-01-03
 
 ### Added
