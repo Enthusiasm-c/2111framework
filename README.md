@@ -1,9 +1,9 @@
-# 2111framework v2.4
+# 2111framework v2.5
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.4.0
+**Version:** 2.5.0
 **Updated:** January 5, 2025
 
 ---
@@ -28,15 +28,18 @@ claude --chrome
 
 ---
 
-## What's New in v2.4
+## What's New in v2.5
 
 ### Added:
+- **Syrve Cloud API extended** (3 new files, 1100+ lines)
+  - `syrve-table-orders.md` - QR menu, in-restaurant ordering
+  - `syrve-reports.md` - OLAP analytics, sales dashboards
+  - `syrve-marketing.md` - Loyalty, discounts, coupons
+
+### v2.4:
 - **Syrve Cloud API skills suite** (5 files, 1400+ lines)
-  - `syrve-api.md` - Auth, organizations, dictionaries (expanded)
-  - `syrve-delivery.md` - Delivery orders, couriers, zones
-  - `syrve-menu.md` - Nomenclature, stop-lists, combos
-  - `syrve-customers.md` - Loyalty, wallets, coupons
-  - `syrve-webhooks.md` - Event subscriptions, handlers
+  - `syrve-api.md`, `syrve-delivery.md`, `syrve-menu.md`
+  - `syrve-customers.md`, `syrve-webhooks.md`
 
 ### v2.3:
 - Code Reviewer & Simplifier agent
@@ -98,6 +101,9 @@ claude --chrome
 | `syrve-menu.md` | Syrve menu, stop-lists, combos |
 | `syrve-customers.md` | Syrve loyalty, wallets, coupons |
 | `syrve-webhooks.md` | Syrve event subscriptions |
+| `syrve-table-orders.md` | Syrve QR menu, in-restaurant ordering |
+| `syrve-reports.md` | Syrve OLAP analytics, dashboards |
+| `syrve-marketing.md` | Syrve discounts, promotions, coupons |
 | `neondb-best-practices.md` | PostgreSQL serverless patterns |
 | `telegram-bot-patterns.md` | Mini Apps, CloudStorage, Auth |
 | `monitoring-sentry.md` | Error tracking setup |
@@ -154,4 +160,4 @@ Using 21st.dev Magic, create a restaurant dashboard with sales charts
 
 ---
 
-**Version:** 2.4.0
+**Version:** 2.5.0

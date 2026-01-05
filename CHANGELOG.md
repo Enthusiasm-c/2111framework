@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.5.0] - 2025-01-05
+
+### Added
+- **Syrve Cloud API extended** - Table orders, reports, marketing
+  - `syrve-table-orders.md` - QR menu, in-restaurant ordering, tables (~400 lines)
+  - `syrve-reports.md` - OLAP analytics, sales dashboards, performance reports (~350 lines)
+  - `syrve-marketing.md` - Loyalty programs, discounts, coupons, promotions (~350 lines)
+
+### Changed
+- README updated with new Syrve skills
+- Total Syrve skills: 8 files, 2500+ lines
+
+---
+
 ## [2.4.0] - 2025-01-05
 
 ### Added
