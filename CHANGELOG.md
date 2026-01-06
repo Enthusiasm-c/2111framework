@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0] - 2025-01-06
+
+### Added
+- **Clerk MCP guide** (`clerk-mcp-guide.md`) - User management from Claude Code
+  - Users: getUser, getUserList, getUserCount, updateUserMetadata
+  - Organizations: getOrganization, getOrganizationList, createInvitation
+  - Invitations: getInvitationList, revokeInvitation
+  - Integration examples with Supabase, Neon, GitHub MCP
+  - Code examples for Vercel AI SDK, LangChain
+
+---
+
 ## [2.5.0] - 2025-01-05
 
 ### Added

@@ -1,10 +1,10 @@
-# 2111framework v2.5
+# 2111framework v2.6
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.5.0
-**Updated:** January 5, 2025
+**Version:** 2.6.0
+**Updated:** January 6, 2025
 
 ---
 
@@ -28,13 +28,16 @@ claude --chrome
 
 ---
 
-## What's New in v2.5
+## What's New in v2.6
 
 ### Added:
-- **Syrve Cloud API extended** (3 new files, 1100+ lines)
-  - `syrve-table-orders.md` - QR menu, in-restaurant ordering
-  - `syrve-reports.md` - OLAP analytics, sales dashboards
-  - `syrve-marketing.md` - Loyalty, discounts, coupons
+- **Clerk MCP guide** (`clerk-mcp-guide.md`)
+  - User management from Claude Code
+  - Organizations & invitations
+  - Integration with Supabase, Neon
+
+### v2.5:
+- Syrve Cloud API extended (table orders, reports, marketing)
 
 ### v2.4:
 - **Syrve Cloud API skills suite** (5 files, 1400+ lines)
@@ -66,6 +69,7 @@ claude --chrome
 | Context7 | Library documentation | `claude mcp add context7 npx @context7/mcp-server` |
 | shadcn | UI components | `claude mcp add shadcn npx @modelcontextprotocol/server-shadcn` |
 | 21st.dev Magic | AI UI generation | `claude mcp add 21st-magic npx -y @21st-dev/magic@latest` |
+| Clerk | User management | `claude mcp add clerk -- npx -y @clerk/agent-toolkit -p local-mcp` |
 | Chrome Extension | Browser testing | Built-in, install from Chrome Web Store |
 
 ---
@@ -90,6 +94,7 @@ claude --chrome
 |-------|-------------|
 | `chrome-extension-guide.md` | Browser automation for frontend testing |
 | `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
+| `clerk-mcp-guide.md` | Users, organizations, invitations management |
 | `context7-patterns.md` | Library documentation lookup |
 | `21st-magic-patterns.md` | AI UI component generation |
 
@@ -160,4 +165,4 @@ Using 21st.dev Magic, create a restaurant dashboard with sales charts
 
 ---
 
-**Version:** 2.5.0
+**Version:** 2.6.0
