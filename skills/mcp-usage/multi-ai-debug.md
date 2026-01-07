@@ -2,11 +2,13 @@
 name: multi-ai-debug
 description: Use Codex and Gemini CLI as second-opinion debuggers from Claude Code
 category: mcp-usage
+updated: 2025-01-07
+models: gpt-5.1-codex-max (OpenAI), gemini-3-pro (Google)
 ---
 
 # Multi-AI Debugging
 
-Get a "second opinion" from Codex (OpenAI) or Gemini (Google) when debugging.
+Get a "second opinion" from Codex (OpenAI gpt-5.1-codex-max) or Gemini (Google gemini-3-pro) when debugging.
 
 ## Why Use Multiple AIs?
 
@@ -53,17 +55,26 @@ export GEMINI_API_KEY="..."
 
 ## Quick Aliases
 
-Add to `~/.zshrc`:
+Add to `~/.zshrc` (or run `./scripts/setup-ai-aliases.sh`):
 
 ```bash
-# Codex read-only review
-alias cr='CODEX_SANDBOX_TYPE=read-only codex -q "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
+# Codex (gpt-5.1-codex-max with high reasoning) - read-only review
+alias cr='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
 
-# Gemini review
-alias gr='gemini -q "Analyze this code for bugs and issues. Be specific with line numbers:"'
+# Gemini (gemini-3-pro) - code review
+alias gr='gemini -m gemini-3-pro --preview-features -p "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers:"'
 
-# Quick bug analysis
-alias bug='CODEX_SANDBOX_TYPE=read-only codex -q "Find the bug in this code. Explain root cause and fix:"'
+# Quick bug analysis (gpt-5.1-codex-max)
+alias bug='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Find the bug in this code. Explain root cause and suggest fix:"'
+
+# Security audit (gpt-5.1-codex-max)
+alias sec='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Security audit: Find vulnerabilities, injection risks, auth issues, exposed secrets. OWASP Top 10 check:"'
+
+# Performance review (gpt-5.1-codex-max)
+alias perf='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
+
+# Architecture review (gemini-3-pro)
+alias arch='gemini -m gemini-3-pro --preview-features -p "Architecture review: Analyze code structure, coupling, SOLID principles, suggest improvements:"'
 ```
 
 Apply:
@@ -179,9 +190,9 @@ When user runs `/review-bug "description"`:
 
 | Model | Best For |
 |-------|----------|
-| **Claude** | Full context, implementing fixes, refactoring |
-| **Codex** | Quick bug spotting, security review, OpenAI perspective |
-| **Gemini** | Alternative analysis, free tier, Google perspective |
+| **Claude (Opus 4.5)** | Full context, implementing fixes, refactoring |
+| **Codex (gpt-5.1-codex-max)** | Deep bug analysis, security review, high reasoning |
+| **Gemini (gemini-3-pro)** | Architecture review, alternative perspective |
 
 ### Decision Tree:
 
@@ -237,13 +248,13 @@ export OPENAI_API_KEY="sk-..."
 
 ## Cost Comparison
 
-| Model | Cost | Free Tier |
-|-------|------|-----------|
-| Codex (GPT-4) | ~$0.03/1K tokens | No |
-| Gemini 2.5 Pro | ~$0.01/1K tokens | Yes (generous) |
-| Claude | Via subscription | With Claude Code |
+| Model | Cost | Notes |
+|-------|------|-------|
+| Codex (gpt-5.1-codex-max) | Premium tier | High reasoning, best for complex bugs |
+| Gemini (gemini-3-pro) | Mid tier | Good for architecture, preview features |
+| Claude (Opus 4.5) | Via subscription | With Claude Code |
 
-**Tip:** Use Gemini for frequent checks, Codex for deep dives.
+**Tip:** Use Codex for deep dives with high reasoning, Gemini for architecture review.
 
 ---
 
