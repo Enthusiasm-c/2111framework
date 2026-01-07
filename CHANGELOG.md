@@ -1,10 +1,33 @@
 # Changelog
 
+## [2.8.0] - 2026-01-07
+
+### Added
+- **AI Agents Natural Language** (`ai-agents.md`) - Natural language commands for external AI agents
+  - Say: "Запусти агента Gemini review для broken layout"
+  - Say: "Попроси Codex найти race condition"
+  - Say: "Нужно второе мнение по этому багу"
+  - Auto-detects problem type → selects best agent
+  - Instructions added to CLAUDE.md for automatic recognition
+
+### Changed
+- **Multi-AI Debug updated** - Correct model names and syntax
+  - Gemini: `gemini-3-pro-preview` (requires paid tier)
+  - Codex: `gpt-5.1-codex-max` with `model_reasoning_effort="high"`
+  - Codex CLI updated to v0.79.0
+  - Removed `--preview-features` flag (doesn't exist)
+
+### Fixed
+- Removed hardcoded API keys from repository
+- Added `.claude/settings.local.json` to `.gitignore`
+
+---
+
 ## [2.7.0] - 2025-01-06
 
 ### Added
 - **Multi-AI Debug** (`multi-ai-debug.md`) - Use Codex/Gemini as second-opinion debuggers
-  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`
+  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`, `arch`
   - Setup script: `scripts/setup-ai-aliases.sh`
   - Workflow: Claude + Codex/Gemini collaboration
   - Read-only mode for safety

@@ -1,10 +1,10 @@
-# 2111framework v2.7
+# 2111framework v2.8
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.7.0
-**Updated:** January 6, 2025
+**Version:** 2.8.0
+**Updated:** January 7, 2026
 
 ---
 
@@ -19,49 +19,64 @@ claude mcp add context7 npx @context7/mcp-server
 claude mcp add shadcn npx @modelcontextprotocol/server-shadcn
 claude mcp add 21st-magic npx -y @21st-dev/magic@latest
 
-# Install Chrome Extension
-# https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn
+# Setup Multi-AI Debug (Codex + Gemini)
+~/.claude/2111framework/scripts/setup-ai-aliases.sh
+source ~/.zshrc
 
-# Enable Chrome
-claude --chrome
+# Add API keys to ~/.zshrc
+export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
+export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
 ```
 
 ---
 
-## What's New in v2.7
+## What's New in v2.8
 
 ### Added:
+- **AI Agents Natural Language** (`ai-agents.md`)
+  - Say: "Запусти агента Gemini review для broken layout в аналитике"
+  - Say: "Попроси Codex найти race condition в auth"
+  - Say: "Нужно второе мнение по этому багу"
+  - Auto-detects problem type → selects best AI agent
+
+### v2.7:
 - **Multi-AI Debug** (`multi-ai-debug.md`)
-  - Use Codex/Gemini as second-opinion debuggers
-  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`
-  - Setup script included
+  - Models: `gpt-5.1-codex-max` (high reasoning), `gemini-3-pro-preview`
+  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`, `arch`
+  - Codex v0.79.0 syntax support
 
-### v2.6:
-- Clerk MCP guide (users, organizations, invitations)
+---
 
-### v2.5:
-- Syrve Cloud API extended (table orders, reports, marketing)
+## Multi-AI Agents
 
-### v2.4:
-- **Syrve Cloud API skills suite** (5 files, 1400+ lines)
-  - `syrve-api.md`, `syrve-delivery.md`, `syrve-menu.md`
-  - `syrve-customers.md`, `syrve-webhooks.md`
+### Natural Language Commands
 
-### v2.3:
-- Code Reviewer & Simplifier agent
-- Architect agent extended (309 lines)
+| Say this | Claude does |
+|----------|-------------|
+| "Запусти агента Gemini review для broken layout" | Finds files → runs Gemini analysis |
+| "Попроси Codex найти race condition" | Finds files → runs Codex analysis |
+| "Нужно второе мнение" | Runs both Codex + Gemini |
 
-### v2.2:
-- Chrome Extension guide
-- YAML frontmatter to all skills
-- All docs in English
-- Playwright removed
+### Agent Selection
 
-### v2.1:
-- GitHub MCP guide
-- Database Migrations skill
-- Monitoring skill (Sentry)
-- Extended QA & Docs agents
+| Problem Type | Best Agent |
+|--------------|------------|
+| UI, layout, CSS, visual bugs | **Gemini 3 Pro** |
+| Logic, async, TypeScript, race conditions | **Codex** |
+| Security, auth, OWASP | **Codex** |
+| Architecture review | **Gemini** |
+| Unknown / need validation | **Both** |
+
+### Bash Aliases
+
+```bash
+cr file.tsx    # Codex code review (gpt-5.1-codex-max)
+gr file.tsx    # Gemini code review (gemini-3-pro-preview)
+bug file.tsx   # Codex bug finder
+sec file.tsx   # Codex security audit
+perf file.tsx  # Codex performance review
+arch file.tsx  # Gemini architecture review
+```
 
 ---
 
@@ -73,7 +88,6 @@ claude --chrome
 | shadcn | UI components | `claude mcp add shadcn npx @modelcontextprotocol/server-shadcn` |
 | 21st.dev Magic | AI UI generation | `claude mcp add 21st-magic npx -y @21st-dev/magic@latest` |
 | Clerk | User management | `claude mcp add clerk -- npx -y @clerk/agent-toolkit -p local-mcp` |
-| Chrome Extension | Browser testing | Built-in, install from Chrome Web Store |
 
 ---
 
@@ -95,10 +109,11 @@ claude --chrome
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
+| `ai-agents.md` | Natural language commands for Gemini/Codex agents |
+| `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
 | `chrome-extension-guide.md` | Browser automation for frontend testing |
 | `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
 | `clerk-mcp-guide.md` | Users, organizations, invitations management |
-| `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
 | `context7-patterns.md` | Library documentation lookup |
 | `21st-magic-patterns.md` | AI UI component generation |
 
@@ -134,10 +149,17 @@ claude --chrome
 
 ## Usage Examples
 
+### Multi-AI Debug
+```
+"Запусти агента Gemini review для broken layout в Dashboard"
+"Попроси Codex найти почему форма отправляется дважды"
+"Нужно второе мнение по этому багу"
+```
+
 ### Architecture Planning
 ```
 Read agents/architect.md
-Plan a Syrve product sync feature for Ave AI
+Plan a Syrve product sync feature
 ```
 
 ### Code Review
@@ -152,10 +174,18 @@ Read skills/mcp-usage/chrome-extension-guide.md
 Test the login flow on localhost:3000
 ```
 
-### UI Generation
-```
-Using 21st.dev Magic, create a restaurant dashboard with sales charts
-```
+---
+
+## Model Comparison
+
+| Capability | Claude Opus 4.5 | Codex (gpt-5.1) | Gemini 3 Pro |
+|------------|-----------------|-----------------|--------------|
+| Backend/Architecture | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Frontend UI/UX | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Bug Detection | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Security Audit | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Multimodal | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Long Tasks (7h+) | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 
 ---
 
@@ -169,4 +199,4 @@ Using 21st.dev Magic, create a restaurant dashboard with sales charts
 
 ---
 
-**Version:** 2.7.0
+**Version:** 2.8.0
