@@ -1,9 +1,9 @@
-# 2111framework v2.6
+# 2111framework v2.7
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.6.0
+**Version:** 2.7.0
 **Updated:** January 6, 2025
 
 ---
@@ -28,13 +28,16 @@ claude --chrome
 
 ---
 
-## What's New in v2.6
+## What's New in v2.7
 
 ### Added:
-- **Clerk MCP guide** (`clerk-mcp-guide.md`)
-  - User management from Claude Code
-  - Organizations & invitations
-  - Integration with Supabase, Neon
+- **Multi-AI Debug** (`multi-ai-debug.md`)
+  - Use Codex/Gemini as second-opinion debuggers
+  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`
+  - Setup script included
+
+### v2.6:
+- Clerk MCP guide (users, organizations, invitations)
 
 ### v2.5:
 - Syrve Cloud API extended (table orders, reports, marketing)
@@ -95,6 +98,7 @@ claude --chrome
 | `chrome-extension-guide.md` | Browser automation for frontend testing |
 | `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
 | `clerk-mcp-guide.md` | Users, organizations, invitations management |
+| `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
 | `context7-patterns.md` | Library documentation lookup |
 | `21st-magic-patterns.md` | AI UI component generation |
 
@@ -165,4 +169,4 @@ Using 21st.dev Magic, create a restaurant dashboard with sales charts
 
 ---
 
-**Version:** 2.6.0
+**Version:** 2.7.0

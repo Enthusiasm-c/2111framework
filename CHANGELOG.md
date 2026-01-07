@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.7.0] - 2025-01-06
+
+### Added
+- **Multi-AI Debug** (`multi-ai-debug.md`) - Use Codex/Gemini as second-opinion debuggers
+  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`
+  - Setup script: `scripts/setup-ai-aliases.sh`
+  - Workflow: Claude + Codex/Gemini collaboration
+  - Read-only mode for safety
+
+---
+
 ## [2.6.0] - 2025-01-06
 
 ### Added
