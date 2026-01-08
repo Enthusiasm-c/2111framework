@@ -1,9 +1,9 @@
-# 2111framework v2.9
+# 2111framework v2.10
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.9.0
+**Version:** 2.10.0
 **Updated:** January 8, 2026
 
 ---
@@ -30,9 +30,17 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 
 ---
 
-## What's New in v2.9
+## What's New in v2.10
 
 ### Added:
+- **Consilium - Product Analysis Board** (`consilium.md`)
+  - 6 AI agents simulate venture studio team
+  - `/consilium [product brief]` - full product analysis
+  - Agents: Growth, Product, Finance, Sales, Tech, Market
+  - Specialized for B2B SaaS in Indonesian restaurant industry
+  - Orchestrator creates unified growth plan
+
+### v2.9:
 - **Ralph Wiggum Plugin** (`ralph-wiggum.md`)
   - Autonomous loops - run tasks for hours without intervention
   - `/ralph-loop "task" --max-iterations 20`
@@ -113,6 +121,11 @@ arch file.tsx  # Gemini architecture review
 
 ## Skills
 
+### Business
+| Skill | Description |
+|-------|-------------|
+| `consilium.md` | 6-agent product analysis board for startups |
+
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
@@ -156,6 +169,16 @@ arch file.tsx  # Gemini architecture review
 ---
 
 ## Usage Examples
+
+### Consilium (Product Analysis)
+```bash
+/consilium
+
+Product: Invoice OCR for restaurants
+Problem: Manual entry takes 2 hours daily
+Solution: Photo → OCR → POS integration
+Metrics: 50 users, $200 MRR, 15% growth
+```
 
 ### Ralph Wiggum (Autonomous)
 ```bash
@@ -217,4 +240,4 @@ Test the login flow on localhost:3000
 
 ---
 
-**Version:** 2.9.0
+**Version:** 2.10.0
