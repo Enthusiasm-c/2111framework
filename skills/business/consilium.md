@@ -24,30 +24,67 @@ Metrics: 50 active users, $200 MRR, 15% monthly growth
 
 ---
 
-## The Board (6 Agents)
+## The Board (7 Agents)
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                       ORCHESTRATOR                              │
-│     Collects all reports → Creates unified growth plan          │
-└────────────────────────────────────────────────────────────────┘
-         ▲         ▲         ▲         ▲         ▲         ▲
-         │         │         │         │         │         │
-    ┌────┴───┐ ┌───┴────┐ ┌──┴───┐ ┌───┴──┐ ┌───┴───┐ ┌───┴────┐
-    │ GROWTH │ │PRODUCT │ │ FIN  │ │SALES │ │ TECH  │ │MARKET  │
-    │Marketer│ │Manager │ │Analyst│ │Chief │ │Advisor│ │Research│
-    └────────┘ └────────┘ └──────┘ └──────┘ └───────┘ └────────┘
+                    USER INPUT (minimal)
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                     RESEARCH AGENT                                │
+│   Scans codebase + merges with user input → Enriched Brief        │
+└──────────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+                   ENRICHED PRODUCT BRIEF
+                           │
+         ┌─────────┬───────┴───────┬─────────┐
+         ▼         ▼               ▼         ▼
+    ┌────────┐ ┌────────┐    ┌────────┐ ┌────────┐
+    │ GROWTH │ │PRODUCT │    │ SALES  │ │ MARKET │
+    └────────┘ └────────┘    └────────┘ └────────┘
+         │         │               │         │
+         │    ┌────────┐      ┌────────┐     │
+         │    │  FIN   │      │  TECH  │     │
+         │    └────────┘      └────────┘     │
+         │         │               │         │
+         └─────────┴───────┬───────┴─────────┘
+                           ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                       ORCHESTRATOR                                │
+│         Synthesizes all reports → Creates unified plan            │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## How to Use
 
-### Step 1: Prepare Your Product Brief
+### Option A: Inside a Project (Auto-Research)
 
-Create a structured brief (or let Claude help you):
+When you run `/consilium` inside your project directory, Research Agent automatically scans the codebase:
+
+```
+/consilium
+
+Metrics: 50 users, $200 MRR, 8% churn
+Competition: No direct competitor in Indonesia
+```
+
+Research Agent will:
+1. Scan `package.json`, `README.md`, schema files
+2. Discover integrations (POS, payments, OCR)
+3. Count users from database (if Neon MCP connected)
+4. Merge findings with your input
+5. Pass enriched brief to 6 specialist agents
+
+### Option B: Standalone (Full Brief)
+
+If running outside a project, provide full brief:
 
 ```markdown
+/consilium
+
 ## Product Brief
 
 **Name:** [Product name]
@@ -80,36 +117,151 @@ Create a structured brief (or let Claude help you):
 - Your differentiation
 ```
 
-### Step 2: Run Consilium
+---
+
+### Workflow
 
 ```
-/consilium
-
-[Paste your product brief here]
+Step 1: /consilium + minimal input
+           │
+           ▼
+Step 2: Research Agent scans codebase (parallel)
+           │
+           ▼
+Step 3: Enriched Brief created
+           │
+           ▼
+Step 4: 6 Agents analyze in parallel
+        - Growth Agent Report
+        - Product Agent Report
+        - Finance Agent Report
+        - Sales Agent Report
+        - Tech Agent Report
+        - Market Agent Report
+           │
+           ▼
+Step 5: Orchestrator synthesizes → Unified Plan
+        - Priority actions (7/30/90 days)
+        - Resource allocation
+        - Experiments to run
+        - Go/No-go decision
 ```
-
-### Step 3: Get Reports from Each Agent
-
-Claude will run 6 parallel analyses and present:
-
-1. **Growth Agent Report** - Marketing channels, CAC optimization
-2. **Product Agent Report** - PMF signals, feature priorities
-3. **Finance Agent Report** - Unit economics, burn rate
-4. **Sales Agent Report** - Pricing, distribution strategy
-5. **Tech Agent Report** - Scalability, tech debt
-6. **Market Agent Report** - TAM/SAM/SOM, trends
-
-### Step 4: Unified Growth Plan
-
-Orchestrator synthesizes all reports into:
-- Priority actions (next 30/60/90 days)
-- Resource allocation
-- Risk mitigation
-- Growth experiments
 
 ---
 
 ## Agent Prompts
+
+### Agent 0: Research Agent (runs first)
+
+**Focus:** Codebase analysis + enriching user input
+
+**When to run:** Always runs first, in parallel with receiving user input.
+
+**What it scans:**
+
+| Source | Data Extracted |
+|--------|----------------|
+| `package.json` | Tech stack, dependencies, scripts |
+| `README.md` | Product description, features |
+| `src/` structure | Architecture, modules, integrations |
+| `prisma/schema.prisma` or `drizzle/` | Data model, entities |
+| `.env.example` | Integrations (POS, payments, APIs) |
+| `src/integrations/` | POS/payment integrations |
+| `src/services/` | Core business logic |
+| Database (if Neon MCP) | User count, activity metrics |
+
+```
+You are a Technical Research Agent preparing context for a product analysis board.
+
+Your job is to scan the current project codebase and create an ENRICHED PRODUCT BRIEF
+by combining what you find with any user-provided input.
+
+## Scanning Checklist
+
+1. **Project Identity**
+   - Read package.json: name, description, dependencies
+   - Read README.md: product description, features
+   - Identify: Is this mobile app, web app, API, or hybrid?
+
+2. **Tech Stack Analysis**
+   - Frontend: React, React Native, Next.js, Vue?
+   - Backend: Node, Python, Go?
+   - Database: PostgreSQL, MongoDB, Supabase, Neon?
+   - Hosting: Vercel, DO, AWS?
+
+3. **Integration Discovery**
+   - Search for POS integrations: Moka, Pawoon, iSeller, GoBiz
+   - Search for payment: Xendit, Midtrans, GoPay, OVO
+   - Search for OCR/AI: Google Vision, AWS Textract, custom
+   - Search for analytics: Mixpanel, Amplitude, PostHog
+
+4. **Data Model Analysis**
+   - Read schema files (Prisma, Drizzle, SQL)
+   - Identify core entities: Users, Restaurants, Invoices, etc.
+   - Understand relationships
+
+5. **Business Logic**
+   - Scan services/ folder for core features
+   - Identify main user flows
+   - Find pricing/billing logic if exists
+
+6. **Metrics (if database access)**
+   - Count users/restaurants
+   - Check activity (last 30 days)
+   - Look for revenue/subscription data
+
+## Output Format
+
+Create an ENRICHED PRODUCT BRIEF in this format:
+
+```markdown
+## Enriched Product Brief
+
+### From Codebase Analysis:
+
+**Tech Stack:**
+- Frontend: [discovered]
+- Backend: [discovered]
+- Database: [discovered]
+- Key dependencies: [list]
+
+**Integrations Found:**
+- POS: [list or "none found"]
+- Payments: [list or "none found"]
+- OCR/AI: [list or "none found"]
+
+**Data Model:**
+- Core entities: [list]
+- User table fields: [relevant fields]
+
+**Features Detected:**
+- [feature 1 from code]
+- [feature 2 from code]
+
+**Metrics from DB (if available):**
+- Total users: X
+- Active last 30d: Y
+- [other metrics]
+
+### From User Input:
+[Paste user's original input here]
+
+### Merged Brief for Analysis:
+[Combine codebase findings with user input into complete brief]
+```
+
+## Important Notes
+
+- If you can't access something, note it as "Not accessible"
+- Don't guess - only report what you actually find
+- Flag any discrepancies between code and user claims
+- Highlight technical risks you discover
+- Note missing integrations that would be expected
+
+This enriched brief will be passed to 6 specialist agents for deep analysis.
+```
+
+---
 
 ### Agent 1: Growth Marketer
 
