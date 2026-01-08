@@ -1,10 +1,10 @@
-# 2111framework v2.8
+# 2111framework v2.9
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.8.0
-**Updated:** January 7, 2026
+**Version:** 2.9.0
+**Updated:** January 8, 2026
 
 ---
 
@@ -30,9 +30,16 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 
 ---
 
-## What's New in v2.8
+## What's New in v2.9
 
 ### Added:
+- **Ralph Wiggum Plugin** (`ralph-wiggum.md`)
+  - Autonomous loops - run tasks for hours without intervention
+  - `/ralph-loop "task" --max-iterations 20`
+  - Auto-retry until success criteria met
+  - Examples: CRUD generation, lint/test fixes, migrations
+
+### v2.8:
 - **AI Agents Natural Language** (`ai-agents.md`)
   - Say: "Запусти агента Gemini review для broken layout в аналитике"
   - Say: "Попроси Codex найти race condition в auth"
@@ -109,6 +116,7 @@ arch file.tsx  # Gemini architecture review
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
+| `ralph-wiggum.md` | Autonomous loops - run tasks for hours |
 | `ai-agents.md` | Natural language commands for Gemini/Codex agents |
 | `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
 | `chrome-extension-guide.md` | Browser automation for frontend testing |
@@ -148,6 +156,16 @@ arch file.tsx  # Gemini architecture review
 ---
 
 ## Usage Examples
+
+### Ralph Wiggum (Autonomous)
+```bash
+# Fix all lint errors autonomously
+/ralph-loop "Run npm run lint, fix all errors" --max-iterations 15
+
+# Generate CRUD and tests
+/ralph-loop "Generate CRUD API for Orders entity with tests" \
+  --completion-promise "All tests passed" --max-iterations 25
+```
 
 ### Multi-AI Debug
 ```
@@ -199,4 +217,4 @@ Test the login flow on localhost:3000
 
 ---
 
-**Version:** 2.8.0
+**Version:** 2.9.0

@@ -31,6 +31,7 @@ Run in Claude Code terminal:
 
 | Plugin | What It Does |
 |--------|-------------|
+| `ralph-wiggum` | Autonomous loops - run tasks for hours |
 | `pr-review` | Automatic code review |
 | `feature-dev` | Structured feature development |
 
@@ -85,6 +86,58 @@ Build a player profile card component.
 Show avatar, stats, achievements, ranking.
 Gaming aesthetic, bold colors, micro-animations.
 ```
+
+## ralph-wiggum Plugin
+
+### What It Does
+
+Run Claude Code autonomously for hours without supervision. Claude works in a loop until task is complete.
+
+### Installation
+
+```bash
+/plugin install ralph-wiggum@claude-plugins-official
+```
+
+### Basic Usage
+
+```bash
+# Simple task
+/ralph-loop "Run npm run lint, fix all errors" --max-iterations 10
+
+# With completion condition
+/ralph-loop "Run npm test, make all tests pass" \
+  --completion-promise "All tests passed" \
+  --max-iterations 20
+```
+
+### When to Use
+
+| Use Ralph | Use Manual |
+|-----------|------------|
+| Clear success criteria | Need decisions each step |
+| Mechanical tasks (CRUD, lint) | Creative work (design) |
+| Overnight tasks | Critical code (payments) |
+| High volume work | Unclear requirements |
+
+### Example Tasks
+
+```bash
+# Generate CRUD for restaurant platform
+/ralph-loop "
+Generate CRUD API for: Restaurants, MenuItems, Orders
+Use NestJS + Prisma. Include validation, tests.
+Run: npm run build && npm test
+" --completion-promise "All tests passed" --max-iterations 30
+
+# Fix all TypeScript errors
+/ralph-loop "Run npx tsc --noEmit, fix all errors" \
+  --completion-promise "Successfully compiled" --max-iterations 20
+```
+
+See full guide: `~/.claude/skills/mcp-usage/ralph-wiggum.md`
+
+---
 
 ## Integration with 2111framework
 
@@ -183,6 +236,7 @@ Create agent with your stack:
 - [ ] `/plugin marketplace add anthropics/claude-code`
 - [ ] `/plugin install frontend-design`
 - [ ] `/plugin install skill-creator`
+- [ ] `/plugin install ralph-wiggum` (autonomous loops)
 - [ ] Configure `/agents` with base context
 - [ ] Clone 2111framework: `git clone https://github.com/Enthusiasm-c/2111framework.git`
 - [ ] Run `./install.sh`

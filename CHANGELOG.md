@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.9.0] - 2026-01-08
+
+### Added
+- **Ralph Wiggum Plugin Guide** (`ralph-wiggum.md`) - Autonomous loops for Claude Code
+  - Run tasks for hours without intervention
+  - Auto-retry until success criteria met
+  - Examples: CRUD generation, lint fixes, test fixes, migrations
+  - Integration with review/QA agents post-completion
+  - Safety guidelines and cost management tips
+
+### Changed
+- **PLUGINS_SETUP.md** - Added Ralph Wiggum to recommended plugins
+  - Installation instructions
+  - Usage examples for restaurant platform
+  - When to use Ralph vs manual mode
+
+---
+
 ## [2.8.0] - 2026-01-07
 
 ### Added
