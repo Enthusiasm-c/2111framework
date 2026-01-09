@@ -1,9 +1,9 @@
-# 2111framework v2.11
+# 2111framework v2.12
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.11.0
+**Version:** 2.12.0
 **Updated:** January 9, 2026
 **Requires:** Claude Code 2.1.0+
 
@@ -31,9 +31,20 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 
 ---
 
-## What's New in v2.11
+## What's New in v2.12
 
-### Claude Code 2.1.0 Integration:
+### Code Simplifier Integration:
+- **Review agent** now uses official `code-simplifier` plugin
+- **Two-phase workflow**: Simplify → Review
+- **Flags**: `--no-simplify`, `--simplify-only`
+- Workflow: Ralph Wiggum → Review → Commit
+
+### Setup:
+```bash
+claude plugin install code-simplifier
+```
+
+### v2.11 - Claude Code 2.1.0 Integration:
 - **All skills updated** with new frontmatter:
   - `model:` - opus/sonnet/haiku per skill
   - `forked_context:` - isolated context for complex tasks
@@ -44,7 +55,7 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 ### Model Assignment:
 | Skill Type | Model | Reason |
 |------------|-------|--------|
-| `consilium`, `security-checklist` | opus | Deep analysis |
+| `consilium`, `security-checklist`, `review` | opus | Deep analysis |
 | `ralph-wiggum` | sonnet | Balanced loops |
 | `ai-agents`, `multi-ai-debug` | haiku | Fast routing |
 | Reference docs | sonnet | Standard tasks |
@@ -302,4 +313,4 @@ hooks:
 
 ---
 
-**Version:** 2.11.0
+**Version:** 2.12.0
