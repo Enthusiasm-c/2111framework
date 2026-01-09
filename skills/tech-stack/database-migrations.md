@@ -2,6 +2,9 @@
 name: database-migrations
 description: Safe schema changes with Drizzle ORM for NeonDB + Next.js
 category: tech-stack
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Database Migrations (Drizzle ORM)

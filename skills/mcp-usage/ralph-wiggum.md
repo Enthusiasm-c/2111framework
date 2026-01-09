@@ -2,8 +2,15 @@
 name: ralph-wiggum
 description: Autonomous loops for Claude Code - run tasks for hours without intervention
 category: mcp-usage
-updated: 2026-01-08
+updated: 2026-01-09
 plugin: ralph-wiggum@claude-plugins-official
+model: sonnet
+forked_context: true
+hooks:
+  pre_invoke:
+    - command: "echo '🔄 Ralph Wiggum: Starting autonomous loop...'"
+  post_invoke:
+    - command: "echo '🏁 Ralph Wiggum: Loop completed.'"
 ---
 
 # Ralph Wiggum - Autonomous Loops

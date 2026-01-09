@@ -1,10 +1,11 @@
-# 2111framework v2.10
+# 2111framework v2.11
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.10.0
-**Updated:** January 8, 2026
+**Version:** 2.11.0
+**Updated:** January 9, 2026
+**Requires:** Claude Code 2.1.0+
 
 ---
 
@@ -30,15 +31,30 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 
 ---
 
-## What's New in v2.10
+## What's New in v2.11
 
-### Added:
+### Claude Code 2.1.0 Integration:
+- **All skills updated** with new frontmatter:
+  - `model:` - opus/sonnet/haiku per skill
+  - `forked_context:` - isolated context for complex tasks
+  - `hooks:` - pre/post invoke commands
+- **Skill invocation** via `/skill-name` (e.g., `/consilium`)
+- **Wildcard permissions** support in documentation
+
+### Model Assignment:
+| Skill Type | Model | Reason |
+|------------|-------|--------|
+| `consilium`, `security-checklist` | opus | Deep analysis |
+| `ralph-wiggum` | sonnet | Balanced loops |
+| `ai-agents`, `multi-ai-debug` | haiku | Fast routing |
+| Reference docs | sonnet | Standard tasks |
+
+### v2.10:
 - **Consilium - Product Analysis Board** (`consilium.md`)
-  - 6 AI agents simulate venture studio team
+  - 7 AI agents (including Research Agent)
   - `/consilium [product brief]` - full product analysis
-  - Agents: Growth, Product, Finance, Sales, Tech, Market
+  - Auto-scans codebase when run inside project
   - Specialized for B2B SaaS in Indonesian restaurant industry
-  - Orchestrator creates unified growth plan
 
 ### v2.9:
 - **Ralph Wiggum Plugin** (`ralph-wiggum.md`)
@@ -230,6 +246,52 @@ Test the login flow on localhost:3000
 
 ---
 
+## Claude Code 2.1.0 Features
+
+This framework requires Claude Code 2.1.0+. Key features used:
+
+### Skill Frontmatter
+```yaml
+---
+name: my-skill
+model: opus              # opus/sonnet/haiku
+forked_context: true     # isolated context
+hooks:
+  pre_invoke:
+    - command: "echo 'Starting...'"
+  post_invoke:
+    - command: "echo 'Done!'"
+---
+```
+
+### Invoke Skills
+```bash
+/consilium          # Product analysis
+/ralph-wiggum       # Autonomous loops
+/security           # Security audit
+```
+
+### Wildcard Permissions
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(npm run *)",
+      "Read(/src/**)"
+    ]
+  }
+}
+```
+
+### Other 2.1.0 Features
+- `Shift+Enter` for newlines (no setup)
+- `/teleport` to claude.ai/code
+- `claude config set language "Russian"`
+- Deny tool → agent continues (doesn't stop)
+
+---
+
 ## Resources
 
 - **CHANGELOG:** [`CHANGELOG.md`](./CHANGELOG.md)
@@ -240,4 +302,4 @@ Test the login flow on localhost:3000
 
 ---
 
-**Version:** 2.10.0
+**Version:** 2.11.0

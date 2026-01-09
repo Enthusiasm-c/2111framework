@@ -2,6 +2,9 @@
 name: chrome-extension-guide
 description: Browser automation via native Chrome extension for frontend testing
 category: mcp-usage
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Claude Chrome Extension - Complete Usage Guide

@@ -2,8 +2,13 @@
 name: multi-ai-debug
 description: Use Codex and Gemini CLI as second-opinion debuggers from Claude Code
 category: mcp-usage
-updated: 2025-01-07
+updated: 2026-01-09
 models: gpt-5.1-codex-max (OpenAI), gemini-3-pro-preview (Google)
+model: haiku
+forked_context: false
+hooks:
+  pre_invoke:
+    - command: "echo '🔍 Multi-AI Debug: Getting second opinion...'"
 ---
 
 # Multi-AI Debugging

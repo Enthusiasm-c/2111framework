@@ -2,6 +2,9 @@
 name: syrve-menu
 description: Syrve Cloud API menu - nomenclature, products, modifiers, stop-lists, combos
 category: integrations
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Syrve Menu API

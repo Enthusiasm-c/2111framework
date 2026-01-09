@@ -2,6 +2,9 @@
 name: context7-best-practices
 description: Context7 MCP server for fetching fresh library documentation
 category: mcp-usage
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Context7 MCP - Best Practices

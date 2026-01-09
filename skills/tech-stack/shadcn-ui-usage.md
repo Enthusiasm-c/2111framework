@@ -2,6 +2,9 @@
 name: shadcn-ui-usage
 description: Complete guide for shadcn/ui component library
 category: tech-stack
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # shadcn/ui - Complete Usage Guide

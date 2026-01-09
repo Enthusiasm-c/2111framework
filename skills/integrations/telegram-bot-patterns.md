@@ -2,6 +2,9 @@
 name: telegram-bot-patterns
 description: Complete patterns for Telegram Mini Apps in Next.js
 category: integrations
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Telegram Bot & Mini Apps Development

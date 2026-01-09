@@ -2,6 +2,9 @@
 name: github-mcp-guide
 description: GitHub MCP server for managing repos, issues, PRs from Claude Code
 category: mcp-usage
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # GitHub MCP Server

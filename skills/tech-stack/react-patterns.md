@@ -2,6 +2,9 @@
 name: react-patterns
 description: React hooks and component best practices
 category: tech-stack
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # React Best Practices

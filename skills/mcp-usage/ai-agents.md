@@ -3,6 +3,12 @@ name: ai-agents
 description: Natural language commands for external AI agents (Gemini, Codex)
 category: mcp-usage
 trigger: запусти агента, ask gemini, ask codex, второе мнение
+updated: 2026-01-09
+model: haiku
+forked_context: false
+hooks:
+  pre_invoke:
+    - command: "echo '🤖 AI Agents: Routing to external agent...'"
 ---
 
 # AI Agents - Natural Language Commands

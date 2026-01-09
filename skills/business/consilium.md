@@ -3,7 +3,14 @@ name: consilium
 description: Multi-agent product analysis for restaurant tech startups in Indonesia
 category: business
 trigger: /consilium, консилиум, analyze product, product review
-updated: 2026-01-08
+updated: 2026-01-09
+model: opus
+forked_context: true
+hooks:
+  pre_invoke:
+    - command: "echo '🔍 Consilium: Starting 7-agent product analysis...'"
+  post_invoke:
+    - command: "echo '✅ Consilium: Analysis complete. Check the report above.'"
 ---
 
 # Consilium - Product Analysis Board

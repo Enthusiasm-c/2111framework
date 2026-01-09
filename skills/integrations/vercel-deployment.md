@@ -2,6 +2,9 @@
 name: vercel-deployment
 description: Complete guide for Next.js 14+ deployment on Vercel
 category: integrations
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Vercel Deployment Guide

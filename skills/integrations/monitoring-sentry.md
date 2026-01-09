@@ -2,6 +2,9 @@
 name: monitoring-sentry
 description: Sentry error tracking setup for Next.js 14+ with Vercel
 category: integrations
+updated: 2026-01-09
+model: sonnet
+forked_context: false
 ---
 
 # Monitoring & Error Tracking
