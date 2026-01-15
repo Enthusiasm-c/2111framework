@@ -20,10 +20,42 @@ Complete reference for Syrve Cloud API (formerly iiko Cloud API / iikoTransport)
 
 ## Base URLs
 
+### API v1 (Legacy)
 | Region | URL |
 |--------|-----|
 | Russia | `https://api-ru.iiko.services/api/1/` |
 | Europe | `https://api-eu.iiko.services/api/1/` |
+
+### API v2 (Current - External Menus)
+| Region | URL |
+|--------|-----|
+| Europe | `https://api-eu.syrve.live/api/2/` |
+
+**Important**: Use API v2 for External Menus. API v1 `/external_menus` requires Enterprise license.
+
+---
+
+## License Tiers (Europe Pricing)
+
+| Tier | Price | API Access |
+|------|-------|------------|
+| **Basic** | €49/mo | Limited (menu read only) |
+| **Pro** | €69/mo | + Inventory API |
+| **Enterprise** | €99/mo | + Full API (Order injection, Loyalty, Reporting) |
+
+### API Access by Endpoint
+
+| Endpoint | Basic | Pro | Enterprise |
+|----------|-------|-----|------------|
+| `/nomenclature` | ✅ | ✅ | ✅ |
+| API v2 `/menu` | ✅ | ✅ | ✅ |
+| API v2 `/menu/by_id` | ✅ | ✅ | ✅ |
+| API v1 `/external_menus` | ❌ | ❌ | ✅ |
+| `/deliveries/create` | ❌ | ❌ | ✅ |
+| Inventory API | ❌ | ✅ | ✅ |
+| Order injection API | ❌ | ❌ | ✅ |
+
+**Recommendation**: Always use API v2 (`api-eu.syrve.live`) for menu access on all tiers.
 
 ---
 

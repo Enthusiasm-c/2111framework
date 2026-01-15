@@ -189,31 +189,80 @@ interface SimpleModifier {
 
 ---
 
-## External Menu (with Price Categories)
+## External Menu - API v2 (Recommended)
 
-`POST /menu`
+**Base URL**: `https://api-eu.syrve.live/api/2/`
 
-Returns menu for specific price category (e.g., delivery menu vs dine-in).
-
-### Request
-
-```json
-{
-  "externalMenuId": "menu-uuid",
-  "organizationIds": ["org-uuid"],
-  "priceCategoryId": "delivery-prices-uuid"
-}
-```
+Use API v2 for external menus - works on all license tiers (Basic, Pro, Enterprise).
 
 ### Get Available Menus
 
-`POST /menu/by_id`
+`POST https://api-eu.syrve.live/api/2/menu`
+
+Returns list of available external menus.
 
 ```json
 {
   "organizationIds": ["org-uuid"]
 }
 ```
+
+**Response:**
+```json
+{
+  "correlationId": "uuid",
+  "externalMenus": [
+    { "id": "8235", "name": "Menu" }
+  ],
+  "priceCategories": []
+}
+```
+
+### Get Menu Items by ID
+
+`POST https://api-eu.syrve.live/api/2/menu/by_id`
+
+Returns full menu content with categories, items, prices, and modifiers.
+
+```json
+{
+  "externalMenuId": "8235",
+  "organizationIds": ["org-uuid"],
+  "priceCategoryId": null
+}
+```
+
+**Response:**
+```json
+{
+  "correlationId": "uuid",
+  "itemCategories": [
+    {
+      "id": "category-uuid",
+      "name": "Main Dishes",
+      "items": [
+        {
+          "sku": "product-uuid",
+          "name": "Margherita Pizza",
+          "description": "Classic tomato and mozzarella",
+          "price": 45000,
+          "itemSizes": [...],
+          "modifierGroups": [...]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Documentation Links
+
+- [Get menu list](https://api-eu.syrve.live/docs#tag/Menu/paths/~1api~12~1menu/post)
+- [Get menu by ID](https://api-eu.syrve.live/docs#tag/Menu/paths/~1api~12~1menu~1by_id/post)
+
+### API v1 External Menus (Enterprise Only)
+
+API v1 `/external_menus` requires Enterprise license (€99/mo). Use API v2 instead.
 
 ---
 
