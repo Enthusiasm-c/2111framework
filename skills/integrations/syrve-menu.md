@@ -2,7 +2,7 @@
 name: syrve-menu
 description: Syrve Cloud API menu - nomenclature, products, modifiers, stop-lists, combos
 category: integrations
-updated: 2026-01-09
+updated: 2026-01-15
 model: sonnet
 forked_context: false
 ---
@@ -193,6 +193,8 @@ interface SimpleModifier {
 
 **Base URL**: `https://api-eu.syrve.live/api/2/`
 
+**OpenAPI Spec**: https://api-eu.syrve.live/api-docs/docs
+
 Use API v2 for external menus - works on all license tiers (Basic, Pro, Enterprise).
 
 ### Get Available Menus
@@ -201,6 +203,7 @@ Use API v2 for external menus - works on all license tiers (Basic, Pro, Enterpri
 
 Returns list of available external menus.
 
+**Request:**
 ```json
 {
   "organizationIds": ["org-uuid"]
@@ -214,7 +217,9 @@ Returns list of available external menus.
   "externalMenus": [
     { "id": "8235", "name": "Menu" }
   ],
-  "priceCategories": []
+  "priceCategories": [
+    { "id": "price-cat-uuid", "name": "Delivery Prices" }
+  ]
 }
 ```
 
@@ -224,30 +229,123 @@ Returns list of available external menus.
 
 Returns full menu content with categories, items, prices, and modifiers.
 
-```json
-{
-  "externalMenuId": "8235",
-  "organizationIds": ["org-uuid"],
-  "priceCategoryId": null
+**Request Schema (MenuRequest):**
+```typescript
+interface MenuRequest {
+  // Required
+  externalMenuId: string;      // From /api/2/menu response
+  organizationIds: string[];   // Array of org UUIDs
+
+  // Optional
+  priceCategoryId?: string;    // Filter by price category
+  version?: number;            // Data model version (default: 2)
+  language?: string;           // Menu language
+  startRevision?: number;      // For incremental updates
 }
 ```
 
-**Response:**
+**Example Request:**
+```json
+{
+  "externalMenuId": "8235",
+  "organizationIds": ["ff53e2af-dc35-4f4e-9cdb-6e7a5bd381fb"],
+  "version": 2
+}
+```
+
+**Response Schema:**
+```typescript
+interface ExternalMenuResponse {
+  correlationId: string;
+  id: number;
+  name: string;
+  description: string;
+  revision: number;
+  itemCategories: ExternalMenuCategory[];
+}
+
+interface ExternalMenuCategory {
+  id: string;
+  name: string;
+  description: string;
+  buttonImageUrl?: string;
+  items: ExternalMenuItem[];
+}
+
+interface ExternalMenuItem {
+  sku: string;              // Product code
+  name: string;
+  description: string;
+  itemId: string;           // Product UUID
+  allergens: string[];
+  tags: string[];
+  itemSizes: ItemSize[];
+  modifierSchemaId?: string;
+  type?: string;            // Dish, Good, Modifier
+}
+
+interface ItemSize {
+  sku: string;
+  sizeName: string;
+  isDefault: boolean;
+  portionWeightGrams: number;
+  itemModifierGroups: ModifierGroup[];
+  prices: Price[];
+}
+
+interface ModifierGroup {
+  name: string;
+  description: string;
+  restrictions: {
+    minQuantity: number;
+    maxQuantity: number;
+    freeQuantity: number;
+    byDefault: number;
+  };
+  items: ModifierItem[];
+}
+
+interface Price {
+  organizationId: string;
+  price: number;           // In minor currency units
+}
+```
+
+**Example Response (truncated):**
 ```json
 {
   "correlationId": "uuid",
+  "id": 8235,
+  "name": "Menu",
+  "revision": 1764748199,
   "itemCategories": [
     {
-      "id": "category-uuid",
-      "name": "Main Dishes",
+      "id": "40c735b1-290d-468e-855d-7ca1c2012a64",
+      "name": "Breakfast platters",
       "items": [
         {
-          "sku": "product-uuid",
-          "name": "Margherita Pizza",
-          "description": "Classic tomato and mozzarella",
-          "price": 45000,
-          "itemSizes": [...],
-          "modifierGroups": [...]
+          "sku": "01554",
+          "name": "Pacific breakfast",
+          "description": "Salmon rillette, spinach, avocado...",
+          "itemSizes": [
+            {
+              "sku": "01554",
+              "isDefault": true,
+              "portionWeightGrams": 388.0,
+              "prices": [
+                { "organizationId": "ff53e2af-...", "price": 95000 }
+              ],
+              "itemModifierGroups": [
+                {
+                  "name": "Add on",
+                  "restrictions": { "minQuantity": 0, "maxQuantity": 91 },
+                  "items": [
+                    { "sku": "00310", "name": "Boiled egg", "prices": [{ "price": 5000 }] }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -259,6 +357,7 @@ Returns full menu content with categories, items, prices, and modifiers.
 
 - [Get menu list](https://api-eu.syrve.live/docs#tag/Menu/paths/~1api~12~1menu/post)
 - [Get menu by ID](https://api-eu.syrve.live/docs#tag/Menu/paths/~1api~12~1menu~1by_id/post)
+- [OpenAPI Spec](https://api-eu.syrve.live/api-docs/docs)
 
 ### API v1 External Menus (Enterprise Only)
 

@@ -2,7 +2,7 @@
 name: syrve-api
 description: Syrve Cloud API (iikoTransport) integration - authentication, organizations, dictionaries
 category: integrations
-updated: 2026-01-09
+updated: 2026-01-15
 model: sonnet
 forked_context: false
 ---
@@ -372,6 +372,135 @@ For domain-specific operations:
 
 ---
 
+## Complete Endpoint Reference
+
+**OpenAPI Spec**: https://api-eu.syrve.live/api-docs/docs
+
+### Authorization
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/access_token` | Retrieve session key for API user |
+
+### Organizations & Terminals
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/organizations` | Returns organizations available to api-login |
+| `POST /api/1/organizations/settings` | Returns organization settings |
+| `POST /api/1/terminal_groups` | Terminal groups info |
+| `POST /api/1/terminal_groups/is_alive` | Check terminal availability |
+| `POST /api/1/terminal_groups/awake` | Awake terminals from sleep mode |
+
+### Menu (API v2 Recommended)
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/2/menu` | External menus with price categories |
+| `POST /api/2/menu/by_id` | Retrieve external menu by ID |
+| `POST /api/1/nomenclature` | Full product catalog (legacy) |
+| `POST /api/1/stop_lists` | Out-of-stock items |
+| `POST /api/1/stop_lists/check` | Check items in stop-list |
+| `POST /api/1/stop_lists/add` | Add items to stop-list |
+| `POST /api/1/stop_lists/remove` | Remove from stop-list |
+| `POST /api/1/combo` | Get combos info |
+| `POST /api/1/combo/calculate` | Calculate combo price |
+
+### Deliveries: Create & Update
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/deliveries/create` | Create delivery |
+| `POST /api/1/deliveries/add_items` | Add order items |
+| `POST /api/1/deliveries/close` | Close order |
+| `POST /api/1/deliveries/cancel` | Cancel delivery |
+| `POST /api/1/deliveries/confirm` | Confirm delivery |
+| `POST /api/1/deliveries/update_order_courier` | Update courier |
+| `POST /api/1/deliveries/update_order_delivery_status` | Update status |
+| `POST /api/1/deliveries/change_complete_before` | Change delivery time |
+| `POST /api/1/deliveries/change_delivery_point` | Change address |
+| `POST /api/1/deliveries/change_payments` | Change payments |
+| `POST /api/1/deliveries/add_payments` | Add payments |
+| `POST /api/1/deliveries/print_delivery_bill` | Print bill |
+
+### Deliveries: Retrieve
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/deliveries/by_id` | Retrieve by IDs |
+| `POST /api/1/deliveries/by_delivery_date_and_status` | By status and date |
+| `POST /api/1/deliveries/by_revision` | By revision |
+| `POST /api/1/deliveries/by_delivery_date_and_phone` | By phone and date |
+
+### Table Orders
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/order/create` | Create table order |
+| `POST /api/1/order/by_id` | Retrieve by IDs |
+| `POST /api/1/order/by_table` | Retrieve by tables |
+| `POST /api/1/order/add_items` | Add items |
+| `POST /api/1/order/close` | Close order |
+| `POST /api/1/order/cancel` | Cancel order |
+| `POST /api/1/order/add_customer` | Add customer |
+| `POST /api/1/order/add_payments` | Add payments |
+
+### Banquets & Reserves
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/reserve/create` | Create banquet/reserve |
+| `POST /api/1/reserve/status_by_id` | Get status |
+| `POST /api/1/reserve/cancel` | Cancel reservation |
+| `POST /api/1/reserve/available_organizations` | Available orgs |
+| `POST /api/1/reserve/available_terminal_groups` | Available terminals |
+| `POST /api/1/reserve/restaurant_sections_workload` | Sections workload |
+
+### Customers & Loyalty
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/loyalty/syrve/customer/info` | Get customer info |
+| `POST /api/1/loyalty/syrve/customer/create_or_update` | Create/update customer |
+| `POST /api/1/loyalty/syrve/customer/program/add` | Add to program |
+| `POST /api/1/loyalty/syrve/customer/card/add` | Add card |
+| `POST /api/1/loyalty/syrve/customer/wallet/topup` | Refill balance |
+| `POST /api/1/loyalty/syrve/customer/wallet/chargeoff` | Withdraw balance |
+| `POST /api/1/loyalty/syrve/calculate` | Calculate checkin |
+| `POST /api/1/loyalty/syrve/coupons/info` | Get coupon info |
+
+### Employees & Couriers
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/employees/couriers` | List couriers |
+| `POST /api/1/employees/couriers/active_location` | Active locations |
+| `POST /api/1/employees/info` | Employee info |
+| `POST /api/1/employees/shift/clockin` | Open session |
+| `POST /api/1/employees/shift/clockout` | Close session |
+
+### Dictionaries
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/deliveries/order_types` | Order types |
+| `POST /api/1/payment_types` | Payment types |
+| `POST /api/1/cancel_causes` | Cancel causes |
+| `POST /api/1/discounts` | Discounts/surcharges |
+| `POST /api/1/removal_types` | Removal types |
+| `POST /api/1/marketing_sources` | Marketing sources |
+
+### Addresses
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/regions` | Regions |
+| `POST /api/1/cities` | Cities |
+| `POST /api/1/streets/by_city` | Streets by city |
+
+### Webhooks
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/webhooks/settings` | Get webhook settings |
+| `POST /api/1/webhooks/update_settings` | Update webhook settings |
+
+### Operations
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/1/commands/status` | Get command status |
+| `POST /api/1/notifications/send` | Send notification |
+
+---
+
 ## Quick Reference
 
 | Operation | Endpoint | Method |
@@ -380,10 +509,10 @@ For domain-specific operations:
 | Organizations | `/organizations` | POST |
 | Terminal Groups | `/terminal_groups` | POST |
 | Terminal Status | `/terminal_groups/is_alive` | POST |
-| Order Types | `/deliveries/order_types` | POST |
-| Payment Types | `/payment_types` | POST |
-| Cancel Causes | `/deliveries/cancel_causes` | POST |
-| Discounts | `/discounts` | POST |
-| Regions | `/regions` | POST |
-| Cities | `/cities` | POST |
-| Streets | `/streets/by_city` | POST |
+| **Menu List (v2)** | `/api/2/menu` | POST |
+| **Menu by ID (v2)** | `/api/2/menu/by_id` | POST |
+| Nomenclature (v1) | `/nomenclature` | POST |
+| Stop Lists | `/stop_lists` | POST |
+| Create Delivery | `/deliveries/create` | POST |
+| Create Table Order | `/order/create` | POST |
+| Customer Info | `/loyalty/syrve/customer/info` | POST |

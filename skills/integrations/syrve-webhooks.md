@@ -2,7 +2,7 @@
 name: syrve-webhooks
 description: Syrve Cloud API webhooks - order events, subscriptions, handling
 category: integrations
-updated: 2026-01-09
+updated: 2026-01-15
 model: sonnet
 forked_context: false
 ---

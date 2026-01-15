@@ -2,7 +2,7 @@
 name: syrve-delivery
 description: Syrve Cloud API delivery orders - create, update, track, couriers
 category: integrations
-updated: 2026-01-09
+updated: 2026-01-15
 model: sonnet
 forked_context: false
 ---
@@ -10,6 +10,10 @@ forked_context: false
 # Syrve Delivery API
 
 Complete reference for delivery order operations in Syrve Cloud API.
+
+**OpenAPI Spec**: https://api-eu.syrve.live/api-docs/docs
+
+**License Required**: Enterprise (€99/mo) for `/deliveries/create`
 
 ## When to Use
 - Create delivery orders from external platform

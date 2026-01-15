@@ -2,7 +2,7 @@
 name: syrve-reports
 description: Syrve Cloud API reports - OLAP, analytics, sales data, dashboards
 category: integrations
-updated: 2026-01-09
+updated: 2026-01-15
 model: sonnet
 forked_context: false
 ---
