@@ -1,10 +1,10 @@
-# 2111framework v2.12
+# 2111framework v2.13
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.12.0
-**Updated:** January 9, 2026
+**Version:** 2.13.0
+**Updated:** January 16, 2026
 **Requires:** Claude Code 2.1.0+
 
 ---
@@ -28,6 +28,32 @@ source ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
 ```
+
+---
+
+## What's New in v2.13
+
+### React Optimization Skill (Vercel Best Practices)
+New skill based on official Vercel React best practices:
+- **Async Waterfalls**: `Promise.all()` for parallel operations
+- **Early Returns**: Check conditions before fetch
+- **Minimal Fetch**: Use `select` for validation, `include` only when needed
+- **React.memo**: Memoize list item components
+- **Server Actions**: Replace `useEffect` + `fetch` patterns
+- **Dynamic Imports**: Lazy load heavy libraries
+
+**Usage:**
+```bash
+# Reference in code review
+/review src/api/webhooks/xendit/route.ts
+
+# Or read directly
+Read skills/tech-stack/react-optimization.md
+```
+
+**Review Agent Updated:**
+- Performance checklist expanded (Async, React, Data Fetching)
+- Links to react-optimization.md skill
 
 ---
 
@@ -184,6 +210,7 @@ arch file.tsx  # Gemini architecture review
 | Skill | Description |
 |-------|-------------|
 | `nextjs-app-router.md` | Next.js 14+ patterns |
+| `react-optimization.md` | Vercel best practices: waterfalls, memo, Server Actions |
 | `typescript-conventions.md` | Type safety, Zod validation |
 | `database-migrations.md` | Drizzle ORM workflow |
 
@@ -313,4 +340,4 @@ hooks:
 
 ---
 
-**Version:** 2.12.0
+**Version:** 2.13.0

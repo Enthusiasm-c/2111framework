@@ -137,11 +137,23 @@ After simplification, review the clean code for:
 - [ ] Sensitive data not logged
 - [ ] Auth checks in place
 
-### Performance
+### Performance (Async Patterns)
+- [ ] No sequential awaits that could be `Promise.all()`
+- [ ] Conditions checked BEFORE async operations (early return)
+- [ ] Minimal `select` for validation, full `include` only when needed
 - [ ] No N+1 queries
-- [ ] Unnecessary re-renders prevented
 - [ ] Large data sets paginated
-- [ ] Heavy operations memoized
+
+### Performance (React Rendering)
+- [ ] `React.memo` for list item components
+- [ ] `useCallback` for handlers passed to children
+- [ ] No inline arrow functions in `.map()` loops
+- [ ] Heavy libraries (framer-motion, chart.js) use `dynamic()` import
+
+### Performance (Data Fetching)
+- [ ] Server Components preferred over client fetch
+- [ ] Server Actions instead of useEffect + fetch where possible
+- [ ] No unnecessary re-renders from unstable references
 
 ### Best Practices
 - [ ] Single responsibility principle
@@ -506,3 +518,4 @@ Reference these as needed:
 - `/skills/code-quality/code-review-checklist.md`
 - `/skills/code-quality/typescript-best-practices.md`
 - `/skills/tech-stack/nextjs-app-router.md`
+- `/skills/tech-stack/react-optimization.md` - Vercel best practices for performance

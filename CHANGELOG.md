@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.13.0] - 2026-01-16
+
+### Added
+- **React Optimization Skill** (`skills/tech-stack/react-optimization.md`)
+  - Based on official Vercel React Best Practices blog post
+  - Async waterfall elimination with `Promise.all()`
+  - Early return patterns (check conditions before fetch)
+  - Minimal fetch strategies (`select` vs `include`)
+  - React.memo and useCallback patterns for re-render prevention
+  - Server Actions vs client-side fetch patterns
+  - Dynamic imports for bundle size reduction
+  - Grep commands for finding anti-patterns
+  - Impact examples with timing benchmarks
+
+### Changed
+- **Review Agent** (`agents/review.md`) - Expanded performance checklist
+  - Split into 3 sections: Async Patterns, React Rendering, Data Fetching
+  - Added link to react-optimization.md skill
+  - More specific checklist items for common issues
+
+---
+
 ## [2.9.0] - 2026-01-08
 
 ### Added
