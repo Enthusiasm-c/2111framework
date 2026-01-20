@@ -1,0 +1,28 @@
+{
+  "model": "opus",
+  "alwaysThinkingEnabled": true,
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx)$ ]]; then LOGS=$(grep -n \"console.log\" \"$FILE\" 2>/dev/null | head -3); if [ -n \"$LOGS\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"WARNING: console.log detected in $FILE:\\n$LOGS\\nConsider removing before commit.\\\"}}\"; fi; fi'",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx)$ ]] && [ -f \"package.json\" ] && grep -q \"eslint\" package.json 2>/dev/null; then ERRORS=$(npx eslint \"$FILE\" --format compact 2>/dev/null | head -5); if [ -n \"$ERRORS\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"ESLint issues in $FILE:\\n$ERRORS\\\"}}\"; fi; fi'",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

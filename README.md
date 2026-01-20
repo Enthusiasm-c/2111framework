@@ -1,10 +1,10 @@
-# 2111framework v2.13
+# 2111framework v2.14
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.13.0
-**Updated:** January 16, 2026
+**Version:** 2.14.0
+**Updated:** January 20, 2026
 **Requires:** Claude Code 2.1.0+
 
 ---
@@ -15,10 +15,12 @@
 # Clone framework
 git clone https://github.com/Enthusiasm-c/2111framework.git ~/.claude/2111framework
 
-# Install MCP servers
+# Install MCP servers (optimized - only essentials)
 claude mcp add context7 npx @context7/mcp-server
 claude mcp add shadcn npx @modelcontextprotocol/server-shadcn
-claude mcp add 21st-magic npx -y @21st-dev/magic@latest
+
+# Copy hooks config
+cp ~/.claude/2111framework/config/settings.json ~/.claude/settings.json
 
 # Setup Multi-AI Debug (Codex + Gemini)
 ~/.claude/2111framework/scripts/setup-ai-aliases.sh
@@ -27,6 +29,30 @@ source ~/.zshrc
 # Add API keys to ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
+```
+
+---
+
+## What's New in v2.14
+
+### Auto-Check Hooks (NEW):
+Based on [Anthropic hackathon winner](https://github.com/affaan-m/everything-claude-code) best practices:
+- **console.log detector**: Warns when console.log found in .ts/.tsx files
+- **ESLint checker**: Shows errors after file edits (if ESLint configured)
+
+```
+Edit file.ts → [HOOK] "WARNING: console.log detected..."
+            → [HOOK] "ESLint issues: ..."
+```
+
+### MCP Optimization (NEW):
+- Removed rarely-used MCPs from global config
+- Saved ~10,500 tokens (~5% context window)
+- Only essential MCPs: `context7`, `shadcn`
+
+### Install hooks:
+```bash
+cp ~/.claude/2111framework/config/settings.json ~/.claude/settings.json
 ```
 
 ---

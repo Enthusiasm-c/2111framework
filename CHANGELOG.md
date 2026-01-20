@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.14.0] - 2026-01-20
+
+### Added
+- **Auto-Check Hooks** (`config/settings.json`) - Automatic code quality checks
+  - console.log detector: warns when console.log found in .ts/.tsx files
+  - ESLint checker: shows ESLint errors after file edits (if ESLint configured)
+  - Based on [Anthropic hackathon winner](https://github.com/affaan-m/everything-claude-code) best practices
+
+- **MCP Optimization** - Context window management
+  - Removed rarely-used MCPs from global config (clerk, magic)
+  - Removed duplicate context7 MCP
+  - Saved ~10,500 tokens (~5% context window)
+  - Documentation for project-specific MCP configuration
+
+### Changed
+- Updated global CLAUDE.md with hooks documentation
+- Added MCP optimization guide
+
+---
+
 ## [2.13.0] - 2026-01-16
 
 ### Added
