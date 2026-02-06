@@ -1,10 +1,7 @@
 ---
 name: neondb-best-practices
 description: NeonDB serverless PostgreSQL best practices for Next.js + Vercel
-category: integrations
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # NeonDB Serverless PostgreSQL

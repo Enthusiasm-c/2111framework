@@ -1,10 +1,7 @@
 ---
 name: accessibility-basics
 description: Essential guide for WCAG 2.1/2.2 compliance
-category: code-quality
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # Web Accessibility (a11y) Basics

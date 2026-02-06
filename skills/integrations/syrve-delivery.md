@@ -1,10 +1,7 @@
 ---
 name: syrve-delivery
 description: Syrve Cloud API delivery orders - create, update, track, couriers
-category: integrations
-updated: 2026-01-15
 model: sonnet
-forked_context: false
 ---
 
 # Syrve Delivery API

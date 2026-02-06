@@ -1,5 +1,45 @@
 # Changelog
 
+## [2.15.0] - 2026-02-06
+
+### Added
+- **Agent Teams skill** (`agent-teams.md`) - Parallel agent coordination
+  - Lead + Teammates architecture
+  - Patterns: parallel code review, feature dev, consilium
+  - Cost control guidelines
+- **MCP Tool Search skill** (`mcp-tool-search.md`) - MCP lazy loading reference
+  - serverInstructions for minimal context usage
+  - Recommended mcp.json configuration
+- **Async Hooks skill** (`async-hooks.md`) - Background hooks + Setup hook
+  - `async: true` for non-blocking hooks
+  - Setup hook via `claude --init`
+  - Hook lifecycle reference
+- **Background Tasks skill** (`background-tasks.md`) - Dev server in background
+  - Ctrl+B for background commands
+  - `--from-pr` for PR-linked sessions
+- **Effort Profiles** (`config/effort-profiles.md`) - Effort level reference
+  - low/medium/high levels and recommendations
+  - ultrathink for extended analysis
+- **Migration Guide** (`MIGRATION_V2.13.md`) - migration checklist
+
+### Changed
+- **README.md** - Updated to v2.15, Opus 4.6, new features section
+- **mcp.json** - Restored context7 with serverInstructions, added to shadcn
+- **agents/review.md** - Agent Teams code review pattern, ultrathink, Opus 4.6 self-correction
+- **agents/security.md** - model: opus, context: fork, ultrathink, zero-day patterns
+- **skills/business/consilium.md** - Agent Teams parallel mode, ultrathink
+- **skills/mcp-usage/ralph-wiggum.md** - Agent Teams + Background Tasks sections
+- **scripts/setup-ai-aliases.sh** - gpt-5.3-codex model
+
+### Fixed
+- `forked_context: true` replaced with `context: fork` (correct Claude Code syntax)
+- Removed unsupported frontmatter fields: `category`, `updated`, `trigger`, `plugin`, `requires_plugin`, `models`
+- Fixed hooks format: `pre_invoke`/`post_invoke` replaced with `SessionStart`/`Stop`
+- Codex model updated: `gpt-5.1-codex-max` replaced with `gpt-5.3-codex`
+- Cleaned frontmatter in all 25 reference skills
+
+---
+
 ## [2.14.0] - 2026-01-20
 
 ### Added
@@ -42,6 +82,40 @@
 
 ---
 
+## [2.12.0] - 2026-01-09
+
+### Added
+- **Code Simplifier Integration** in review agent
+  - Two-phase workflow: Simplify then Review
+  - Flags: `--no-simplify`, `--simplify-only`
+
+### Changed
+- Review agent uses official `code-simplifier` plugin
+- Workflow: Ralph Wiggum -> Review -> Commit
+
+---
+
+## [2.11.0] - 2026-01-09
+
+### Changed
+- **All skills updated** with Claude Code 2.1.0 frontmatter
+  - `model:` per skill (opus/sonnet/haiku)
+  - `forked_context:` for isolated context
+  - `hooks:` pre/post invoke commands
+- Skill invocation via `/skill-name`
+- Wildcard permissions documentation
+
+---
+
+## [2.10.0] - 2026-01-09
+
+### Added
+- **Consilium - Product Analysis Board** (`consilium.md`)
+  - 7 AI agents including Research Agent
+  - Specialized for B2B SaaS in Indonesian restaurant industry
+
+---
+
 ## [2.9.0] - 2026-01-08
 
 ### Added
@@ -64,10 +138,10 @@
 
 ### Added
 - **AI Agents Natural Language** (`ai-agents.md`) - Natural language commands for external AI agents
-  - Say: "Запусти агента Gemini review для broken layout"
-  - Say: "Попроси Codex найти race condition"
-  - Say: "Нужно второе мнение по этому багу"
-  - Auto-detects problem type → selects best agent
+  - Say: "Ask Gemini review for broken layout"
+  - Say: "Ask Codex to find race condition"
+  - Say: "Need a second opinion on this bug"
+  - Auto-detects problem type -> selects best agent
   - Instructions added to CLAUDE.md for automatic recognition
 
 ### Changed
@@ -145,7 +219,7 @@
   - When NOT to Simplify guidelines
 
 ### Changed
-- **Architect agent extended** (90 → 309 lines)
+- **Architect agent extended** (90 -> 309 lines)
   - 5-step Analysis Framework
   - Risk Assessment matrix
   - Tech Stack Specifics section

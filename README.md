@@ -1,11 +1,11 @@
-# 2111framework v2.14
+# 2111framework v2.15
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.14.0
-**Updated:** January 20, 2026
-**Requires:** Claude Code 2.1.0+
+**Version:** 2.15.0
+**Updated:** February 6, 2026
+**Requires:** Claude Code 2.1.7+
 
 ---
 
@@ -15,9 +15,8 @@
 # Clone framework
 git clone https://github.com/Enthusiasm-c/2111framework.git ~/.claude/2111framework
 
-# Install MCP servers (optimized - only essentials)
-claude mcp add context7 npx @context7/mcp-server
-claude mcp add shadcn npx @modelcontextprotocol/server-shadcn
+# Install MCP servers (mcp.json includes context7 + shadcn with serverInstructions)
+cp ~/.claude/2111framework/mcp.json ~/.claude/mcp.json
 
 # Copy hooks config
 cp ~/.claude/2111framework/config/settings.json ~/.claude/settings.json
@@ -29,7 +28,50 @@ source ~/.zshrc
 # Add API keys to ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
+
+# Optional: Enable Agent Teams (experimental)
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
 ```
+
+---
+
+## What's New in v2.15
+
+### Opus 4.6 Adaptation:
+- **Claude Opus 4.6** -- improved self-correction, 500+ zero-day security findings
+- **GPT-5.3 Codex** -- updated model in all aliases and skills
+- **Frontmatter fixes** -- all skills use correct Claude Code syntax
+- **Agent Teams** -- parallel agent coordination (experimental)
+- **Background Tasks** -- Ctrl+B for dev servers, `--from-pr` for PRs
+- **Effort Levels** -- low/medium/high configuration
+- **MCP Tool Search** -- serverInstructions for lazy loading
+- **Async Hooks** -- background hooks, Setup hook
+
+### New Skills:
+| Skill | Description |
+|-------|-------------|
+| `agent-teams.md` | Parallel agent coordination |
+| `mcp-tool-search.md` | MCP lazy loading reference |
+| `async-hooks.md` | Background hooks + Setup hook |
+| `background-tasks.md` | Dev server in background + --from-pr |
+
+### New Config:
+| File | Description |
+|------|-------------|
+| `config/effort-profiles.md` | Effort level reference |
+
+### Frontmatter Fixes:
+- `forked_context: true` replaced with `context: fork`
+- Removed unsupported fields: `category`, `updated`, `trigger`, `plugin`
+- Fixed hooks format: `pre_invoke`/`post_invoke` replaced with `SessionStart`/`Stop`
+
+### Model Assignment:
+| Skill Type | Model | Reason |
+|------------|-------|--------|
+| `consilium`, `security-checklist`, `review`, `security` | opus | Deep analysis |
+| `ralph-wiggum` | sonnet | Balanced loops |
+| `ai-agents`, `multi-ai-debug` | haiku | Fast routing |
+| Reference docs, new skills | (inherit) | Uses session default |
 
 ---
 
@@ -41,8 +83,8 @@ Based on [Anthropic hackathon winner](https://github.com/affaan-m/everything-cla
 - **ESLint checker**: Shows errors after file edits (if ESLint configured)
 
 ```
-Edit file.ts → [HOOK] "WARNING: console.log detected..."
-            → [HOOK] "ESLint issues: ..."
+Edit file.ts -> [HOOK] "WARNING: console.log detected..."
+            -> [HOOK] "ESLint issues: ..."
 ```
 
 ### MCP Optimization (NEW):
@@ -83,73 +125,15 @@ Read skills/tech-stack/react-optimization.md
 
 ---
 
-## What's New in v2.12
-
-### Code Simplifier Integration:
-- **Review agent** now uses official `code-simplifier` plugin
-- **Two-phase workflow**: Simplify → Review
-- **Flags**: `--no-simplify`, `--simplify-only`
-- Workflow: Ralph Wiggum → Review → Commit
-
-### Setup:
-```bash
-claude plugin install code-simplifier
-```
-
-### v2.11 - Claude Code 2.1.0 Integration:
-- **All skills updated** with new frontmatter:
-  - `model:` - opus/sonnet/haiku per skill
-  - `forked_context:` - isolated context for complex tasks
-  - `hooks:` - pre/post invoke commands
-- **Skill invocation** via `/skill-name` (e.g., `/consilium`)
-- **Wildcard permissions** support in documentation
-
-### Model Assignment:
-| Skill Type | Model | Reason |
-|------------|-------|--------|
-| `consilium`, `security-checklist`, `review` | opus | Deep analysis |
-| `ralph-wiggum` | sonnet | Balanced loops |
-| `ai-agents`, `multi-ai-debug` | haiku | Fast routing |
-| Reference docs | sonnet | Standard tasks |
-
-### v2.10:
-- **Consilium - Product Analysis Board** (`consilium.md`)
-  - 7 AI agents (including Research Agent)
-  - `/consilium [product brief]` - full product analysis
-  - Auto-scans codebase when run inside project
-  - Specialized for B2B SaaS in Indonesian restaurant industry
-
-### v2.9:
-- **Ralph Wiggum Plugin** (`ralph-wiggum.md`)
-  - Autonomous loops - run tasks for hours without intervention
-  - `/ralph-loop "task" --max-iterations 20`
-  - Auto-retry until success criteria met
-  - Examples: CRUD generation, lint/test fixes, migrations
-
-### v2.8:
-- **AI Agents Natural Language** (`ai-agents.md`)
-  - Say: "Запусти агента Gemini review для broken layout в аналитике"
-  - Say: "Попроси Codex найти race condition в auth"
-  - Say: "Нужно второе мнение по этому багу"
-  - Auto-detects problem type → selects best AI agent
-
-### v2.7:
-- **Multi-AI Debug** (`multi-ai-debug.md`)
-  - Models: `gpt-5.1-codex-max` (high reasoning), `gemini-3-pro-preview`
-  - Bash aliases: `cr`, `gr`, `bug`, `sec`, `perf`, `arch`
-  - Codex v0.79.0 syntax support
-
----
-
 ## Multi-AI Agents
 
 ### Natural Language Commands
 
 | Say this | Claude does |
 |----------|-------------|
-| "Запусти агента Gemini review для broken layout" | Finds files → runs Gemini analysis |
-| "Попроси Codex найти race condition" | Finds files → runs Codex analysis |
-| "Нужно второе мнение" | Runs both Codex + Gemini |
+| "Ask Gemini review for broken layout" | Finds files, runs Gemini analysis |
+| "Ask Codex to find race condition" | Finds files, runs Codex analysis |
+| "Need a second opinion" | Runs both Codex + Gemini |
 
 ### Agent Selection
 
@@ -164,7 +148,7 @@ claude plugin install code-simplifier
 ### Bash Aliases
 
 ```bash
-cr file.tsx    # Codex code review (gpt-5.1-codex-max)
+cr file.tsx    # Codex code review (gpt-5.3-codex)
 gr file.tsx    # Gemini code review (gemini-3-pro-preview)
 bug file.tsx   # Codex bug finder
 sec file.tsx   # Codex security audit
@@ -176,12 +160,14 @@ arch file.tsx  # Gemini architecture review
 
 ## MCP Servers
 
-| Server | Purpose | Command |
-|--------|---------|---------|
-| Context7 | Library documentation | `claude mcp add context7 npx @context7/mcp-server` |
-| shadcn | UI components | `claude mcp add shadcn npx @modelcontextprotocol/server-shadcn` |
-| 21st.dev Magic | AI UI generation | `claude mcp add 21st-magic npx -y @21st-dev/magic@latest` |
-| Clerk | User management | `claude mcp add clerk -- npx -y @clerk/agent-toolkit -p local-mcp` |
+| Server | Purpose | Notes |
+|--------|---------|-------|
+| Context7 | Library documentation | Included in mcp.json with serverInstructions |
+| shadcn | UI components | Included in mcp.json with serverInstructions |
+| 21st.dev Magic | AI UI generation | Add per-project if needed |
+| Clerk | User management | Add per-project if needed |
+
+MCP Tool Search with `serverInstructions` enables lazy loading -- only tool descriptions loaded, not full schemas. See `skills/mcp-usage/mcp-tool-search.md`.
 
 ---
 
@@ -190,11 +176,11 @@ arch file.tsx  # Gemini architecture review
 | Agent | File | Description |
 |-------|------|-------------|
 | Architect | `agents/architect.md` | System design, tech stack, implementation phases |
-| Review | `agents/review.md` | Code review + simplification |
+| Review | `agents/review.md` | Code review + simplification (Opus, ultrathink) |
 | QA | `agents/qa.md` | Testing, bug finding, Chrome Extension |
 | Docs | `agents/docs.md` | Documentation, READMEs, ADRs |
 | Dev | `agents/dev.md` | Feature implementation |
-| Security | `agents/security.md` | Vulnerability audits |
+| Security | `agents/security.md` | Vulnerability audits (Opus, ultrathink, zero-day) |
 
 ---
 
@@ -203,19 +189,23 @@ arch file.tsx  # Gemini architecture review
 ### Business
 | Skill | Description |
 |-------|-------------|
-| `consilium.md` | 6-agent product analysis board for startups |
+| `consilium.md` | 6-agent product analysis board (Agent Teams compatible) |
 
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
 | `ralph-wiggum.md` | Autonomous loops - run tasks for hours |
+| `agent-teams.md` | Parallel agent coordination (NEW) |
+| `mcp-tool-search.md` | MCP lazy loading reference (NEW) |
+| `async-hooks.md` | Background hooks + Setup hook (NEW) |
+| `background-tasks.md` | Dev server in background + --from-pr (NEW) |
 | `ai-agents.md` | Natural language commands for Gemini/Codex agents |
 | `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
 | `chrome-extension-guide.md` | Browser automation for frontend testing |
 | `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
 | `clerk-mcp-guide.md` | Users, organizations, invitations management |
-| `context7-patterns.md` | Library documentation lookup |
-| `21st-magic-patterns.md` | AI UI component generation |
+| `context7-best-practices.md` | Library documentation lookup |
+| `shadcn-mcp-guide.md` | shadcn component installation |
 
 ### Integrations
 | Skill | Description |
@@ -243,8 +233,9 @@ arch file.tsx  # Gemini architecture review
 ### Code Quality
 | Skill | Description |
 |-------|-------------|
-| `code-review-checklist.md` | Review guidelines |
-| `typescript-best-practices.md` | Clean TypeScript |
+| `security-checklist.md` | Security audit checklist |
+| `accessibility-basics.md` | WCAG compliance |
+| `performance-optimization.md` | Next.js performance |
 
 ---
 
@@ -256,7 +247,7 @@ arch file.tsx  # Gemini architecture review
 
 Product: Invoice OCR for restaurants
 Problem: Manual entry takes 2 hours daily
-Solution: Photo → OCR → POS integration
+Solution: Photo -> OCR -> POS integration
 Metrics: 50 users, $200 MRR, 15% growth
 ```
 
@@ -270,61 +261,56 @@ Metrics: 50 users, $200 MRR, 15% growth
   --completion-promise "All tests passed" --max-iterations 25
 ```
 
+### Agent Teams (Parallel Review)
+```
+"Review src/features/auth/ with Agent Teams -- security, performance, and correctness in parallel"
+```
+
 ### Multi-AI Debug
 ```
-"Запусти агента Gemini review для broken layout в Dashboard"
-"Попроси Codex найти почему форма отправляется дважды"
-"Нужно второе мнение по этому багу"
+"Ask Gemini review for broken layout in Dashboard"
+"Ask Codex why form submits twice"
+"Need a second opinion on this bug"
 ```
 
-### Architecture Planning
-```
-Read agents/architect.md
-Plan a Syrve product sync feature
-```
-
-### Code Review
-```
-Read agents/review.md
-Review and simplify src/components/Dashboard.tsx
-```
-
-### Frontend Testing
-```
-Read skills/mcp-usage/chrome-extension-guide.md
-Test the login flow on localhost:3000
+### Background Dev Server
+```bash
+npm run dev          # Press Ctrl+B to run in background
+# Continue working while dev server runs
 ```
 
 ---
 
 ## Model Comparison
 
-| Capability | Claude Opus 4.5 | Codex (gpt-5.1) | Gemini 3 Pro |
+| Capability | Claude Opus 4.6 | Codex (gpt-5.3) | Gemini 3 Pro |
 |------------|-----------------|-----------------|--------------|
-| Backend/Architecture | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| Frontend UI/UX | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Bug Detection | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| Security Audit | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| Multimodal | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Long Tasks (7h+) | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Backend/Architecture | Best | Strong | Good |
+| Frontend UI/UX | Good | Strong | Best |
+| Bug Detection | Strong | Best | Strong |
+| Security Audit | Best | Strong | Good |
+| Multimodal | Good | Good | Best |
+| Long Tasks (7h+) | Strong | Best | Good |
+| Self-Correction | Best | Good | Good |
 
 ---
 
-## Claude Code 2.1.0 Features
+## Claude Code Features Used
 
-This framework requires Claude Code 2.1.0+. Key features used:
+This framework requires Claude Code 2.1.7+. Key features:
 
 ### Skill Frontmatter
 ```yaml
 ---
 name: my-skill
 model: opus              # opus/sonnet/haiku
-forked_context: true     # isolated context
+context: fork            # isolated context
 hooks:
-  pre_invoke:
-    - command: "echo 'Starting...'"
-  post_invoke:
-    - command: "echo 'Done!'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Starting...'"
+          once: true
 ---
 ```
 
@@ -333,6 +319,28 @@ hooks:
 /consilium          # Product analysis
 /ralph-wiggum       # Autonomous loops
 /security           # Security audit
+```
+
+### Agent Teams (Experimental)
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
+```
+
+### Effort Levels
+```bash
+export CLAUDE_CODE_EFFORT_LEVEL=high   # low/medium/high
+```
+
+### Background Tasks
+```bash
+npm run dev    # Press Ctrl+B for background
+```
+
+### MCP Tool Search
+```json
+{
+  "serverInstructions": "Short description for lazy loading"
+}
 ```
 
 ### Wildcard Permissions
@@ -348,22 +356,16 @@ hooks:
 }
 ```
 
-### Other 2.1.0 Features
-- `Shift+Enter` for newlines (no setup)
-- `/teleport` to claude.ai/code
-- `claude config set language "Russian"`
-- Deny tool → agent continues (doesn't stop)
-
 ---
 
 ## Resources
 
 - **CHANGELOG:** [`CHANGELOG.md`](./CHANGELOG.md)
-- **Migration:** [`MIGRATION_V2.md`](./MIGRATION_V2.md)
+- **Migration v2.15:** [`MIGRATION_V2.13.md`](./MIGRATION_V2.13.md)
+- **Migration v2.0:** [`MIGRATION_V2.md`](./MIGRATION_V2.md)
 - **Plugins:** [`PLUGINS_SETUP.md`](./PLUGINS_SETUP.md)
-- **21st.dev:** https://21st.dev/magic
-- **Chrome Extension:** https://chromewebstore.google.com/detail/claude
+- **Effort Profiles:** [`config/effort-profiles.md`](./config/effort-profiles.md)
 
 ---
 
-**Version:** 2.13.0
+**Version:** 2.15.0

@@ -1,10 +1,7 @@
 ---
 name: syrve-api
 description: Syrve Cloud API (iikoTransport) integration - authentication, organizations, dictionaries
-category: integrations
-updated: 2026-01-15
 model: sonnet
-forked_context: false
 ---
 
 # Syrve Cloud API Integration

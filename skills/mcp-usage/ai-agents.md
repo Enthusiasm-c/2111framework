@@ -1,14 +1,13 @@
 ---
 name: ai-agents
-description: Natural language commands for external AI agents (Gemini, Codex)
-category: mcp-usage
-trigger: запусти агента, ask gemini, ask codex, второе мнение
-updated: 2026-01-09
+description: Natural language commands for external AI agents (Gemini, Codex). Keywords - ask gemini, ask codex, second opinion.
 model: haiku
-forked_context: false
 hooks:
-  pre_invoke:
-    - command: "echo '🤖 AI Agents: Routing to external agent...'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'AI Agents: Routing to external agent...'"
+          once: true
 ---
 
 # AI Agents - Natural Language Commands
@@ -39,9 +38,9 @@ hooks:
 
 | Фраза пользователя | Claude выполняет |
 |-------------------|------------------|
-| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex exec -m gpt-5.1-codex-max -s read-only "Find race condition:"` |
-| "Попроси Codex проверить типы" | `cat <file> \| codex exec -m gpt-5.1-codex-max -s read-only "Find TypeScript type errors:"` |
-| "Codex, security review" | `cat <file> \| codex exec -m gpt-5.1-codex-max -s read-only "Security audit: OWASP Top 10:"` |
+| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex exec -m gpt-5.3-codex -s read-only "Find race condition:"` |
+| "Попроси Codex проверить типы" | `cat <file> \| codex exec -m gpt-5.3-codex -s read-only "Find TypeScript type errors:"` |
+| "Codex, security review" | `cat <file> \| codex exec -m gpt-5.3-codex -s read-only "Security audit: OWASP Top 10:"` |
 
 ### Второе мнение (оба агента)
 
@@ -80,7 +79,7 @@ grep -rl "Analytics" src --include="*.tsx" | head -5
 cat <files> | gemini -m gemini-3-pro-preview -p "<problem description>:"
 
 # Codex для логики
-cat <files> | codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
+cat <files> | codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
 ```
 
 ### Step 4: Показать результат и предложить fix

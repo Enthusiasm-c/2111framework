@@ -1,16 +1,19 @@
 ---
 name: consilium
-description: Multi-agent product analysis for restaurant tech startups in Indonesia
-category: business
-trigger: /consilium, консилиум, analyze product, product review
-updated: 2026-01-09
+description: Multi-agent product analysis for restaurant tech startups in Indonesia. Keywords - consilium, analyze product, product review.
 model: opus
-forked_context: true
+context: fork
 hooks:
-  pre_invoke:
-    - command: "echo '🔍 Consilium: Starting 7-agent product analysis...'"
-  post_invoke:
-    - command: "echo '✅ Consilium: Analysis complete. Check the report above.'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Consilium: Starting 7-agent product analysis...'"
+          once: true
+  Stop:
+    - hooks:
+        - type: command
+          command: "echo 'Consilium: Analysis complete. Check the report above.'"
+          once: true
 ---
 
 # Consilium - Product Analysis Board
@@ -708,8 +711,49 @@ Swap restaurant-specific context for:
 
 ---
 
+## Extended Analysis with ultrathink
+
+For maximum depth, prefix your consilium input with `ultrathink`:
+
+```
+ultrathink
+
+/consilium
+
+Product: [your product]
+Problem: [detailed problem]
+...
+```
+
+This enables extended thinking for each agent, resulting in deeper analysis at the cost of more tokens.
+
+---
+
+## Consilium + Agent Teams
+
+With Agent Teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true`), consilium agents run as true parallel teammates:
+
+```
+Lead: Research Agent scans codebase → creates Enriched Brief
+
+Parallel batch 1:
+-> Teammate 1: Growth Marketer + Sales Strategist
+-> Teammate 2: Product Manager + Tech Advisor
+-> Teammate 3: Financial Analyst + Market Researcher
+
+Lead: Orchestrator synthesizes all 6 reports → Unified Plan
+```
+
+Benefits:
+- Faster execution (parallel vs sequential)
+- Each teammate has full context isolation
+- Natural fit for multi-agent analysis
+
+---
+
 ## Related Skills
 
 - `ralph-wiggum.md` - Autonomous execution of consilium recommendations
 - `ai-agents.md` - Get second opinion from other AIs
+- `agent-teams.md` - Parallel agent coordination
 - `spec-kit` - Turn consilium output into implementation specs

@@ -1,10 +1,7 @@
 ---
 name: syrve-marketing
 description: Syrve Cloud API marketing - loyalty programs, promotions, discounts, coupons
-category: integrations
-updated: 2026-01-15
 model: sonnet
-forked_context: false
 ---
 
 # Syrve Marketing API

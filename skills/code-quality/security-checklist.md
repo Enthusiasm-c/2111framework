@@ -1,15 +1,19 @@
 ---
 name: security-checklist
 description: Complete security audit checklist for web applications
-category: code-quality
-updated: 2026-01-09
 model: opus
-forked_context: true
+context: fork
 hooks:
-  pre_invoke:
-    - command: "echo '🔐 Security: Starting security audit...'"
-  post_invoke:
-    - command: "echo '✅ Security: Audit complete. Review findings above.'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Security: Starting security audit...'"
+          once: true
+  Stop:
+    - hooks:
+        - type: command
+          command: "echo 'Security: Audit complete. Review findings above.'"
+          once: true
 ---
 
 # Security Checklist

@@ -1,10 +1,7 @@
 ---
 name: project-context-template
 description: Template for creating project context files
-category: project-contexts
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # Project: [Your Project Name]

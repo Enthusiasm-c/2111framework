@@ -1,16 +1,19 @@
 ---
 name: ralph-wiggum
 description: Autonomous loops for Claude Code - run tasks for hours without intervention
-category: mcp-usage
-updated: 2026-01-09
-plugin: ralph-wiggum@claude-plugins-official
 model: sonnet
-forked_context: true
+context: fork
 hooks:
-  pre_invoke:
-    - command: "echo '🔄 Ralph Wiggum: Starting autonomous loop...'"
-  post_invoke:
-    - command: "echo '🏁 Ralph Wiggum: Loop completed.'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Ralph Wiggum: Starting autonomous loop...'"
+          once: true
+  Stop:
+    - hooks:
+        - type: command
+          command: "echo 'Ralph Wiggum: Loop completed.'"
+          once: true
 ---
 
 # Ralph Wiggum - Autonomous Loops
@@ -359,8 +362,60 @@ git add . && git commit -m "Feature X"
 
 ---
 
+## Ralph + Agent Teams
+
+With Agent Teams enabled, Ralph can spawn teammates for parallel sub-tasks within each iteration:
+
+```
+Ralph iteration 5:
+  Lead: "Implement Order CRUD"
+  -> Teammate 1: API routes + validation
+  -> Teammate 2: React components + forms
+  -> Teammate 3: Test suite
+
+  Lead: Integrate, run build, check if done
+```
+
+Enable Agent Teams:
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
+```
+
+---
+
+## Ralph + Background Tasks
+
+Run Ralph with a dev server in background for instant feedback:
+
+```bash
+# 1. Start dev server in background (Ctrl+B)
+npm run dev          # Ctrl+B
+
+# 2. Start Ralph loop
+/ralph-loop "Fix all TypeScript errors and verify pages render" --max-iterations 20
+```
+
+Ralph can check the dev server output to verify pages render correctly.
+
+---
+
+## Effort Level Recommendation
+
+For Ralph loops, use `effortLevel: medium` to save tokens across many iterations:
+
+```bash
+export CLAUDE_CODE_EFFORT_LEVEL=medium
+/ralph-loop "Fix all lint errors" --max-iterations 15
+```
+
+Switch back to `high` for non-Ralph work.
+
+---
+
 ## Related Skills
 
 - `multi-ai-debug.md` - Get second opinion from Codex/Gemini
 - `ai-agents.md` - Natural language agent commands
+- `agent-teams.md` - Parallel agent coordination
+- `background-tasks.md` - Dev server in background
 - `chrome-extension-guide.md` - UI testing for Ralph-generated code

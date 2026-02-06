@@ -2,15 +2,19 @@
 name: review
 description: Two-phase code review - simplify first, then review. Uses official code-simplifier plugin.
 tools: Read, Grep, Glob, Bash
-updated: 2026-01-09
 model: opus
-forked_context: true
-requires_plugin: code-simplifier
+context: fork
 hooks:
-  pre_invoke:
-    - command: "echo '🔍 Review Agent: Starting two-phase analysis...'"
-  post_invoke:
-    - command: "echo '✅ Review Agent: Analysis complete.'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Review Agent: Starting two-phase analysis...'"
+          once: true
+  Stop:
+    - hooks:
+        - type: command
+          command: "echo 'Review Agent: Analysis complete.'"
+          once: true
 ---
 
 # CODE REVIEWER & SIMPLIFIER AGENT
@@ -510,6 +514,32 @@ If there are no tests, simplification is risky. Add tests first.
 4. **Propose** - Show before/after with metrics
 5. **Verify** - Ensure no behavior change
 6. **Apply** - Make changes incrementally
+
+---
+
+## Extended Analysis
+
+Use `ultrathink` for deep review of critical code paths (payments, auth, data handling).
+
+Opus 4.6 has improved self-correction capabilities -- it will re-examine its own findings and filter out false positives before reporting.
+
+---
+
+## Agent Teams Code Review
+
+With Agent Teams enabled, run parallel review from multiple angles:
+
+```
+Lead: "Review src/features/checkout/"
+
+-> Teammate 1: Security review (injection, auth, data exposure)
+-> Teammate 2: Performance review (N+1, memory, async patterns)
+-> Teammate 3: Correctness review (edge cases, types, logic errors)
+
+Lead: Synthesize findings, deduplicate, prioritize
+```
+
+This is especially effective after Ralph Wiggum autonomous loops where large amounts of code were generated.
 
 ---
 

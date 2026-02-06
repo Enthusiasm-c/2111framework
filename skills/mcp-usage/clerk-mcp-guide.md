@@ -1,10 +1,7 @@
 ---
 name: clerk-mcp-guide
 description: Clerk MCP server for managing users, organizations, invitations from Claude Code
-category: mcp-usage
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # Clerk MCP Server

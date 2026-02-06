@@ -1,10 +1,7 @@
 ---
 name: performance-optimization
 description: Complete performance optimization guide for Next.js 14+
-category: code-quality
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # Web Performance Optimization

@@ -1,19 +1,14 @@
 {
   "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@context7/mcp-server"]
-    },
     "shadcn": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-shadcn"]
+      "args": ["shadcn@latest", "mcp"],
+      "serverInstructions": "Use for shadcn/ui component installation and registry browsing"
     },
-    "21st-magic": {
+    "context7": {
       "command": "npx",
-      "args": ["-y", "@21st-dev/magic@latest"],
-      "env": {
-        "API_KEY": "YOUR_21ST_DEV_API_KEY"
-      }
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "serverInstructions": "Use for fetching up-to-date library documentation and code examples"
     }
   }
 }

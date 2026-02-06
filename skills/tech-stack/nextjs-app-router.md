@@ -1,10 +1,7 @@
 ---
 name: nextjs-app-router
 description: Next.js App Router conventions and project structure
-category: tech-stack
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # Next.js App Router Conventions

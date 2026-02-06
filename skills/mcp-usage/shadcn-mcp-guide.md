@@ -1,10 +1,7 @@
 ---
 name: shadcn-mcp-guide
 description: Official shadcn MCP server for component installation
-category: mcp-usage
-updated: 2026-01-09
 model: sonnet
-forked_context: false
 ---
 
 # shadcn MCP - Usage Guide

@@ -1,19 +1,18 @@
 ---
 name: multi-ai-debug
 description: Use Codex and Gemini CLI as second-opinion debuggers from Claude Code
-category: mcp-usage
-updated: 2026-01-09
-models: gpt-5.1-codex-max (OpenAI), gemini-3-pro-preview (Google)
 model: haiku
-forked_context: false
 hooks:
-  pre_invoke:
-    - command: "echo '🔍 Multi-AI Debug: Getting second opinion...'"
+  SessionStart:
+    - hooks:
+        - type: command
+          command: "echo 'Multi-AI Debug: Getting second opinion...'"
+          once: true
 ---
 
 # Multi-AI Debugging
 
-Get a "second opinion" from Codex (OpenAI gpt-5.1-codex-max) or Gemini (Google gemini-3-pro-preview) when debugging.
+Get a "second opinion" from Codex (OpenAI gpt-5.3-codex) or Gemini (Google gemini-3-pro-preview) when debugging.
 
 ## Why Use Multiple AIs?
 
@@ -63,20 +62,20 @@ export GEMINI_API_KEY="..."
 Add to `~/.zshrc` (or run `./scripts/setup-ai-aliases.sh`):
 
 ```bash
-# Codex (gpt-5.1-codex-max with high reasoning) - read-only review
-alias cr='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
+# Codex (gpt-5.3-codex with high reasoning) - read-only review
+alias cr='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
 
 # Gemini (gemini-3-pro-preview) - code review
 alias gr='gemini -m gemini-3-pro-preview -p "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers:"'
 
-# Quick bug analysis (gpt-5.1-codex-max)
-alias bug='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Find the bug in this code. Explain root cause and suggest fix:"'
+# Quick bug analysis (gpt-5.3-codex)
+alias bug='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "Find the bug in this code. Explain root cause and suggest fix:"'
 
-# Security audit (gpt-5.1-codex-max)
-alias sec='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Security audit: Find vulnerabilities, injection risks, auth issues, exposed secrets. OWASP Top 10 check:"'
+# Security audit (gpt-5.3-codex)
+alias sec='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "Security audit: Find vulnerabilities, injection risks, auth issues, exposed secrets. OWASP Top 10 check:"'
 
-# Performance review (gpt-5.1-codex-max)
-alias perf='codex exec -m gpt-5.1-codex-max -c model_reasoning_effort=\"high\" -s read-only "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
+# Performance review (gpt-5.3-codex)
+alias perf='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
 
 # Architecture review (gemini-3-pro-preview)
 alias arch='gemini -m gemini-3-pro-preview -p "Architecture review: Analyze code structure, coupling, SOLID principles, suggest improvements:"'
@@ -196,7 +195,7 @@ When user runs `/review-bug "description"`:
 | Model | Best For |
 |-------|----------|
 | **Claude (Opus 4.5)** | Full context, implementing fixes, refactoring |
-| **Codex (gpt-5.1-codex-max)** | Deep bug analysis, security review, high reasoning |
+| **Codex (gpt-5.3-codex)** | Deep bug analysis, security review, high reasoning |
 | **Gemini (gemini-3-pro-preview)** | Architecture review, alternative perspective |
 
 ### Decision Tree:
@@ -255,7 +254,7 @@ export OPENAI_API_KEY="sk-..."
 
 | Model | Cost | Notes |
 |-------|------|-------|
-| Codex (gpt-5.1-codex-max) | Premium tier | High reasoning, best for complex bugs |
+| Codex (gpt-5.3-codex) | Premium tier | High reasoning, best for complex bugs |
 | Gemini (gemini-3-pro-preview) | $2/$12 per 1M tokens | Good for architecture, paid tier only |
 | Claude (Opus 4.5) | Via subscription | With Claude Code |
 
