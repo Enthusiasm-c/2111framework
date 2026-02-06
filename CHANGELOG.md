@@ -19,15 +19,15 @@
   - `--from-pr` for PR-linked sessions
 - **Effort Profiles** (`config/effort-profiles.md`) - Effort level reference
   - low/medium/high levels and recommendations
-  - ultrathink for extended analysis
+  - Extended thinking reference (default 31,999 tokens)
 - **Migration Guide** (`MIGRATION_V2.13.md`) - migration checklist
 
 ### Changed
 - **README.md** - Updated to v2.15, Opus 4.6, new features section
 - **mcp.json** - Restored context7 with serverInstructions, added to shadcn
-- **agents/review.md** - Agent Teams code review pattern, ultrathink, Opus 4.6 self-correction
-- **agents/security.md** - model: opus, context: fork, ultrathink, zero-day patterns
-- **skills/business/consilium.md** - Agent Teams parallel mode, ultrathink
+- **agents/review.md** - Agent Teams code review pattern, Opus 4.6 self-correction
+- **agents/security.md** - model: opus, context: fork, zero-day patterns
+- **skills/business/consilium.md** - Agent Teams parallel mode
 - **skills/mcp-usage/ralph-wiggum.md** - Agent Teams + Background Tasks sections
 - **scripts/setup-ai-aliases.sh** - gpt-5.3-codex model
 

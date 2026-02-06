@@ -711,24 +711,6 @@ Swap restaurant-specific context for:
 
 ---
 
-## Extended Analysis with ultrathink
-
-For maximum depth, prefix your consilium input with `ultrathink`:
-
-```
-ultrathink
-
-/consilium
-
-Product: [your product]
-Problem: [detailed problem]
-...
-```
-
-This enables extended thinking for each agent, resulting in deeper analysis at the cost of more tokens.
-
----
-
 ## Consilium + Agent Teams
 
 With Agent Teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true`), consilium agents run as true parallel teammates:

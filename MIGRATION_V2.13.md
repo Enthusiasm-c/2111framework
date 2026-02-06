@@ -107,9 +107,9 @@ hooks:
 
 | File | Changes |
 |------|---------|
-| `agents/review.md` | Frontmatter fix, Agent Teams pattern, ultrathink |
-| `agents/security.md` | model: opus, context: fork, ultrathink, zero-day patterns |
-| `skills/business/consilium.md` | Frontmatter fix, Agent Teams parallel mode, ultrathink |
+| `agents/review.md` | Frontmatter fix, Agent Teams pattern |
+| `agents/security.md` | model: opus, context: fork, zero-day patterns |
+| `skills/business/consilium.md` | Frontmatter fix, Agent Teams parallel mode |
 | `skills/mcp-usage/ralph-wiggum.md` | Frontmatter fix, Agent Teams + Background Tasks sections |
 | `skills/mcp-usage/ai-agents.md` | Frontmatter fix, gpt-5.3-codex |
 | `skills/mcp-usage/multi-ai-debug.md` | Frontmatter fix, gpt-5.3-codex |

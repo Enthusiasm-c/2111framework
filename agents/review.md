@@ -519,7 +519,7 @@ If there are no tests, simplification is risky. Add tests first.
 
 ## Extended Analysis
 
-Use `ultrathink` for deep review of critical code paths (payments, auth, data handling).
+Extended thinking is enabled by default (31,999 tokens) — no special keywords needed.
 
 Opus 4.6 has improved self-correction capabilities -- it will re-examine its own findings and filter out false positives before reporting.
 

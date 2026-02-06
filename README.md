@@ -176,11 +176,11 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 | Agent | File | Description |
 |-------|------|-------------|
 | Architect | `agents/architect.md` | System design, tech stack, implementation phases |
-| Review | `agents/review.md` | Code review + simplification (Opus, ultrathink) |
+| Review | `agents/review.md` | Code review + simplification (Opus) |
 | QA | `agents/qa.md` | Testing, bug finding, Chrome Extension |
 | Docs | `agents/docs.md` | Documentation, READMEs, ADRs |
 | Dev | `agents/dev.md` | Feature implementation |
-| Security | `agents/security.md` | Vulnerability audits (Opus, ultrathink, zero-day) |
+| Security | `agents/security.md` | Vulnerability audits (Opus, zero-day patterns) |
 
 ---
 

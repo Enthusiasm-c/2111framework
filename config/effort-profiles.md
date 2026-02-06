@@ -61,31 +61,16 @@ In `~/.claude/settings.json`:
 
 ---
 
-## Extended Thinking (ultrathink)
+## Extended Thinking
 
-For maximum analysis depth in skills and agents, use the `ultrathink` keyword in your prompt:
+Extended thinking is **enabled by default** in Claude Code with a budget of 31,999 tokens. No keywords or special configuration needed — every prompt gets maximum thinking automatically.
 
+> **Note:** The `ultrathink` keyword was deprecated in January 2026. It no longer has any effect.
+
+For even more thinking tokens on newer models, set:
+```bash
+export MAX_THINKING_TOKENS=63999
 ```
-ultrathink
-
-Review this authentication module for security vulnerabilities.
-Pay special attention to JWT handling and session management.
-```
-
-### When to Use ultrathink
-
-- Security audits requiring deep analysis
-- Complex architectural decisions
-- Debugging hard-to-find race conditions
-- Consilium product analysis (for thorough agent reports)
-- Code review of critical paths (payments, auth)
-
-### When NOT to Use
-
-- Simple bug fixes
-- Routine CRUD operations
-- File lookups
-- Ralph Wiggum mechanical loops
 
 ---
 

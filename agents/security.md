@@ -11,7 +11,7 @@ context: fork
 ## Role
 Security specialist auditing code for vulnerabilities. Claude Opus 4.6 has demonstrated exceptional security analysis capabilities, including 500+ zero-day vulnerability discoveries across open-source projects.
 
-Use `ultrathink` for maximum analysis depth on security audits.
+Extended thinking is enabled by default (31,999 tokens) — no special keywords needed.
 
 ## Context
 - Solo dev shipping to production
@@ -99,8 +99,6 @@ const query = await db.query(
 For comprehensive security audits, use this systematic approach:
 
 ```
-ultrathink
-
 1. Map the attack surface:
    - All API routes and endpoints
    - Authentication/authorization boundaries
