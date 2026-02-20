@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.17.0] - 2026-02-20
+
+### Added
+- **12 Battle-Tested Hooks** (`config/settings.json`) — expanded from 2 to 12 hooks
+  - **SessionStart/compact** — Re-injects PROJECT_MEMORY.md + git context after /compact (context persistence)
+  - **SessionStart/startup** — Shows project, branch, git status on session start (once)
+  - **PreToolUse/Edit|Write** — Blocks editing protected files (.env, lock files) with exit 2
+  - **PreToolUse/Bash** — Blocks destructive commands (rm -rf /, reset --hard, push --force, DROP TABLE)
+  - **PostToolUse/Edit|Write** — Auto-format with Prettier (async, non-blocking)
+  - **Notification** — macOS desktop notification when Claude waits for input
+  - **Stop/auto-memory** — Saves session info to ~/.claude/memory/sessions.md
+  - **Stop/uncommitted** — Reminds about uncommitted changes when session ends
+  - **UserPromptSubmit** — Injects .claude/TODO.md into context with every prompt
+  - **SubagentStop** — Desktop notification when subagent completes
+  - Existing hooks preserved: console.log detector (#5) and ESLint checker (#6)
+
+- **Auto-Memory System** — Persistent memory across sessions and compact
+  - `config/hooks/auto-memory.sh` — Stop hook script for session logging
+  - `skills/workflow/auto-memory.md` — Documentation and best practices
+  - Memory cycle: Stop saves → SessionStart reads → /compact re-injects
+  - Auto-creates PROJECT_MEMORY.md template if missing
+
+- **Hooks Catalog** (`skills/workflow/hooks-catalog.md`) — Complete reference
+  - Table of all 12 hooks with event, matcher, sync/async
+  - Exit code semantics (0 = ok, 2 = block)
+  - Lifecycle events reference
+  - Matcher syntax guide
+  - Custom hook examples: TypeScript checker, test runner, security scanner
+
+### Changed
+- **install.sh** — Added hooks and memory directory creation, hook script installation
+- **README.md** — Updated to v2.17.0 with hooks and auto-memory documentation
+
+---
+
 ## [2.16.0] - 2026-02-20
 
 ### Added

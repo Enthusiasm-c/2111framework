@@ -2,6 +2,51 @@
   "model": "opus",
   "alwaysThinkingEnabled": true,
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'echo \"=== CONTEXT RE-INJECTION ===\"; if [ -f PROJECT_MEMORY.md ]; then echo \"--- PROJECT_MEMORY.md ---\"; cat PROJECT_MEMORY.md; echo \"\"; fi; echo \"--- Git Branch ---\"; git branch --show-current 2>/dev/null; echo \"--- Last 5 Commits ---\"; git log --oneline -5 2>/dev/null; echo \"=========================\"'",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'echo \"=== SESSION INFO ===\"; echo \"Project: $(basename $(pwd))\"; echo \"Branch: $(git branch --show-current 2>/dev/null || echo N/A)\"; echo \"Status:\"; git status --short 2>/dev/null | head -10; echo \"==================\"'",
+            "timeout": 5,
+            "once": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_input.filePath // empty\"); if [ -z \"$FILE\" ]; then exit 0; fi; BASENAME=$(basename \"$FILE\"); case \"$BASENAME\" in .env|.env.local|.env.production|.env.staging|package-lock.json|yarn.lock|pnpm-lock.yaml) echo \"BLOCKED: $BASENAME is a protected file. Do not edit it directly.\" >&2; exit 2;; esac'",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'CMD=$(cat - | jq -r \".tool_input.command // empty\"); if [ -z \"$CMD\" ]; then exit 0; fi; if echo \"$CMD\" | grep -qE \"rm\\s+-rf\\s+/|git\\s+reset\\s+--hard|git\\s+push\\s+--force|git\\s+push\\s+-f\\s|DROP\\s+TABLE|git\\s+clean\\s+-fd\"; then echo \"BLOCKED: Destructive command detected. This command is not allowed by the hooks guard.\" >&2; exit 2; fi'",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -20,6 +65,75 @@
             "type": "command",
             "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx)$ ]] && [ -f \"package.json\" ] && grep -q \"eslint\" package.json 2>/dev/null; then ERRORS=$(npx eslint \"$FILE\" --format compact 2>/dev/null | head -5); if [ -n \"$ERRORS\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"ESLint issues in $FILE:\\n$ERRORS\\\"}}\"; fi; fi'",
             "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx|css|json)$ ]] && command -v prettier &>/dev/null; then prettier --write \"$FILE\" 2>/dev/null; fi'",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'osascript -e \"display notification \\\"Claude is waiting for your input\\\" with title \\\"Claude Code\\\" sound name \\\"Ping\\\"\" 2>/dev/null || true'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'mkdir -p ~/.claude/memory; SCRIPT=\"$HOME/.claude/hooks/auto-memory.sh\"; if [ -f \"$SCRIPT\" ]; then cat - | bash \"$SCRIPT\"; fi'",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'CHANGES=$(git status --short 2>/dev/null); if [ -n \"$CHANGES\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"REMINDER: You have uncommitted changes:\\n$CHANGES\\nConsider committing before leaving.\\\"}}\"; fi'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'if [ -f .claude/TODO.md ]; then echo \"--- Active TODOs ---\"; cat .claude/TODO.md; echo \"---\"; fi'",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'osascript -e \"display notification \\\"A subagent has completed its task\\\" with title \\\"Claude Code - Agent Done\\\" sound name \\\"Glass\\\"\" 2>/dev/null || true'",
+            "timeout": 5
           }
         ]
       }

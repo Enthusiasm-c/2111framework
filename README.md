@@ -1,9 +1,9 @@
-# 2111framework v2.16
+# 2111framework v2.17
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.16.0
+**Version:** 2.17.0
 **Updated:** February 20, 2026
 **Requires:** Claude Code 2.1.7+
 
@@ -35,6 +35,47 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
 
 ---
 
+## What's New in v2.17
+
+### 12 Battle-Tested Hooks:
+Expanded from 2 to 12 hooks for deterministic automation:
+
+| Hook | Event | What it does |
+|------|-------|-------------|
+| Context re-injection | SessionStart/compact | Re-injects PROJECT_MEMORY.md after /compact |
+| Session info | SessionStart/startup | Shows project, branch, status (once) |
+| Protected files | PreToolUse/Edit\|Write | **Blocks** .env, lock files (exit 2) |
+| Destructive guard | PreToolUse/Bash | **Blocks** rm -rf /, reset --hard, push --force |
+| console.log detector | PostToolUse/Edit\|Write | Warns about console.log |
+| ESLint checker | PostToolUse/Edit\|Write | Shows ESLint errors |
+| Prettier auto-format | PostToolUse/Edit\|Write | Formats files (async) |
+| Desktop notification | Notification | macOS alert when Claude waits |
+| Auto-memory save | Stop | Logs session to ~/.claude/memory/ |
+| Uncommitted reminder | Stop | Shows uncommitted changes |
+| TODO auto-inject | UserPromptSubmit | Injects .claude/TODO.md |
+| Subagent notification | SubagentStop | Alert when subagent completes |
+
+### Auto-Memory System (NEW):
+- **Context persistence** across sessions and /compact
+- Stop hook saves session info automatically
+- SessionStart hook re-injects PROJECT_MEMORY.md
+- Auto-creates PROJECT_MEMORY.md template if missing
+- See `skills/workflow/auto-memory.md`
+
+### Hooks Catalog (NEW):
+- Complete reference for all 12 hooks
+- Exit code semantics, matcher syntax, lifecycle events
+- Custom hook examples (TypeScript checker, test runner, security scanner)
+- See `skills/workflow/hooks-catalog.md`
+
+### Install hooks + auto-memory:
+```bash
+# Re-run installer to get new features
+bash ~/.claude/2111framework/install.sh
+```
+
+---
+
 ## What's New in v2.16
 
 ### Agent Auto-Routing:
@@ -42,12 +83,12 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
 - Claude suggests architect before complex features, review after implementation, security after auth changes
 - No manual `/command` needed — `<example>` blocks in agent descriptions enable auto-routing
 
-### Rules Templates (NEW):
+### Rules Templates:
 - **Path-scoped instructions** using native Claude Code rules format
 - Templates for React, API routes, database, testing, git workflow
 - Generate from PROJECT_MEMORY.md with `/init-rules` skill
 
-### Workflow Skills (NEW):
+### Workflow Skills:
 | Skill | Description |
 |-------|-------------|
 | `tdd-workflow.md` | RED-GREEN-REFACTOR for Next.js + Vitest |
@@ -57,12 +98,6 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
 
 ### Agent Routing Reference:
 - `config/agent-routing.md` — routing table, agent chains, flow diagrams
-
-### Install rules templates:
-```bash
-# Re-run installer to get new features
-bash ~/.claude/2111framework/install.sh
-```
 
 ---
 
@@ -261,9 +296,11 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 | `typescript-conventions.md` | Type safety, Zod validation |
 | `database-migrations.md` | Drizzle ORM workflow |
 
-### Workflow (NEW)
+### Workflow
 | Skill | Description |
 |-------|-------------|
+| `hooks-catalog.md` | Complete reference for all 12 hooks (NEW) |
+| `auto-memory.md` | Persistent memory system for sessions (NEW) |
 | `tdd-workflow.md` | RED-GREEN-REFACTOR for Next.js + Vitest |
 | `context-engineering.md` | Context window management |
 | `systematic-debugging.md` | 4-phase debugging (REPRODUCE → ISOLATE → ROOT CAUSE → FIX) |
@@ -407,4 +444,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.16.0
+**Version:** 2.17.0
