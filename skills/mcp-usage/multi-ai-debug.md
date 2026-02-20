@@ -12,7 +12,7 @@ hooks:
 
 # Multi-AI Debugging
 
-Get a "second opinion" from Codex (OpenAI gpt-5.3-codex) or Gemini (Google gemini-3-pro-preview) when debugging.
+Get a "second opinion" from Codex (OpenAI gpt-5.3-codex) or Gemini (Google gemini-3.1-pro-preview) when debugging.
 
 ## Why Use Multiple AIs?
 
@@ -65,8 +65,8 @@ Add to `~/.zshrc` (or run `./scripts/setup-ai-aliases.sh`):
 # Codex (gpt-5.3-codex with high reasoning) - read-only review
 alias cr='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
 
-# Gemini (gemini-3-pro-preview) - code review
-alias gr='gemini -m gemini-3-pro-preview -p "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers:"'
+# Gemini (gemini-3.1-pro-preview) - code review
+alias gr='gemini -m gemini-3.1-pro-preview -p "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers:"'
 
 # Quick bug analysis (gpt-5.3-codex)
 alias bug='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "Find the bug in this code. Explain root cause and suggest fix:"'
@@ -77,8 +77,8 @@ alias sec='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s rea
 # Performance review (gpt-5.3-codex)
 alias perf='codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
 
-# Architecture review (gemini-3-pro-preview)
-alias arch='gemini -m gemini-3-pro-preview -p "Architecture review: Analyze code structure, coupling, SOLID principles, suggest improvements:"'
+# Architecture review (gemini-3.1-pro-preview)
+alias arch='gemini -m gemini-3.1-pro-preview -p "Architecture review: Analyze code structure, coupling, SOLID principles, suggest improvements:"'
 ```
 
 Apply:
@@ -196,7 +196,7 @@ When user runs `/review-bug "description"`:
 |-------|----------|
 | **Claude (Opus 4.5)** | Full context, implementing fixes, refactoring |
 | **Codex (gpt-5.3-codex)** | Deep bug analysis, security review, high reasoning |
-| **Gemini (gemini-3-pro-preview)** | Architecture review, alternative perspective |
+| **Gemini (gemini-3.1-pro-preview)** | Architecture review, alternative perspective |
 
 ### Decision Tree:
 
@@ -255,7 +255,7 @@ export OPENAI_API_KEY="sk-..."
 | Model | Cost | Notes |
 |-------|------|-------|
 | Codex (gpt-5.3-codex) | Premium tier | High reasoning, best for complex bugs |
-| Gemini (gemini-3-pro-preview) | $2/$12 per 1M tokens | Good for architecture, paid tier only |
+| Gemini (gemini-3.1-pro-preview) | $2/$12 per 1M tokens | Good for architecture, paid tier only |
 | Claude (Opus 4.5) | Via subscription | With Claude Code |
 
 **Tip:** Use Codex for deep dives with high reasoning, Gemini for architecture review.

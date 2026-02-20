@@ -205,7 +205,7 @@ Read skills/tech-stack/react-optimization.md
 
 | Problem Type | Best Agent |
 |--------------|------------|
-| UI, layout, CSS, visual bugs | **Gemini 3 Pro** |
+| UI, layout, CSS, visual bugs | **Gemini 3.1 Pro** |
 | Logic, async, TypeScript, race conditions | **Codex** |
 | Security, auth, OWASP | **Codex** |
 | Architecture review | **Gemini** |
@@ -215,7 +215,7 @@ Read skills/tech-stack/react-optimization.md
 
 ```bash
 cr file.tsx    # Codex code review (gpt-5.3-codex)
-gr file.tsx    # Gemini code review (gemini-3-pro-preview)
+gr file.tsx    # Gemini code review (gemini-3.1-pro-preview)
 bug file.tsx   # Codex bug finder
 sec file.tsx   # Codex security audit
 perf file.tsx  # Codex performance review
@@ -359,7 +359,7 @@ npm run dev          # Press Ctrl+B to run in background
 
 ## Model Comparison
 
-| Capability | Claude Opus 4.6 | Codex (gpt-5.3) | Gemini 3 Pro |
+| Capability | Claude Opus 4.6 | Codex (gpt-5.3) | Gemini 3.1 Pro |
 |------------|-----------------|-----------------|--------------|
 | Backend/Architecture | Best | Strong | Good |
 | Frontend UI/UX | Good | Strong | Best |

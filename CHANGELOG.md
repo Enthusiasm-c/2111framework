@@ -213,7 +213,7 @@
 
 ### Changed
 - **Multi-AI Debug updated** - Correct model names and syntax
-  - Gemini: `gemini-3-pro-preview` (requires paid tier)
+  - Gemini: `gemini-3.1-pro-preview` (requires paid tier)
   - Codex: `gpt-5.1-codex-max` with `model_reasoning_effort="high"`
   - Codex CLI updated to v0.79.0
   - Removed `--preview-features` flag (doesn't exist)

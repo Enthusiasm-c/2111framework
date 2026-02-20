@@ -30,9 +30,9 @@ hooks:
 
 | Фраза пользователя | Claude выполняет |
 |-------------------|------------------|
-| "Запусти агента Gemini review для broken layout в странице аналитики" | `find src -name "*analytics*" -o -name "*Analytics*" \| head -5` затем `cat <files> \| gemini -m gemini-3-pro-preview -p "Find root cause of broken UI layout:"` |
-| "Попроси Gemini проверить UI в Dashboard" | `cat src/**/Dashboard*.tsx \| gemini -m gemini-3-pro-preview -p "Review UI for bugs:"` |
-| "Gemini, найди CSS проблему" | `cat <file> \| gemini -m gemini-3-pro-preview -p "Find CSS/styling issue:"` |
+| "Запусти агента Gemini review для broken layout в странице аналитики" | `find src -name "*analytics*" -o -name "*Analytics*" \| head -5` затем `cat <files> \| gemini -m gemini-3.1-pro-preview -p "Find root cause of broken UI layout:"` |
+| "Попроси Gemini проверить UI в Dashboard" | `cat src/**/Dashboard*.tsx \| gemini -m gemini-3.1-pro-preview -p "Review UI for bugs:"` |
+| "Gemini, найди CSS проблему" | `cat <file> \| gemini -m gemini-3.1-pro-preview -p "Find CSS/styling issue:"` |
 
 ### Codex Agent (Logic/TypeScript)
 
@@ -76,7 +76,7 @@ grep -rl "Analytics" src --include="*.tsx" | head -5
 ### Step 3: Запустить анализ
 ```bash
 # Gemini для UI
-cat <files> | gemini -m gemini-3-pro-preview -p "<problem description>:"
+cat <files> | gemini -m gemini-3.1-pro-preview -p "<problem description>:"
 
 # Codex для логики
 cat <files> | codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
