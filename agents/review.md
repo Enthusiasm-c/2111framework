@@ -1,6 +1,28 @@
 ---
 name: review
-description: Two-phase code review - simplify first, then review. Uses official code-simplifier plugin.
+description: |
+  Two-phase code review - simplify first, then review. Uses official code-simplifier plugin. Use proactively after feature implementation, before commits, or when code quality review is needed.
+
+  <example>
+  Context: Developer just finished implementing a feature
+  user: "I've finished the checkout flow implementation"
+  <commentary>Feature implementation is complete. Proactively launch review agent to simplify and review the code before committing.</commentary>
+  assistant: Uses Task tool to launch review agent
+  </example>
+
+  <example>
+  Context: User is about to commit or deploy code
+  user: "I think this is ready, let me commit these changes"
+  <commentary>Before committing, code should be reviewed for bugs, security issues, and simplification opportunities. Launch review agent.</commentary>
+  assistant: Uses Task tool to launch review agent
+  </example>
+
+  <example>
+  Context: User explicitly asks for code review
+  user: "Can you review what I changed in src/lib/auth?"
+  <commentary>Explicit review request. Launch review agent with two-phase approach.</commentary>
+  assistant: Uses Task tool to launch review agent
+  </example>
 tools: Read, Grep, Glob, Bash
 model: opus
 context: fork

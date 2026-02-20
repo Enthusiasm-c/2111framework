@@ -1,6 +1,28 @@
 ---
 name: security
-description: Security specialist for vulnerability audits. Use proactively when reviewing code for OWASP Top 10, authentication flaws, or exposed secrets.
+description: |
+  Security specialist for vulnerability audits. Use proactively when reviewing code for OWASP Top 10, authentication flaws, or exposed secrets. Launch after changes to auth, payments, or sensitive data handling.
+
+  <example>
+  Context: User modified authentication or payment code
+  user: "I've updated the login flow to support OAuth"
+  <commentary>Authentication changes require security review. Proactively launch security agent to audit the OAuth implementation for vulnerabilities.</commentary>
+  assistant: Uses Task tool to launch security agent
+  </example>
+
+  <example>
+  Context: User requests a security audit
+  user: "Can you check if our API endpoints are secure?"
+  <commentary>Explicit security audit request. Launch security agent for comprehensive OWASP Top 10 review.</commentary>
+  assistant: Uses Task tool to launch security agent
+  </example>
+
+  <example>
+  Context: Dev agent just modified files handling sensitive data
+  user: "Dev finished implementing the payment webhook handler"
+  <commentary>Payment-related code was just written. Proactively launch security agent to audit for injection, data exposure, and auth bypass vulnerabilities.</commentary>
+  assistant: Uses Task tool to launch security agent
+  </example>
 tools: Read, Grep, Glob
 model: opus
 context: fork

@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.16.0] - 2026-02-20
+
+### Added
+- **Agent Auto-Routing** — All 6 agents now have `<example>` blocks in descriptions for proactive auto-triggering
+  - Claude automatically suggests architect for complex features, review after implementation, security after auth changes, etc.
+  - No more manual `/command` required — agents launch when context matches
+- **Rules Templates** (`rules/`) — Path-scoped instruction templates using native Claude Code rules format
+  - `rules/README.md` — How to create and use rules
+  - `rules/examples/react-components.md` — React/TSX conventions (`globs: "**/*.tsx"`)
+  - `rules/examples/api-routes.md` — API endpoint patterns (`globs: "**/api/**"`)
+  - `rules/examples/database.md` — Database conventions (`globs: "**/db/**"`)
+  - `rules/examples/testing.md` — Test conventions (`alwaysApply: true`)
+  - `rules/examples/git-workflow.md` — Git commit/branch rules (`alwaysApply: true`)
+- **Workflow Skills** (`skills/workflow/`) — New skill category
+  - `tdd-workflow.md` — RED-GREEN-REFACTOR pattern for Next.js + Vitest
+  - `context-engineering.md` — Context window management strategies
+  - `systematic-debugging.md` — 4-phase debugging: REPRODUCE → ISOLATE → ROOT CAUSE → FIX
+  - `init-rules.md` — Generate rules from PROJECT_MEMORY.md
+- **Agent Routing Reference** (`config/agent-routing.md`) — Routing table and agent chain patterns
+
+### Changed
+- **agents/architect.md** — Added 3 auto-routing examples (complex features, refactoring, DB schema)
+- **agents/review.md** — Added 3 auto-routing examples (after implementation, before commit, explicit review)
+- **agents/developer.md** — Added 3 auto-routing examples (implementation task, implicit need, after plan)
+- **agents/qa.md** — Added 3 auto-routing examples (bug report, before deploy, after dev)
+- **agents/docs.md** — Added 2 auto-routing examples (documentation request, onboarding)
+- **agents/security.md** — Added 3 auto-routing examples (auth changes, explicit audit, payment code)
+- **install.sh** — Added `workflow` skills directory, `rules/` directory copying
+- **README.md** — Updated to v2.16.0 with new features
+
+---
+
 ## [2.15.0] - 2026-02-06
 
 ### Added

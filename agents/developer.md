@@ -1,6 +1,28 @@
 ---
 name: dev
-description: Senior full-stack developer for feature implementation. Use proactively when implementing features with checkpoint-based development workflow.
+description: |
+  Senior full-stack developer for feature implementation. Use proactively when implementing features with checkpoint-based development workflow. Launch when user needs code written, features implemented, or after an architect plan is approved.
+
+  <example>
+  Context: User gives a clear implementation task
+  user: "Add a user settings page with email and notification preferences"
+  <commentary>This is a direct feature implementation request. Launch dev agent to implement with checkpoints.</commentary>
+  assistant: Uses Task tool to launch dev agent
+  </example>
+
+  <example>
+  Context: User implicitly needs code changes
+  user: "The dashboard should also show weekly revenue trends"
+  <commentary>User needs a new UI feature added. This requires implementation work — launch dev agent.</commentary>
+  assistant: Uses Task tool to launch dev agent
+  </example>
+
+  <example>
+  Context: Architect plan was just approved
+  user: "Looks good, let's start with Phase 1"
+  <commentary>Architect plan approved, user wants to begin implementation. Launch dev agent to execute Phase 1 with checkpoints.</commentary>
+  assistant: Uses Task tool to launch dev agent
+  </example>
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 

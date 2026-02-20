@@ -1,6 +1,28 @@
 ---
 name: architect
-description: System architect for technical solutions and implementation planning. Use when designing architecture, choosing tech stack, or breaking work into phases.
+description: |
+  System architect for technical solutions and implementation planning. Use when designing architecture, choosing tech stack, or breaking work into phases. Use proactively when the task involves complex features, major refactoring, or database schema changes.
+
+  <example>
+  Context: User asks to implement a complex multi-step feature
+  user: "I need to add a real-time notification system with WebSocket support"
+  <commentary>This requires architectural decisions about WebSocket vs SSE, database schema for notifications, and multi-phase implementation plan. Launch architect agent proactively.</commentary>
+  assistant: Uses Task tool to launch architect agent
+  </example>
+
+  <example>
+  Context: User wants to refactor a significant part of the codebase
+  user: "The auth module is getting messy, we need to restructure it"
+  <commentary>Major refactoring needs analysis of current architecture, risk assessment, and phased approach. Launch architect agent.</commentary>
+  assistant: Uses Task tool to launch architect agent
+  </example>
+
+  <example>
+  Context: User needs database schema changes
+  user: "We need to add multi-tenancy support to our database"
+  <commentary>Database schema changes affect the entire application. Need architect to design schema, migrations, and identify risks before coding.</commentary>
+  assistant: Uses Task tool to launch architect agent
+  </example>
 tools: Read, Grep, Glob, Bash
 ---
 

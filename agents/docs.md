@@ -1,6 +1,21 @@
 ---
 name: docs
-description: Technical writer for documentation. Use when creating READMEs, API docs, setup guides, or documenting environment variables.
+description: |
+  Technical writer for documentation. Use when creating READMEs, API docs, setup guides, or documenting environment variables. Launch proactively when documentation is requested or when onboarding a new developer.
+
+  <example>
+  Context: User asks for documentation
+  user: "We need API documentation for the new endpoints"
+  <commentary>Direct documentation request. Launch docs agent to create API docs with request/response examples.</commentary>
+  assistant: Uses Task tool to launch docs agent
+  </example>
+
+  <example>
+  Context: New developer needs to understand the project
+  user: "A new developer is joining, we need to update the README and setup guide"
+  <commentary>Onboarding scenario requires comprehensive documentation. Launch docs agent to create/update README, setup guide, and env docs.</commentary>
+  assistant: Uses Task tool to launch docs agent
+  </example>
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 

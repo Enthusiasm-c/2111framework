@@ -4,7 +4,8 @@ set -e
 echo "🚀 Installing 2111framework..."
 
 mkdir -p ~/.claude/agents
-mkdir -p ~/.claude/skills/{integrations,tech-stack,code-quality,mcp-usage,project-contexts}
+mkdir -p ~/.claude/skills/{integrations,tech-stack,code-quality,mcp-usage,project-contexts,workflow}
+mkdir -p ~/.claude/rules
 mkdir -p ~/.claude/projects
 
 echo "🤖 Installing agents..."
@@ -12,6 +13,9 @@ cp -r agents/* ~/.claude/agents/
 
 echo "📚 Installing skills..."
 cp -r skills/* ~/.claude/skills/
+
+echo "📏 Installing rules templates..."
+cp -r rules/* ~/.claude/rules/ 2>/dev/null || true
 
 echo "📁 Installing project contexts..."
 cp -r projects/* ~/.claude/projects/ 2>/dev/null || true

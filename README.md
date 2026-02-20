@@ -1,10 +1,10 @@
-# 2111framework v2.15
+# 2111framework v2.16
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.15.0
-**Updated:** February 6, 2026
+**Version:** 2.16.0
+**Updated:** February 20, 2026
 **Requires:** Claude Code 2.1.7+
 
 ---
@@ -31,6 +31,37 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 
 # Optional: Enable Agent Teams (experimental)
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
+```
+
+---
+
+## What's New in v2.16
+
+### Agent Auto-Routing:
+- **Proactive agent launching** — agents now trigger automatically based on context
+- Claude suggests architect before complex features, review after implementation, security after auth changes
+- No manual `/command` needed — `<example>` blocks in agent descriptions enable auto-routing
+
+### Rules Templates (NEW):
+- **Path-scoped instructions** using native Claude Code rules format
+- Templates for React, API routes, database, testing, git workflow
+- Generate from PROJECT_MEMORY.md with `/init-rules` skill
+
+### Workflow Skills (NEW):
+| Skill | Description |
+|-------|-------------|
+| `tdd-workflow.md` | RED-GREEN-REFACTOR for Next.js + Vitest |
+| `context-engineering.md` | Context window management strategies |
+| `systematic-debugging.md` | 4-phase debugging: REPRODUCE → ISOLATE → ROOT CAUSE → FIX |
+| `init-rules.md` | Generate rules from PROJECT_MEMORY.md |
+
+### Agent Routing Reference:
+- `config/agent-routing.md` — routing table, agent chains, flow diagrams
+
+### Install rules templates:
+```bash
+# Re-run installer to get new features
+bash ~/.claude/2111framework/install.sh
 ```
 
 ---
@@ -230,6 +261,14 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 | `typescript-conventions.md` | Type safety, Zod validation |
 | `database-migrations.md` | Drizzle ORM workflow |
 
+### Workflow (NEW)
+| Skill | Description |
+|-------|-------------|
+| `tdd-workflow.md` | RED-GREEN-REFACTOR for Next.js + Vitest |
+| `context-engineering.md` | Context window management |
+| `systematic-debugging.md` | 4-phase debugging (REPRODUCE → ISOLATE → ROOT CAUSE → FIX) |
+| `init-rules.md` | Generate rules from PROJECT_MEMORY.md |
+
 ### Code Quality
 | Skill | Description |
 |-------|-------------|
@@ -368,4 +407,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.15.0
+**Version:** 2.16.0

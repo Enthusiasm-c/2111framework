@@ -1,6 +1,28 @@
 ---
 name: qa
-description: QA engineer for testing and bug finding. Use proactively when testing functionality, browser testing with Chrome Extension, or finding bugs before deployment.
+description: |
+  QA engineer for testing and bug finding. Use proactively when testing functionality, browser testing with Chrome Extension, or finding bugs before deployment. Launch after dev completes implementation or when bugs are reported.
+
+  <example>
+  Context: User reports a bug or unexpected behavior
+  user: "The form submission is returning a 500 error sometimes"
+  <commentary>Bug report that needs systematic investigation, reproduction steps, and testing. Launch QA agent.</commentary>
+  assistant: Uses Task tool to launch qa agent
+  </example>
+
+  <example>
+  Context: Feature is ready for deployment
+  user: "Let's deploy this to production"
+  <commentary>Before deployment, critical paths need testing. Proactively launch QA agent to run pre-release checklist.</commentary>
+  assistant: Uses Task tool to launch qa agent
+  </example>
+
+  <example>
+  Context: Dev agent just completed implementation
+  user: "Dev finished the payment integration, checkpoint 5 passed"
+  <commentary>Implementation complete. Launch QA agent to test the new feature, especially critical payment paths.</commentary>
+  assistant: Uses Task tool to launch qa agent
+  </example>
 tools: Read, Grep, Glob, Bash
 ---
 
