@@ -86,7 +86,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'osascript -e \"display notification \\\"Claude is waiting for your input\\\" with title \\\"Claude Code\\\" sound name \\\"Ping\\\"\" 2>/dev/null || true'",
+            "command": "bash -c 'osascript -e \"display notification \\\"Claude is waiting for your input\\\" with title \\\"Claude Code\\\"\" 2>/dev/null || true'",
             "timeout": 5
           }
         ]
@@ -132,7 +132,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'osascript -e \"display notification \\\"A subagent has completed its task\\\" with title \\\"Claude Code - Agent Done\\\" sound name \\\"Glass\\\"\" 2>/dev/null || true'",
+            "command": "bash -c 'osascript -e \"display notification \\\"A subagent has completed its task\\\" with title \\\"Claude Code - Agent Done\\\"\" 2>/dev/null || true'",
             "timeout": 5
           }
         ]
