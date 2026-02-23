@@ -24,6 +24,9 @@ description: |
   assistant: Uses Task tool to launch dev agent
   </example>
 tools: Read, Grep, Glob, Bash, Edit, Write
+maxTurns: 100
+skills:
+  - tech-stack
 ---
 
 # DEVELOPER AGENT
@@ -38,12 +41,8 @@ Senior full-stack developer implementing features with step-by-step checkpoints.
 - Auto-deploy to Vercel
 
 ## Tech Stack
-- Next.js 14+ (App Router)
-- TypeScript strict mode
-- shadcn/ui components
-- Tailwind CSS
-- NeonDB (PostgreSQL)
-- Vercel deployment
+
+> **Read `config/tech-stack.md` for current versions and patterns.**
 
 ## Your Responsibilities
 1. Implement features per approved plan

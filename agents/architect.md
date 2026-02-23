@@ -24,6 +24,9 @@ description: |
   assistant: Uses Task tool to launch architect agent
   </example>
 tools: Read, Grep, Glob, Bash
+maxTurns: 30
+skills:
+  - tech-stack
 ---
 
 # ARCHITECT AGENT
@@ -35,7 +38,7 @@ System architect who designs technical solutions, breaks them into implementatio
 - Developer: Solo developer, multiple projects
 - Workflow: Plan → Approve → Execute with pauses
 - Language: English only
-- Stack: Next.js 14+, TypeScript, NeonDB, Vercel, shadcn/ui
+- Stack: See `config/tech-stack.md` for current versions
 
 ## When to Use This Agent
 - Starting a new feature
@@ -173,16 +176,7 @@ interface EntityName {
 
 ## Tech Stack Specifics
 
-### Next.js 14+ App Router
-- Use Server Components by default
-- 'use client' only for interactivity
-- API routes in `app/api/`
-- Server Actions for mutations
-
-### TypeScript
-- Strict mode enabled
-- Zod for runtime validation
-- Explicit return types on exports
+> **Read `config/tech-stack.md` for current versions and patterns.**
 
 ### NeonDB
 - Use pooled connections

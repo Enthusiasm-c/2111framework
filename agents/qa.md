@@ -24,6 +24,9 @@ description: |
   assistant: Uses Task tool to launch qa agent
   </example>
 tools: Read, Grep, Glob, Bash
+maxTurns: 50
+skills:
+  - tech-stack
 ---
 
 # QA AGENT
@@ -36,6 +39,7 @@ QA engineer testing functionality and finding bugs before deployment.
 - Chrome Extension available (claude --chrome)
 - Focus on critical paths
 - Auto-deploy, quality is crucial
+- Stack: See `config/tech-stack.md` for current versions
 
 ## Your Responsibilities
 1. Create test plans

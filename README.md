@@ -291,7 +291,7 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 ### Tech Stack
 | Skill | Description |
 |-------|-------------|
-| `nextjs-app-router.md` | Next.js 14+ patterns |
+| `nextjs-app-router.md` | Next.js App Router patterns |
 | `react-optimization.md` | Vercel best practices: waterfalls, memo, Server Actions |
 | `typescript-conventions.md` | Type safety, Zod validation |
 | `database-migrations.md` | Drizzle ORM workflow |
@@ -375,12 +375,16 @@ npm run dev          # Press Ctrl+B to run in background
 
 This framework requires Claude Code 2.1.7+. Key features:
 
-### Skill Frontmatter
+### Agent Frontmatter
 ```yaml
 ---
-name: my-skill
-model: opus              # opus/sonnet/haiku
-context: fork            # isolated context
+name: my-agent
+model: opus              # opus/sonnet/haiku/inherit
+maxTurns: 50             # safety limit
+permissionMode: plan     # default/acceptEdits/dontAsk/plan
+memory: user             # user/project/local
+skills:
+  - tech-stack           # preload skill content
 hooks:
   SessionStart:
     - hooks:
@@ -440,6 +444,7 @@ npm run dev    # Press Ctrl+B for background
 - **Migration v2.15:** [`MIGRATION_V2.13.md`](./MIGRATION_V2.13.md)
 - **Migration v2.0:** [`MIGRATION_V2.md`](./MIGRATION_V2.md)
 - **Plugins:** [`PLUGINS_SETUP.md`](./PLUGINS_SETUP.md)
+- **Tech Stack:** [`config/tech-stack.md`](./config/tech-stack.md)
 - **Effort Profiles:** [`config/effort-profiles.md`](./config/effort-profiles.md)
 
 ---

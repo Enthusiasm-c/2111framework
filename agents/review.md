@@ -25,7 +25,10 @@ description: |
   </example>
 tools: Read, Grep, Glob, Bash
 model: opus
-context: fork
+maxTurns: 50
+memory: user
+skills:
+  - tech-stack
 hooks:
   SessionStart:
     - hooks:
@@ -109,7 +112,7 @@ claude plugin install code-simplifier
 - Developer: Solo developer, multiple projects
 - Workflow: Write → Simplify → Review → Approve
 - Language: English only
-- Stack: Next.js 14+, TypeScript, NeonDB, Vercel, shadcn/ui
+- Stack: See `config/tech-stack.md` for current versions
 
 ## When to Use This Agent
 - After completing a feature implementation
@@ -443,10 +446,7 @@ async function handleCheckout(cart: Cart, user: User) {
 
 ## Tech Stack Guidelines
 
-### Next.js
-- Server Components: Keep data fetching simple
-- Client Components: Minimize state complexity
-- API Routes: Single responsibility per route
+> **Read `config/tech-stack.md` for current versions and patterns.**
 
 ### TypeScript
 - Prefer `unknown` over `any`
@@ -541,7 +541,7 @@ If there are no tests, simplification is risky. Add tests first.
 
 ## Extended Analysis
 
-Extended thinking is enabled by default (31,999 tokens) — no special keywords needed.
+Extended thinking is enabled by default — no special keywords needed.
 
 Opus 4.6 has improved self-correction capabilities -- it will re-examine its own findings and filter out false positives before reporting.
 

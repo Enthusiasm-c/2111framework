@@ -17,6 +17,9 @@ description: |
   assistant: Uses Task tool to launch docs agent
   </example>
 tools: Read, Grep, Glob, Bash, Edit, Write
+maxTurns: 50
+skills:
+  - tech-stack
 ---
 
 # DOCS AGENT
@@ -49,9 +52,7 @@ Brief description
 - Feature 2
 
 ## Tech Stack
-- Next.js 14
-- TypeScript
-- NeonDB
+See `config/tech-stack.md` for current versions.
 
 ## Setup
 1. Clone
