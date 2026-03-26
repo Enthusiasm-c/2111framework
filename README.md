@@ -1,10 +1,10 @@
-# 2111framework v2.17
+# 2111framework v2.18
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.17.0
-**Updated:** February 20, 2026
+**Version:** 2.18.0
+**Updated:** March 26, 2026
 **Requires:** Claude Code 2.1.7+
 
 ---
@@ -28,10 +28,49 @@ source ~/.zshrc
 # Add API keys to ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
-
-# Optional: Enable Agent Teams (experimental)
-export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
 ```
+
+---
+
+## What's New in v2.18
+
+### Native Memory Integration:
+- **Hybrid memory system** — native Claude Code memory (`.claude/projects/*/memory/`) + framework hooks
+- Native memory handles: user preferences, feedback, external references
+- PROJECT_MEMORY.md handles: architecture decisions, resolved bugs, API limitations
+- Compact hook now also re-injects TODO.md alongside PROJECT_MEMORY.md
+- See `skills/workflow/auto-memory.md`
+
+### Agent Teams — Stable + Worktree Isolation:
+- **No longer experimental** — removed `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true` flag
+- **`isolation: "worktree"`** — each agent gets isolated git worktree, no file conflicts
+- **`run_in_background: true`** — non-blocking parallel execution
+- **`SendMessage`** — communicate with named running agents
+- **`subagent_type`** — typed agent specialization (dev, qa, review, security, Explore)
+- Updated patterns: parallel code review, parallel feature dev, research fan-out
+- See `skills/mcp-usage/agent-teams.md`
+
+### New Hook Types:
+- **`type: "prompt"`** — Claude model evaluates hooks (semantic validation)
+- **`type: "agent"`** — subagent with tool access for deep verification
+- **`type: "http"`** — POST JSON to URLs (Slack/Telegram notifications, remote validation)
+- Framework still uses `type: "command"` hooks; new types documented for custom setups
+- See `skills/workflow/hooks-catalog.md`
+
+### 3 New Safety Hooks (15 total):
+- **TypeScript checker** — runs `tsc --noEmit` after every `.ts/.tsx` edit (async), catches type errors immediately
+- **Test coverage checker** — warns if edited file has no corresponding test file
+- **PROJECT_MEMORY size auditor** — warns when PROJECT_MEMORY.md exceeds 50KB
+
+### Browser Testing:
+- **Chrome DevTools MCP** documented as replacement for broken Chrome Extension
+- New skill: `skills/mcp-usage/browser-testing-guide.md`
+- Supports: screenshots, form testing, Lighthouse audits, mobile emulation
+
+### Agent Updates:
+- **Dev agent** — parallel execution docs with worktree isolation
+- **Review agent** — updated Agent Teams pattern with Agent tool syntax
+- **Security agent** — parallel security audit pattern with named subagents
 
 ---
 
@@ -267,7 +306,8 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 | `background-tasks.md` | Dev server in background + --from-pr (NEW) |
 | `ai-agents.md` | Natural language commands for Gemini/Codex agents |
 | `multi-ai-debug.md` | Codex/Gemini as second-opinion debuggers |
-| `chrome-extension-guide.md` | Browser automation for frontend testing |
+| `browser-testing-guide.md` | Browser testing via Chrome DevTools MCP (NEW) |
+| `chrome-extension-guide.md` | Browser automation via Chrome Extension (legacy) |
 | `github-mcp-guide.md` | Issues, PRs, CI/CD from terminal |
 | `clerk-mcp-guide.md` | Users, organizations, invitations management |
 | `context7-best-practices.md` | Library documentation lookup |
@@ -401,9 +441,10 @@ hooks:
 /security           # Security audit
 ```
 
-### Agent Teams (Experimental)
-```bash
-export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
+### Agent Teams + Worktree Isolation
+```
+Agent(subagent_type: "dev", isolation: "worktree", run_in_background: true)
+SendMessage(to: "agent-name", message: "...")
 ```
 
 ### Effort Levels
@@ -449,4 +490,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.17.0
+**Version:** 2.18.0

@@ -1,122 +1,170 @@
 ---
 name: auto-memory
-description: Persistent memory system for Claude Code sessions
+description: Persistent memory system for Claude Code sessions — native + framework hybrid
 ---
 
 # Auto-Memory System
 
-Claude Code is stateless between sessions and loses context after `/compact`. The auto-memory system solves this by creating a persistence loop:
+Claude Code now has a **native memory system** built in. The 2111framework complements it with project-specific hooks for context that native memory doesn't cover.
+
+## Architecture: Native + Framework Hybrid
 
 ```
-Stop hook saves → SessionStart hook reads → /compact re-injects
+Native Memory (built-in)              Framework Hooks (2111framework)
+─────────────────────────              ────────────────────────────────
+.claude/projects/*/memory/             PROJECT_MEMORY.md
+├── MEMORY.md (index)                  ├── Architecture decisions
+├── user_*.md (user prefs)             ├── Resolved bugs
+├── feedback_*.md (corrections)        ├── API limitations
+├── project_*.md (project state)       └── Anti-patterns
+└── reference_*.md (external refs)
+                                       SessionStart/compact hook
+Auto-loaded every session              ├── Re-injects PROJECT_MEMORY.md
+Claude manages read/write              ├── Git branch + last 5 commits
+Survives compact automatically         └── Fills gaps native memory misses
 ```
 
-## How It Works
+---
 
-### The Memory Cycle
+## Native Memory System (Built-in)
 
-1. **Session ends** (Stop hook) — `auto-memory.sh` writes timestamp + project info to `~/.claude/memory/sessions.md`
-2. **Session starts** (SessionStart hook) — displays `PROJECT_MEMORY.md` + git context
-3. **After /compact** (SessionStart hook) — re-injects `PROJECT_MEMORY.md` into context so Claude remembers key decisions
+Claude Code automatically maintains memory in `.claude/projects/<project-path>/memory/`. No setup required.
 
-### What Gets Saved Automatically
+### Memory Types
 
-The Stop hook (`config/hooks/auto-memory.sh`) saves:
-- Timestamp of session end
-- Project name (from current directory)
-- Git branch name
+| Type | What to store | Example |
+|------|--------------|---------|
+| `user` | Your role, preferences, knowledge | "Senior dev, prefers terse responses" |
+| `feedback` | Corrections and confirmed approaches | "Don't mock DB in integration tests" |
+| `project` | Ongoing work, goals, deadlines | "Merge freeze starts 2026-03-05" |
+| `reference` | Pointers to external systems | "Bugs tracked in Linear project INGEST" |
 
-### What You Maintain Manually
+### How It Works
 
-`PROJECT_MEMORY.md` in your project root — this is the **high-value** file:
-- Architecture decisions
-- Resolved bugs (so Claude doesn't re-introduce them)
-- API limitations discovered during development
-- Anti-patterns specific to the project
+- **MEMORY.md** index is loaded into every conversation automatically
+- Claude decides when to save/read memories based on conversation context
+- Memories have frontmatter with `name`, `description`, `type`
+- Survives `/compact` without any hooks — it's always in context
 
-## File Structure
+### What Native Memory Handles Well
 
-```
-~/.claude/memory/
-  sessions.md          # Auto-generated session log
+- User preferences and working style
+- Feedback corrections ("don't do X, do Y instead")
+- External resource pointers
+- Cross-session context
 
-<project-root>/
-  PROJECT_MEMORY.md    # Manual — key decisions and context
-```
+### What Native Memory Does NOT Handle
 
-## SESSION_MEMORY vs PROJECT_MEMORY
+- **Architecture decisions** tied to specific codebases (too detailed for memory files)
+- **Git context** after compact (branch, recent commits)
+- **TODO list** persistence across prompts
+- **Resolved bugs** with technical details
 
-| File | Location | Updated by | Purpose |
-|------|----------|------------|---------|
-| `sessions.md` | `~/.claude/memory/` | Hook (auto) | Session log across all projects |
-| `PROJECT_MEMORY.md` | Project root | You (manual) | Project-specific decisions and context |
+This is where framework hooks fill the gap.
 
-## Integration with /compact
+---
 
-When you run `/compact`, Claude loses all conversation context. The SessionStart hook detects the compact event and re-injects:
+## Framework Hooks (PROJECT_MEMORY.md)
 
-1. Full contents of `PROJECT_MEMORY.md`
-2. Current git branch
-3. Last 5 commits
-
-This means **anything in PROJECT_MEMORY.md survives compact**.
-
-## Best Practices
-
-### What to Record in PROJECT_MEMORY.md
-
-- "We chose X over Y because Z" (architecture decisions)
-- "Bug: X happened because Y — fix: Z" (resolved bugs)
-- "API X doesn't support Y, use Z instead" (limitations)
-- "Never do X in this project because Y" (anti-patterns)
-- Key file paths and their purposes
-
-### What NOT to Record
-
-- Temporary debugging notes
-- TODO items (use `.claude/TODO.md` instead)
-- Full code snippets (reference file paths instead)
-- Information that changes frequently
-
-### When to Update
-
-After Claude suggests updating PROJECT_MEMORY.md (or when you discover something important):
+### The Compact Re-injection Cycle
 
 ```
-"Add to PROJECT_MEMORY.md: We use Drizzle ORM with Neon serverless driver.
-Connection pooling is handled by Neon, not by our code."
+/compact fires → context lost → SessionStart/compact hook fires
+→ re-injects PROJECT_MEMORY.md + git branch + last 5 commits
+→ Claude recovers project context
 ```
+
+### PROJECT_MEMORY.md
+
+Located in your project root. This is the **high-value** file for technical context:
+
+```markdown
+# Project Memory
+
+## Architecture Decisions
+- We chose X over Y because Z
+- Tech stack versions centralized in config/tech-stack.md
+
+## Resolved Bugs
+- Bug: X happened because Y — fix: Z
+
+## API Limitations
+- API X doesn't support Y, use Z instead
+
+## Anti-patterns
+- Never do X in this project because Y
+```
+
+### What Goes Where
+
+| Information | Where to store | Why |
+|-------------|---------------|-----|
+| "I prefer short responses" | Native memory (feedback) | Personal preference, cross-project |
+| "We use Drizzle ORM with Neon" | PROJECT_MEMORY.md | Architecture decision, project-specific |
+| "Bugs tracked in Linear" | Native memory (reference) | External system pointer |
+| "API X rate-limits at 100/min" | PROJECT_MEMORY.md | Technical limitation, code-relevant |
+| "Don't mock DB in tests" | Native memory (feedback) | Workflow preference, cross-project |
+| "Auth rewrite driven by compliance" | PROJECT_MEMORY.md | Project-specific context |
+
+---
+
+## Legacy: auto-memory.sh
+
+The Stop hook (`config/hooks/auto-memory.sh`) still logs session timestamps to `~/.claude/memory/sessions.md`. This is mostly **superseded by native memory** but kept for backward compatibility and session auditing.
+
+You can safely remove it if you don't need session logs:
+
+```json
+// In settings.json, remove the first Stop hook entry
+```
+
+---
 
 ## Setup
 
-Auto-memory is installed automatically with `bash install.sh`. To verify:
+### Native Memory
+No setup needed. Works out of the box with Claude Code.
+
+### Framework Hooks
+Installed automatically with `bash install.sh`:
+- SessionStart/compact hook — re-injects PROJECT_MEMORY.md
+- Stop hook — session logging (legacy)
+
+### Verify Setup
 
 ```bash
-# Check hook script exists
-ls -la ~/.claude/hooks/auto-memory.sh
+# Native memory directory (auto-created by Claude Code)
+ls -la ~/.claude/projects/
 
-# Check memory directory exists
-ls -la ~/.claude/memory/
-
-# Check settings.json has Stop hook
+# Framework hooks
+cat ~/.claude/settings.json | jq '.hooks.SessionStart'
 cat ~/.claude/settings.json | jq '.hooks.Stop'
+
+# PROJECT_MEMORY.md in project root
+cat PROJECT_MEMORY.md
 ```
 
-## Customization
+---
 
-### Disable auto-memory
+## Best Practices
 
-Remove the first Stop hook entry from `~/.claude/settings.json`:
-```json
-"Stop": [
-  // Remove the auto-memory entry
-]
-```
+### Keep PROJECT_MEMORY.md Focused
 
-### Change memory location
+- Only technical decisions, bugs, and limitations
+- Reference file paths, don't paste code
+- Update after important discoveries
+- Keep under 100 lines — it's re-injected on every compact
 
-Edit `config/hooks/auto-memory.sh` and change `MEMORY_DIR`.
+### Let Native Memory Handle the Rest
 
-### Add more context to compact re-injection
+- Don't duplicate user preferences in PROJECT_MEMORY.md
+- Don't store TODO items (use `.claude/TODO.md`)
+- Don't store temporary debugging notes
+- Trust Claude to manage its own memory files
 
-Edit the SessionStart compact hook in `settings.json` to include additional files or commands.
+### Migration from v2.17
+
+If you have a large PROJECT_MEMORY.md with user preferences mixed in:
+1. Move personal preferences → let Claude save them as native `feedback` memories
+2. Move external references → let Claude save them as native `reference` memories
+3. Keep only architecture decisions, bugs, API limitations in PROJECT_MEMORY.md

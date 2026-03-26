@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'echo \"=== CONTEXT RE-INJECTION ===\"; if [ -f PROJECT_MEMORY.md ]; then echo \"--- PROJECT_MEMORY.md ---\"; cat PROJECT_MEMORY.md; echo \"\"; fi; echo \"--- Git Branch ---\"; git branch --show-current 2>/dev/null; echo \"--- Last 5 Commits ---\"; git log --oneline -5 2>/dev/null; echo \"=========================\"'",
+            "command": "bash -c 'echo \"=== CONTEXT RE-INJECTION (complements native memory) ===\"; if [ -f PROJECT_MEMORY.md ]; then echo \"--- PROJECT_MEMORY.md ---\"; cat PROJECT_MEMORY.md; echo \"\"; fi; echo \"--- Git Context ---\"; echo \"Branch: $(git branch --show-current 2>/dev/null)\"; git log --oneline -5 2>/dev/null; if [ -f .claude/TODO.md ]; then echo \"\"; echo \"--- Active TODOs ---\"; cat .claude/TODO.md; fi; echo \"=========================\"'",
             "timeout": 5
           }
         ]
@@ -78,6 +78,27 @@
             "async": true
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx)$ ]] && [ -f tsconfig.json ]; then ERRORS=$(npx tsc --noEmit 2>&1 | grep -E \"error TS\" | head -5); if [ -n \"$ERRORS\" ]; then COUNT=$(npx tsc --noEmit 2>&1 | grep -c \"error TS\" || true); echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"TypeScript: $COUNT errors found after editing $FILE:\\n$ERRORS\\nFix type errors before continuing.\\\"}}\"; fi; fi'",
+            "timeout": 30,
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(cat - | jq -r \".tool_input.file_path // .tool_response.filePath\"); if [[ \"$FILE\" =~ \\.(ts|tsx)$ ]] && [[ ! \"$FILE\" =~ \\.(test|spec)\\.(ts|tsx)$ ]] && [[ ! \"$FILE\" =~ __tests__ ]] && [[ ! \"$FILE\" =~ \\.d\\.ts$ ]]; then BASENAME=$(basename \"$FILE\" | sed \"s/\\.[^.]*$//\"); DIR=$(dirname \"$FILE\"); FOUND=0; for P in \"${DIR}/${BASENAME}.test.ts\" \"${DIR}/${BASENAME}.test.tsx\" \"${DIR}/${BASENAME}.spec.ts\" \"${DIR}/__tests__/${BASENAME}.test.ts\"; do [ -f \"$P\" ] && FOUND=1 && break; done; if [ -f __tests__ ] || [ -d __tests__ ]; then grep -rl \"$BASENAME\" __tests__/ 2>/dev/null | head -1 | grep -q . && FOUND=1; fi; if [ $FOUND -eq 0 ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"WARNING: No test file found for $FILE. Consider creating a test to verify this change.\\\"}}\"; fi; fi'",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Notification": [
@@ -121,6 +142,16 @@
           {
             "type": "command",
             "command": "bash -c 'if [ -f .claude/TODO.md ]; then echo \"--- Active TODOs ---\"; cat .claude/TODO.md; echo \"---\"; fi'",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'if [ -f PROJECT_MEMORY.md ]; then SIZE=$(wc -c < PROJECT_MEMORY.md); SIZE_KB=$((SIZE / 1024)); if [ $SIZE_KB -gt 50 ]; then LINES=$(wc -l < PROJECT_MEMORY.md); echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"WARNING: PROJECT_MEMORY.md is ${SIZE_KB}KB (${LINES} lines). Files over 50KB slow down context re-injection. Archive old entries to PROJECT_MEMORY_ARCHIVE.md and keep only active decisions.\\\"}}\"; fi; fi'",
             "timeout": 3
           }
         ]

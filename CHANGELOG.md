@@ -1,5 +1,61 @@
 # Changelog
 
+## [2.18.0] - 2026-03-26
+
+### Added
+- **Native Memory Integration** — hybrid memory system combining Claude Code's built-in memory (`.claude/projects/*/memory/`) with framework hooks
+  - Native memory handles user preferences, feedback corrections, external references
+  - PROJECT_MEMORY.md handles architecture decisions, resolved bugs, API limitations
+  - Clear separation: "what goes where" guide in auto-memory.md
+  - Compact hook now also re-injects TODO.md alongside PROJECT_MEMORY.md
+
+- **New Hook Types Documentation** — `skills/workflow/hooks-catalog.md` expanded with 4 hook types:
+  - `type: "prompt"` — Claude model evaluates hooks (semantic validation, cheaper than agent)
+  - `type: "agent"` — subagent with tool access for deep verification (e.g., auto-test after edit)
+  - `type: "http"` — POST JSON to URLs (Slack/Telegram notifications, remote validation, audit logging)
+  - Practical examples for each type including Telegram notification and smart safety check
+
+- **Parallel Security Audit** pattern in `agents/security.md` — spawn named subagents for auth, input, and data audits
+- **Parallel Execution** section in `agents/developer.md` — worktree isolation for parallel dev agents
+
+- **3 New Safety Hooks** — expanded from 12 to 15 hooks in `config/settings.json`:
+  - **TypeScript checker** (PostToolUse) — runs `tsc --noEmit` async after `.ts/.tsx` edits, reports type errors immediately
+  - **Test coverage checker** (PostToolUse) — warns when edited file has no corresponding test file (checks co-located, __tests__/, spec patterns)
+  - **PROJECT_MEMORY size auditor** (UserPromptSubmit) — warns when PROJECT_MEMORY.md exceeds 50KB, suggests archiving
+
+- **Browser Testing Guide** (`skills/mcp-usage/browser-testing-guide.md`) — Chrome DevTools MCP as replacement for broken Chrome Extension
+  - Setup instructions for Chrome DevTools MCP
+  - Common workflows: responsive testing, form testing, API debugging, Lighthouse audits
+  - Telegram Mini App testing strategies
+  - Decision table: when to use DevTools MCP vs Chrome Extension
+
+### Changed
+- **Agent Teams — Stable** (`skills/mcp-usage/agent-teams.md`) — complete rewrite:
+  - Removed `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true` flag (no longer needed)
+  - Added `isolation: "worktree"` documentation — each agent gets isolated git worktree
+  - Added `run_in_background: true` — non-blocking parallel execution
+  - Added `SendMessage` — communicate with named running agents
+  - Added `subagent_type` — typed agent specialization
+  - New patterns: parallel feature dev with worktree merge, research fan-out
+  - Worktree merge workflow documentation
+
+- **Review Agent** (`agents/review.md`) — updated Agent Teams code review pattern to use Agent tool syntax with named agents and `run_in_background`
+
+- **Security Agent** (`agents/security.md`) — replaced generic Agent Teams pattern with concrete parallel audit using named subagents
+
+- **Compact Hook** (`config/settings.json`) — now re-injects TODO.md in addition to PROJECT_MEMORY.md and git context
+
+- **Auto-Memory Skill** (`skills/workflow/auto-memory.md`) — rewritten for hybrid approach:
+  - Documents native memory types (user, feedback, project, reference)
+  - Clear "what goes where" decision table
+  - Marked auto-memory.sh as legacy (superseded by native memory)
+  - Migration guide from v2.17
+
+- **README.md** — updated to v2.18.0 with all new features
+- **Quick Start** — removed experimental Agent Teams flag
+
+---
+
 ## [2.17.0] - 2026-02-20
 
 ### Added

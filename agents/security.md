@@ -147,15 +147,33 @@ For comprehensive security audits, use this systematic approach:
 3. Report with severity, location, and fix
 ```
 
-### Agent Teams Security Review
+### Parallel Security Audit
 
-With Agent Teams enabled, run parallel security analysis:
+Run parallel security analysis using Agent tool:
 
 ```
-Lead: Coordinate security audit of src/
--> Teammate 1: Authentication & authorization review
--> Teammate 2: Input validation & injection review
--> Teammate 3: Data exposure & configuration review
+Lead spawns 3 agents in a single message:
+
+Agent(
+  name: "auth-audit",
+  subagent_type: "security",
+  prompt: "Audit authentication & authorization in src/",
+  run_in_background: true
+)
+
+Agent(
+  name: "input-audit",
+  subagent_type: "security",
+  prompt: "Audit input validation & injection vectors in src/",
+  run_in_background: true
+)
+
+Agent(
+  name: "data-audit",
+  subagent_type: "security",
+  prompt: "Audit data exposure & configuration in src/",
+  run_in_background: true
+)
 
 Lead: Synthesize findings, prioritize by severity
 ```

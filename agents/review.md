@@ -549,16 +549,33 @@ Opus 4.6 has improved self-correction capabilities -- it will re-examine its own
 
 ## Agent Teams Code Review
 
-With Agent Teams enabled, run parallel review from multiple angles:
+Run parallel review from multiple angles using Agent tool:
 
 ```
-Lead: "Review src/features/checkout/"
+Lead spawns 3 agents in a single message:
 
--> Teammate 1: Security review (injection, auth, data exposure)
--> Teammate 2: Performance review (N+1, memory, async patterns)
--> Teammate 3: Correctness review (edge cases, types, logic errors)
+Agent(
+  name: "sec-review",
+  subagent_type: "security",
+  prompt: "Security audit of src/features/checkout/",
+  run_in_background: true
+)
 
-Lead: Synthesize findings, deduplicate, prioritize
+Agent(
+  name: "perf-review",
+  subagent_type: "review",
+  prompt: "Performance review of src/features/checkout/ — async patterns, N+1, memory",
+  run_in_background: true
+)
+
+Agent(
+  name: "correctness",
+  subagent_type: "qa",
+  prompt: "Review src/features/checkout/ for edge cases, types, logic errors",
+  run_in_background: true
+)
+
+Lead: Waits for completion notifications, synthesizes findings
 ```
 
 This is especially effective after Ralph Wiggum autonomous loops where large amounts of code were generated.

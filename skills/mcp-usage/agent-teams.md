@@ -1,25 +1,51 @@
 ---
 name: agent-teams
-description: Parallel agent coordination in Claude Code. Use when tasks benefit from multiple agents working simultaneously -- code review, feature development, or research from multiple angles.
+description: Parallel agent coordination in Claude Code. Use when tasks benefit from multiple agents working simultaneously — code review, feature development, or research from multiple angles.
 model: opus
 context: fork
 ---
 
-# Agent Teams - Parallel Agent Coordination
+# Agent Teams — Parallel Agent Coordination
 
-Run multiple Claude agents in parallel within a single session.
+Run multiple Claude agents in parallel within a single session. Agent Teams is now a **stable feature** in Claude Code — no experimental flags needed.
 
-## Activation
+---
 
-Agent Teams is an experimental feature. Enable it:
+## Core Concepts
 
-```bash
-# Via environment variable
-export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
+### Agent Tool
 
-# Or via settings.json
-claude config set experimental.agentTeams true
+The `Agent` tool spawns specialized subagents. Key parameters:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `subagent_type` | Agent specialization | `"Explore"`, `"dev"`, `"qa"`, `"review"`, `"security"` |
+| `isolation` | File system isolation | `"worktree"` — isolated git worktree copy |
+| `run_in_background` | Non-blocking execution | `true` — notified on completion |
+| `name` | Addressable agent name | `"security-reviewer"` |
+| `model` | Model override | `"sonnet"`, `"opus"`, `"haiku"` |
+| `mode` | Permission mode | `"plan"`, `"bypassPermissions"`, `"auto"` |
+
+### SendMessage
+
+Continue a running agent's conversation:
+
 ```
+SendMessage(to: "security-reviewer", message: "Also check for CSRF")
+```
+
+Agents resume with full context preserved. Use the agent's `name` or returned `agentId`.
+
+### Worktree Isolation
+
+```
+Agent(isolation: "worktree") → temporary git worktree
+→ agent works on isolated copy of the repo
+→ no file conflicts with other agents
+→ auto-cleaned if no changes; branch returned if changes made
+```
+
+**When to use:** Any time multiple agents write to the same files. Without worktree isolation, parallel dev agents will overwrite each other.
 
 ---
 
@@ -27,45 +53,27 @@ claude config set experimental.agentTeams true
 
 ```
 Lead Agent (you interact with this)
-├── Teammate 1 (autonomous worker)
-├── Teammate 2 (autonomous worker)
-└── Teammate 3 (autonomous worker)
+├── Agent A (isolation: "worktree", run_in_background: true)
+├── Agent B (isolation: "worktree", run_in_background: true)
+└── Agent C (subagent_type: "Explore")
 
-Shared: Task List + Mailbox (message passing)
+Communication: SendMessage between named agents
+Isolation: Each writing agent gets its own worktree
+Background: Lead continues working while agents run
 ```
-
-### Key Concepts
-
-| Concept | Description |
-|---------|-------------|
-| **Lead Agent** | Main agent that coordinates work, assigns tasks |
-| **Teammates** | Spawned agents working in parallel on sub-tasks |
-| **Task List** | Shared todo list visible to all agents |
-| **Mailbox** | Message passing between lead and teammates |
 
 ---
 
-## When to Use Agent Teams
+## When to Use What
 
-### Use Agent Teams
-
-- Code review from multiple angles (security + performance + correctness)
-- Feature development with parallel concerns (API + UI + tests)
-- Research across multiple codebases or documentation sources
-- Consilium-style parallel analysis
-- Large refactoring across many files
-
-### Use SubAgents (Task tool) Instead
-
-- Simple delegation of a single focused task
-- Protecting context window from large outputs
-- Sequential dependency chains
-
-### Use Solo Agent
-
-- Simple bug fixes
-- Single-file edits
-- Quick lookups
+| Scenario | Approach |
+|----------|----------|
+| Code review from 3 angles | 3 parallel agents (security, perf, correctness) |
+| Feature dev: API + UI + tests | 3 agents in worktrees, merge after |
+| Quick codebase search | Single `Explore` agent |
+| Bug investigation | Single focused agent |
+| Research across docs | 2-3 `Explore` agents in background |
+| Simple file edit | Direct edit, no agents |
 
 ---
 
@@ -74,108 +82,160 @@ Shared: Task List + Mailbox (message passing)
 ### Pattern 1: Parallel Code Review
 
 ```
-Lead: "Review src/auth/ for security, performance, and correctness"
+Lead spawns 3 agents in parallel (single message, 3 Agent calls):
 
-→ Teammate 1: Security audit (OWASP, auth bypass, injection)
-→ Teammate 2: Performance review (N+1, memory, async)
-→ Teammate 3: Correctness review (edge cases, types, logic)
+Agent(
+  name: "sec-review",
+  subagent_type: "security",
+  prompt: "Security audit of src/auth/",
+  run_in_background: true
+)
 
-Lead: Synthesizes all findings into unified report
+Agent(
+  name: "perf-review",
+  subagent_type: "review",
+  prompt: "Performance review of src/auth/ — focus on async patterns, N+1, memory",
+  run_in_background: true
+)
+
+Agent(
+  name: "correctness",
+  subagent_type: "qa",
+  prompt: "Review src/auth/ for edge cases, type safety, logic errors",
+  run_in_background: true
+)
+
+Lead: Waits for notifications, synthesizes findings
 ```
 
-### Pattern 2: Feature Development
+### Pattern 2: Parallel Feature Development
 
 ```
-Lead: "Implement user notifications feature"
+Lead: Architect designs the plan
 
-→ Teammate 1: API routes and database schema
-→ Teammate 2: React components and UI
-→ Teammate 3: Test suite
+Agent(
+  name: "api-dev",
+  subagent_type: "dev",
+  isolation: "worktree",
+  prompt: "Implement API routes per plan: ...",
+  run_in_background: true
+)
 
-Lead: Integrates all work, resolves conflicts
+Agent(
+  name: "ui-dev",
+  subagent_type: "dev",
+  isolation: "worktree",
+  prompt: "Implement React components per plan: ...",
+  run_in_background: true
+)
+
+Agent(
+  name: "test-dev",
+  subagent_type: "dev",
+  isolation: "worktree",
+  prompt: "Write test suite per plan: ...",
+  run_in_background: true
+)
+
+Lead: Merges worktree branches when all complete
 ```
 
-### Pattern 3: Consilium Parallel Mode
+### Pattern 3: Research Fan-out
+
+```
+Lead needs to understand 3 unfamiliar codebases:
+
+Agent(subagent_type: "Explore", prompt: "How does auth work in src/lib/auth/?", run_in_background: true)
+Agent(subagent_type: "Explore", prompt: "How does the API layer work in src/app/api/?", run_in_background: true)
+Agent(subagent_type: "Explore", prompt: "What's the database schema in src/db/?", run_in_background: true)
+
+Lead: Continues planning while research runs
+```
+
+### Pattern 4: Consilium Parallel Analysis
 
 ```
 /consilium [product brief]
 
-Lead: Research Agent scans codebase
-→ Teammate 1: Growth + Sales analysis
-→ Teammate 2: Product + Tech analysis
-→ Teammate 3: Finance + Market analysis
+Lead (Research Agent): Scans codebase first
 
-Lead: Orchestrator synthesizes unified plan
-```
+→ Agent 1: Growth + Sales analysis
+→ Agent 2: Product + Tech analysis
+→ Agent 3: Finance + Market analysis
 
----
-
-## Display Modes
-
-### In-Process (Default)
-
-All agents run in the same terminal. Output interleaved with labels.
-
-### Split Panes (Advanced)
-
-```bash
-# tmux: split into panes per agent
-tmux split-window -h  # horizontal split
-tmux split-window -v  # vertical split
-
-# iTerm2: use tabs or split panes
+Lead (Orchestrator): Synthesizes unified plan
 ```
 
 ---
 
 ## Cost Control
 
-Agent Teams multiply token usage. Be aware:
+Parallel agents multiply token usage:
 
-| Agents | Approximate Cost Multiplier |
-|--------|----------------------------|
-| Lead + 1 | ~2x |
-| Lead + 2 | ~3x |
-| Lead + 3 | ~4x |
+| Setup | Cost Multiplier |
+|-------|----------------|
+| Lead + 1 agent | ~2x |
+| Lead + 2 agents | ~3x |
+| Lead + 3 agents | ~4x |
 
 ### Tips
 
-- Use `effortLevel: medium` for teammates doing routine work
-- Set clear, scoped tasks to avoid open-ended exploration
-- Monitor with `claude --usage` after sessions
-- Start with 1-2 teammates, scale up if needed
+- Use `model: "sonnet"` for routine agents (exploration, simple reviews)
+- Use `model: "opus"` only for security and complex analysis
+- Set clear, scoped prompts — avoid open-ended exploration
+- Use `run_in_background: true` to avoid idle waiting
+- Monitor usage with `claude --usage`
+- Start with 1-2 agents, scale up if needed
+
+---
+
+## Worktree Merge Workflow
+
+When parallel dev agents work in worktrees:
+
+1. Each agent creates changes on an isolated branch
+2. Agent result includes worktree path and branch name
+3. Lead merges branches sequentially:
+
+```bash
+git merge <branch-from-agent-1> --no-ff
+git merge <branch-from-agent-2> --no-ff
+# Resolve conflicts if any
+```
+
+4. Worktrees with no changes are auto-cleaned
 
 ---
 
 ## Limitations
 
-- Experimental feature, may change in future releases
-- Teammates share the same file system -- watch for write conflicts
-- No built-in conflict resolution for simultaneous edits
-- Lead agent context grows with coordination overhead
-- Requires more API tokens than solo mode
+- Worktree agents can't see each other's changes until merged
+- Lead agent context grows with each agent's report
+- Background agents can't ask clarifying questions
+- File conflicts possible without worktree isolation
+- Token usage scales linearly with agent count
 
 ---
 
 ## Integration with 2111framework
 
 ```bash
-# Review with Agent Teams
-/review src/features/auth/    # Lead coordinates security + correctness + perf teammates
+# Review with parallel agents
+/review src/features/auth/    # Lead coordinates 3 review angles
 
-# Ralph + Agent Teams
+# Ralph Wiggum + parallel review after
 /ralph-loop "Implement CRUD" --max-iterations 25
-# Each iteration can spawn teammates for parallel sub-tasks
+# Then spawn parallel review agents on the generated code
 
-# Consilium with Agent Teams
+# Consilium with parallel analysts
 /consilium [brief]
-# 6 analyst agents run as teammates in parallel
+# 6 analyst agents run in parallel
 ```
 
 ---
 
 ## Related Skills
 
-- `ralph-wiggum.md` - Autonomous loops (can use teammates)
-- `consilium.md` - Product analysis (natural fit for parallel agents)
-- `review.md` - Code review (parallel review angles)
+- `ralph-wiggum.md` — Autonomous loops (review results with parallel agents)
+- `consilium.md` — Product analysis (natural fit for parallel agents)
+- `review.md` — Code review (parallel review angles)

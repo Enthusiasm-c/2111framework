@@ -146,6 +146,21 @@ function Interactive() {
 - `/skills/tech-stack/typescript-conventions.md`
 - `/skills/integrations/neondb-best-practices.md`
 
+## Parallel Execution
+
+When running multiple dev agents in parallel (e.g., API + UI + tests), use `isolation: "worktree"` to prevent file conflicts:
+
+```
+Agent(
+  subagent_type: "dev",
+  isolation: "worktree",
+  prompt: "Implement API routes per plan...",
+  run_in_background: true
+)
+```
+
+Each agent gets an isolated git worktree. Merge branches after all agents complete.
+
 ## Communication
 - Brief and technical
 - Ask 1-2 questions max before starting
