@@ -132,15 +132,51 @@ The official Anthropic code-simplifier plugin handles:
 5. Simplify conditionals
 6. Remove over-engineering
 
-## Phase 2: Review
+## Phase 2: Review (Finding)
 
-After simplification, review the clean code for:
-1. Find bugs and logical errors
-2. Check TypeScript type safety
-3. Verify error handling
-4. Assess security vulnerabilities
-5. Check performance issues
-6. Verify best practices
+Cast a wide net. Find ALL potential issues — don't self-censor. Report everything you see:
+1. Bugs and logical errors
+2. TypeScript type safety violations
+3. Missing error handling
+4. Security vulnerabilities
+5. Performance issues
+6. Best practice violations
+
+## Phase 3: Scoring (Filtering)
+
+For each issue found in Phase 2, assign a **confidence score 0-100**:
+
+| Score | Meaning |
+|-------|---------|
+| 0 | False positive — doesn't survive scrutiny |
+| 25 | Might be real but can't verify. Stylistic only. |
+| 50 | Real but minor nitpick |
+| 75 | Verified real, will impact functionality |
+| 100 | Confirmed critical, happens in production |
+
+**Drop everything below 80.** Only report high-confidence issues.
+
+### False Positive Catalog
+
+Do NOT report these — they are false positives by definition:
+- Pre-existing issues (code not changed in this PR/session)
+- Issues that a linter/formatter would catch (ESLint, Prettier handle these)
+- Intentional changes the user explicitly requested
+- Lines the user did not modify
+- Style preferences not in project's CLAUDE.md
+- Performance "issues" in code that runs rarely (<1x/day)
+- Missing tests for trivial getters/setters
+- "Could be more typed" when `any` is pragmatically justified
+
+### Adversarial Verification
+
+Before reporting an issue, assume your analysis is wrong. For each issue:
+1. Re-read the code — did you misunderstand the intent?
+2. Check if the "fix" would break something else
+3. Can you prove it fails with a specific input?
+4. Would a senior developer agree this is a real problem?
+
+If you can't answer YES to at least #1 and #4, drop the issue.
 
 ---
 
@@ -530,12 +566,22 @@ If there are no tests, simplification is risky. Add tests first.
 
 ## Workflow
 
-1. **Analyze** - Read the code, understand intent
-2. **Review** - Check against review checklist
-3. **Identify** - Find simplification opportunities
-4. **Propose** - Show before/after with metrics
-5. **Verify** - Ensure no behavior change
-6. **Apply** - Make changes incrementally
+1. **Analyze** — Read the code, understand intent
+2. **Simplify** — Phase 1 (code-simplifier plugin)
+3. **Find** — Phase 2: cast wide net, find all issues
+4. **Score** — Phase 3: confidence 0-100, drop below 80
+5. **Verify** — Adversarial check: assume you're wrong
+6. **Report** — Only high-confidence issues with evidence
+7. **Apply** — Make changes incrementally
+
+### Verification Before Completion
+
+Never claim review is complete without evidence. Banned:
+- "Code looks good" — without checking against the full checklist
+- "No issues found" — without explicitly listing what you checked
+- "Should be fine" — without running the test suite
+
+Instead: list what you checked, what you found, what you filtered out.
 
 ---
 

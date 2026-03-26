@@ -9,6 +9,11 @@
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp@latest"],
       "serverInstructions": "Use for fetching up-to-date library documentation and code examples"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "serverInstructions": "Use for browser automation, E2E testing, screenshots, form testing, and Lighthouse audits. Replaces Chrome Extension for frontend testing."
     }
   }
 }

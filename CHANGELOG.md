@@ -1,5 +1,36 @@
 # Changelog
 
+## [2.18.1] - 2026-03-26
+
+### Added — Plugin-Inspired Improvements
+
+Patterns extracted from superpowers, code-review, semgrep, and sentry plugins:
+
+- **TDD Anti-Rationalization** (`skills/workflow/tdd-workflow.md`) — complete rewrite:
+  - Iron Law: "NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST"
+  - Anti-rationalization table: 8 specific excuses Claude generates, with pre-approved counters
+  - Verification before completion: bans "should work now" without running tests
+  - Escalation rule: if 3+ fixes fail, stop and question architecture
+
+- **Review Agent Upgrade** (`agents/review.md`) — finding/scoring separation:
+  - Phase 2 (Finding): cast wide net, report everything
+  - Phase 3 (Scoring): confidence 0-100, threshold 80, drop everything below
+  - False positive catalog: 8 explicit patterns to never report
+  - Adversarial verification: assume your analysis is wrong before reporting
+  - Verification before completion: must list what was checked
+
+- **Security Context Injection Hook** — UserPromptSubmit hook (from semgrep pattern):
+  - Injects 7 security rules on every prompt in projects with package.json
+  - Covers: SQL injection, XSS, secrets, PII logging, Zod validation, auth checks, eval()
+  - Keeps security awareness alive even after context drift
+
+- **Playwright MCP** (`mcp.json`) — browser automation for E2E testing:
+  - Replaces broken Chrome Extension
+  - 59 MCP tools: navigate, click, fill, screenshot, console, network, Lighthouse
+  - serverInstructions for lazy loading
+
+---
+
 ## [2.18.0] - 2026-03-26
 
 ### Added
