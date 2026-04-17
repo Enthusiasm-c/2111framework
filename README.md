@@ -1,11 +1,11 @@
-# 2111framework v2.18
+# 2111framework v2.19
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.18.0
-**Updated:** March 26, 2026
-**Requires:** Claude Code 2.1.7+
+**Version:** 2.19.0
+**Updated:** April 17, 2026
+**Requires:** Claude Code 2.1.7+, Claude Opus 4.7
 
 ---
 
@@ -29,6 +29,34 @@ source ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
 ```
+
+---
+
+## What's New in v2.19
+
+### Noise Reduction:
+- **macOS desktop notifications removed** from `settings.json` — both the "Claude waiting for input" (Notification hook) and "subagent completed" (SubagentStop hook) are gone. They were noisy during focused work. Add back manually if needed.
+
+### Opus 4.7 + 1M Context:
+- **Claude Opus 4.7** is now the default — adaptive thinking (no `ultrathink` / `alwaysThinkingEnabled`), 1M token context, best-in-class self-correction
+- All agents rewritten for **Full Dependency Scan first** — read the whole feature area in one pass, not chunk-by-chunk
+- `agents/architect.md` — new step 0 "Full Dependency Scan", maxTurns 30 → 50
+- `agents/developer.md` — replaced linear 5-checkpoint system with **Task DAG** (harness TaskCreate/TaskUpdate), verification-before-done is load-bearing for non-coder founder
+- `agents/security.md` — split audits by attack surface (auth/input/data/config), not by file
+- `agents/qa.md` — reads full feature + tests + git diff before designing test plan
+- `agents/review.md` — 1M context lets one `/review` pass cover an entire module
+- Removed `alwaysThinkingEnabled: true` from `settings.json` (no effect on 4.7, wastes tokens)
+
+### Ralph Wiggum Removed:
+- Autonomous loop skill `ralph-wiggum.md` deleted — superseded by Agent Teams (parallel agents in worktrees with `run_in_background: true`)
+- Cleaned references in README, PLUGINS_SETUP, consilium, background-tasks, agent-teams, review, effort-profiles
+
+### Semgrep Plugin (recommended):
+- Added to `PLUGINS_SETUP.md` optional list — real SAST/secrets scan complements the security prompt hook
+
+### Tech Stack Refreshed:
+- `config/tech-stack.md` now lists Claude Code runtime (model, context window, thinking mode)
+- Re-verified on April 17, 2026
 
 ---
 
@@ -142,7 +170,7 @@ bash ~/.claude/2111framework/install.sh
 
 ## What's New in v2.15
 
-### Opus 4.6 Adaptation:
+### Opus 4.6 Adaptation (historical, superseded by 4.7 in v2.19):
 - **Claude Opus 4.6** -- improved self-correction, 500+ zero-day security findings
 - **GPT-5.3 Codex** -- updated model in all aliases and skills
 - **Frontmatter fixes** -- all skills use correct Claude Code syntax
@@ -174,7 +202,6 @@ bash ~/.claude/2111framework/install.sh
 | Skill Type | Model | Reason |
 |------------|-------|--------|
 | `consilium`, `security-checklist`, `review`, `security` | opus | Deep analysis |
-| `ralph-wiggum` | sonnet | Balanced loops |
 | `ai-agents`, `multi-ai-debug` | haiku | Fast routing |
 | Reference docs, new skills | (inherit) | Uses session default |
 
@@ -265,14 +292,22 @@ arch file.tsx  # Gemini architecture review
 
 ## MCP Servers
 
-| Server | Purpose | Notes |
-|--------|---------|-------|
-| Context7 | Library documentation | Included in mcp.json with serverInstructions |
-| shadcn | UI components | Included in mcp.json with serverInstructions |
-| 21st.dev Magic | AI UI generation | Add per-project if needed |
-| Clerk | User management | Add per-project if needed |
+Configured in `mcp.json` (v2.19):
 
-MCP Tool Search with `serverInstructions` enables lazy loading -- only tool descriptions loaded, not full schemas. See `skills/mcp-usage/mcp-tool-search.md`.
+| Server | Purpose | Type |
+|--------|---------|------|
+| Context7 | Library documentation | stdio (npx) |
+| shadcn | UI components | stdio (npx) |
+| Playwright | Browser automation, E2E | stdio (npx) |
+| Chrome DevTools | Browser automation via CDP | stdio (npx) |
+| **Sentry** | Prod error tracking, issue triage | remote HTTP (OAuth) |
+| **Neon** | Postgres SQL, DB branching | remote HTTP (OAuth) |
+
+Guides: `skills/mcp-usage/sentry-mcp-guide.md`, `skills/mcp-usage/neon-mcp-guide.md`, `skills/mcp-usage/vercel-mcp-guide.md`.
+
+**Vercel** is a plugin (not an MCP) — install via `/plugin install vercel@claude-plugins-official`. Provides `/deploy`, `/env`, `/status` slash commands and `deployment-expert` agent.
+
+MCP Tool Search with `serverInstructions` enables lazy loading — only tool descriptions loaded, not full schemas. See `skills/mcp-usage/mcp-tool-search.md`.
 
 ---
 
@@ -299,8 +334,10 @@ MCP Tool Search with `serverInstructions` enables lazy loading -- only tool desc
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
-| `ralph-wiggum.md` | Autonomous loops - run tasks for hours |
-| `agent-teams.md` | Parallel agent coordination (NEW) |
+| `agent-teams.md` | Parallel agent coordination with worktree isolation |
+| `sentry-mcp-guide.md` | Prod error triage via Sentry MCP (NEW v2.19) |
+| `neon-mcp-guide.md` | Postgres branching + SQL via Neon MCP (NEW v2.19) |
+| `vercel-mcp-guide.md` | Vercel plugin: /deploy, /env, /status, deployment-expert agent (NEW v2.19) |
 | `mcp-tool-search.md` | MCP lazy loading reference (NEW) |
 | `async-hooks.md` | Background hooks + Setup hook (NEW) |
 | `background-tasks.md` | Dev server in background + --from-pr (NEW) |
@@ -367,16 +404,6 @@ Solution: Photo -> OCR -> POS integration
 Metrics: 50 users, $200 MRR, 15% growth
 ```
 
-### Ralph Wiggum (Autonomous)
-```bash
-# Fix all lint errors autonomously
-/ralph-loop "Run npm run lint, fix all errors" --max-iterations 15
-
-# Generate CRUD and tests
-/ralph-loop "Generate CRUD API for Orders entity with tests" \
-  --completion-promise "All tests passed" --max-iterations 25
-```
-
 ### Agent Teams (Parallel Review)
 ```
 "Review src/features/auth/ with Agent Teams -- security, performance, and correctness in parallel"
@@ -399,15 +426,17 @@ npm run dev          # Press Ctrl+B to run in background
 
 ## Model Comparison
 
-| Capability | Claude Opus 4.6 | Codex (gpt-5.3) | Gemini 3.1 Pro |
+| Capability | Claude Opus 4.7 | Codex (gpt-5.3) | Gemini 3.1 Pro |
 |------------|-----------------|-----------------|--------------|
 | Backend/Architecture | Best | Strong | Good |
 | Frontend UI/UX | Good | Strong | Best |
 | Bug Detection | Strong | Best | Strong |
 | Security Audit | Best | Strong | Good |
 | Multimodal | Good | Good | Best |
-| Long Tasks (7h+) | Strong | Best | Good |
+| Long Tasks (7h+) | Best | Strong | Good |
 | Self-Correction | Best | Good | Good |
+| Context Window | 1M | 400K | 2M |
+| Adaptive Thinking | Yes | No | Partial |
 
 ---
 
@@ -437,8 +466,8 @@ hooks:
 ### Invoke Skills
 ```bash
 /consilium          # Product analysis
-/ralph-wiggum       # Autonomous loops
 /security           # Security audit
+/review             # Simplify + review
 ```
 
 ### Agent Teams + Worktree Isolation
@@ -490,4 +519,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.18.0
+**Version:** 2.19.0

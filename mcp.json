@@ -13,7 +13,22 @@
     "playwright": {
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"],
-      "serverInstructions": "Use for browser automation, E2E testing, screenshots, form testing, and Lighthouse audits. Replaces Chrome Extension for frontend testing."
+      "serverInstructions": "Use for browser automation, E2E testing, screenshots, form testing, and Lighthouse audits"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"],
+      "serverInstructions": "Use for browser automation via Chrome DevTools Protocol — working replacement for Chrome Extension"
+    },
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp",
+      "serverInstructions": "Use to fetch production error stack traces, triage issues, check alert status. Prefer over opening the Sentry web dashboard. Requires OAuth on first use."
+    },
+    "neon": {
+      "type": "http",
+      "url": "https://mcp.neon.tech/mcp",
+      "serverInstructions": "Use to run SQL, create preview database branches for risky migrations, inspect schema. Branch before modifying production data. Requires Neon account OAuth."
     }
   }
 }

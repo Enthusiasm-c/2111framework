@@ -3,4 +3,10 @@
 .idea/
 *.bak
 *~
-.claude/settings.local.json
+.claude/
+
+# Personal files that must not be in the framework template
+PROJECT_MEMORY.md
+pitch-deck*.pdf
+pitch-deck*.html
+tmp/

@@ -90,9 +90,8 @@ Senior code reviewer with two-phase approach: **simplify first**, then review cl
 # Only simplify, skip review
 /review --simplify-only src/utils/helpers.ts
 
-# Review after Ralph Wiggum
-/ralph-loop "Implement auth" --max-iterations 20
-/review src/lib/auth/  # simplify + review the generated code
+# Review a parallel-generated feature branch
+/review src/lib/auth/  # simplify + review all files
 ```
 
 ## Plugin Setup
@@ -118,7 +117,7 @@ claude plugin install code-simplifier
 - After completing a feature implementation
 - Before committing significant code changes
 - When code feels "too complex"
-- After Ralph Wiggum autonomous loops
+- After parallel dev agents merge their worktrees
 - After receiving bug reports
 - Before code deployment to production
 
@@ -587,9 +586,9 @@ Instead: list what you checked, what you found, what you filtered out.
 
 ## Extended Analysis
 
-Extended thinking is enabled by default — no special keywords needed.
+Adaptive thinking (Opus 4.7) kicks in automatically for complex reasoning — no flags or keywords needed. Simple pattern-matching stays fast; subtle bugs get deep extended thinking for free.
 
-Opus 4.6 has improved self-correction capabilities -- it will re-examine its own findings and filter out false positives before reporting.
+Opus 4.7 has strong self-correction: it re-examines its own findings and filters out false positives before reporting. Combined with the 1M context window, one `/review` pass can cover an entire feature module instead of file-by-file chunks.
 
 ---
 
@@ -624,7 +623,7 @@ Agent(
 Lead: Waits for completion notifications, synthesizes findings
 ```
 
-This is especially effective after Ralph Wiggum autonomous loops where large amounts of code were generated.
+This is especially effective after parallel dev agents merge their worktree branches and a large diff needs multi-angle review.
 
 ---
 

@@ -127,12 +127,11 @@ npm run build        # Ctrl+B
 - Background tasks persist for the session duration
 - Use `Ctrl+C` in the background task output to stop it
 - Dev servers in background + live reload = efficient workflow
-- Combine with Ralph Wiggum for fully autonomous background work
+- Combine with Agent Teams (`run_in_background: true`) for fully autonomous parallel work
 
 ---
 
 ## Related Skills
 
-- `ralph-wiggum.md` - Autonomous loops (runs in foreground)
 - `async-hooks.md` - Background hooks
-- `agent-teams.md` - Parallel agents
+- `agent-teams.md` - Parallel agents with worktree isolation

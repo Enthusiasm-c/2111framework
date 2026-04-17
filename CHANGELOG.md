@@ -1,5 +1,45 @@
 # Changelog
 
+## [2.19.0] - 2026-04-17
+
+### Model & Context
+- **Default model → Claude Opus 4.7** with adaptive thinking and 1M token context
+- Removed `alwaysThinkingEnabled: true` from `config/settings.json` — adaptive thinking in 4.7 makes it a no-op that wastes tokens
+- Updated `config/tech-stack.md` with Claude Code runtime section (model, context window, thinking mode) and re-verified date
+- Updated `config/effort-profiles.md` — deprecated `ultrathink` and `alwaysThinkingEnabled` notes
+
+### Agent Rewrites for Opus 4.7
+- `agents/architect.md` — new step 0 "Full Dependency Scan" (use 1M context to read whole feature area before planning), maxTurns 30 → 50, explicit Opus 4.7 workflow rules, plain-language trade-off output for non-coder founder
+- `agents/developer.md` — replaced linear 5-checkpoint system with **Task DAG** pattern (via harness TaskCreate/TaskUpdate), Verification-Before-Done section, Opus 4.7 tips, removed obsolete linear checkpoint output block
+- `agents/security.md` — Opus 4.7 workflow (split by attack surface, not by file), 1M context note, adversarial exploit-construction step before reporting Critical findings
+- `agents/qa.md` — Opus 4.7 workflow, reads full feature + tests + git diff in one pass, failing-test-first handoff to dev agent, Chrome Extension retained (working again)
+- `agents/review.md` — updated extended analysis note for 4.7 self-correction + 1M context (one pass covers whole module)
+
+### Ralph Wiggum Removed
+- Deleted `skills/mcp-usage/ralph-wiggum.md`
+- Cleaned references in: `README.md`, `PLUGINS_SETUP.md`, `skills/mcp-usage/agent-teams.md`, `skills/mcp-usage/background-tasks.md`, `skills/business/consilium.md`, `config/effort-profiles.md`, `agents/review.md`
+- Superseded by Agent Teams with worktree isolation and `run_in_background: true`
+
+### Hooks — Noise Reduction
+- Removed `Notification` hook (macOS "Claude is waiting for input" osascript)
+- Removed `SubagentStop` hook (macOS "A subagent has completed" osascript)
+- Hook count: 15 → 13
+- Updated `skills/workflow/hooks-catalog.md` table and added deprecation note
+
+### Plugins
+- `PLUGINS_SETUP.md` — added `semgrep` plugin recommendation (real SAST/secrets scan), removed ralph-wiggum from checklist
+
+### New MCP Integrations (Phase 5)
+- **Sentry MCP** (remote HTTP, `https://mcp.sentry.dev/mcp`) added to `mcp.json` — prod error stack traces, issue triage, alerts
+- **Neon MCP** (remote HTTP, `https://mcp.neon.tech/mcp`) added to `mcp.json` — SQL queries, branching for risky migrations
+- **Vercel plugin** documented (provides slash commands + agents, not an MCP server)
+- 3 new skill guides: `skills/mcp-usage/sentry-mcp-guide.md`, `neon-mcp-guide.md`, `vercel-mcp-guide.md`
+- `agents/security.md` — cross-reference findings with real Sentry exceptions (confidence boost +20)
+- `agents/qa.md` — Pre-Release Checklist extended with Vercel `/status`, Sentry error-rate, Neon migration checks
+- `agents/developer.md` — mandatory Neon branch-first workflow for destructive migrations (load-bearing for non-coder founder)
+
+---
+
 ## [2.18.1] - 2026-03-26
 
 ### Added — Plugin-Inspired Improvements

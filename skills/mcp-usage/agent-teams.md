@@ -223,10 +223,6 @@ git merge <branch-from-agent-2> --no-ff
 # Review with parallel agents
 /review src/features/auth/    # Lead coordinates 3 review angles
 
-# Ralph Wiggum + parallel review after
-/ralph-loop "Implement CRUD" --max-iterations 25
-# Then spawn parallel review agents on the generated code
-
 # Consilium with parallel analysts
 /consilium [brief]
 # 6 analyst agents run in parallel
@@ -236,6 +232,5 @@ git merge <branch-from-agent-2> --no-ff
 
 ## Related Skills
 
-- `ralph-wiggum.md` — Autonomous loops (review results with parallel agents)
 - `consilium.md` — Product analysis (natural fit for parallel agents)
 - `review.md` — Code review (parallel review angles)

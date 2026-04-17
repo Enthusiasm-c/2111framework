@@ -125,7 +125,7 @@ Sends tool input JSON as POST body. Response JSON becomes hook output. Good for:
 
 ---
 
-## Framework Hooks (15 configured)
+## Framework Hooks (13 configured)
 
 | # | Event | Matcher | Type | Async | Description |
 |---|-------|---------|------|-------|-------------|
@@ -138,12 +138,12 @@ Sends tool input JSON as POST body. Response JSON becomes hook output. Good for:
 | 7 | PostToolUse | `Edit\|Write` | command | yes | Auto-formats with Prettier (.ts/.tsx/.css/.json) |
 | 8 | PostToolUse | `Edit\|Write` | command | yes | **TypeScript checker** — runs `tsc --noEmit`, shows type errors |
 | 9 | PostToolUse | `Edit\|Write` | command | no | **Test coverage checker** — warns if no test file exists for edited file |
-| 10 | Notification | (any) | command | no | macOS desktop notification when Claude waits for input |
-| 11 | Stop | (any) | command | no | Saves session info (legacy — native memory preferred) |
-| 12 | Stop | (any) | command | no | Reminds about uncommitted changes |
-| 13 | UserPromptSubmit | (any) | command | no | Injects .claude/TODO.md into context |
-| 14 | UserPromptSubmit | (any) | command | no | **PROJECT_MEMORY.md size auditor** — warns when > 50KB |
-| 15 | SubagentStop | (any) | command | no | Desktop notification when subagent completes |
+| 10 | Stop | (any) | command | no | Saves session info (legacy — native memory preferred) |
+| 11 | Stop | (any) | command | no | Reminds about uncommitted changes |
+| 12 | UserPromptSubmit | (any) | command | no | Injects .claude/TODO.md into context |
+| 13 | UserPromptSubmit | (any) | command | no | **PROJECT_MEMORY.md size auditor** — warns when > 50KB |
+
+> **v2.19:** macOS desktop notifications (`Notification` and `SubagentStop` osascript hooks) removed — they were noisy and not useful during focused work. Re-add manually if needed (see examples below).
 
 ---
 

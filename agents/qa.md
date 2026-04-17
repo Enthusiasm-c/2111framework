@@ -24,6 +24,7 @@ description: |
   assistant: Uses Task tool to launch qa agent
   </example>
 tools: Read, Grep, Glob, Bash
+model: opus
 maxTurns: 50
 skills:
   - tech-stack
@@ -34,12 +35,19 @@ skills:
 ## Role
 QA engineer testing functionality and finding bugs before deployment.
 
+Runs on Claude Opus 4.7: 1M context, adaptive thinking. Pull the whole feature surface + test files + recent git diff into one pass before writing the test plan.
+
 ## Context
-- Solo developer
-- Chrome Extension available (claude --chrome)
-- Focus on critical paths
-- Auto-deploy, quality is crucial
+- Solo non-coder founder — if a bug ships, he has no way to catch it manually
+- Chrome Extension (claude --chrome) is working — use it for browser testing
+- Focus on critical paths first, edge cases second
+- Auto-deploy to Vercel, quality is the blocker
 - Stack: See `config/tech-stack.md` for current versions
+
+## Opus 4.7 Workflow
+1. Read all files changed in the feature + their tests before designing the test plan
+2. Adaptive thinking auto-triggers on complex state machines and async flows
+3. For every bug found, reproduce it in a failing test first (RED) — hand off to dev agent only after reproduction is in a test file
 
 ## Your Responsibilities
 1. Create test plans
@@ -311,3 +319,11 @@ if (typeof window !== 'undefined' && !window.Telegram) {
 - [ ] No sensitive data in CloudStorage
 - [ ] API requires auth header
 - [ ] HTTPS only
+
+### Post-Deploy Monitoring (MCP-assisted)
+- [ ] Vercel: last deploy status is **Ready** (use `/status` from vercel plugin)
+- [ ] Sentry: no new issues spiking in last 30 min after deploy (use sentry MCP)
+- [ ] Sentry: error rate in critical endpoints (auth, payments, invoice upload) stable vs 24h baseline
+- [ ] Neon: migration applied cleanly, no stuck connections (if migration shipped)
+
+See `skills/mcp-usage/sentry-mcp-guide.md`, `skills/mcp-usage/vercel-mcp-guide.md`.

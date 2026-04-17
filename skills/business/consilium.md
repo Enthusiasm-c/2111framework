@@ -699,11 +699,12 @@ Swap restaurant-specific context for:
 ## Integration with Other Skills
 
 ```bash
-# After Consilium, use Ralph for execution
+# After Consilium, dispatch implementation via Agent Teams
 /consilium [product brief]
 # Get growth plan
 
-/ralph-loop "Implement pricing page changes from consilium report" --max-iterations 15
+# Spawn parallel dev agents in worktrees for each action item
+# (see skills/mcp-usage/agent-teams.md)
 
 # Use multi-AI for second opinion
 "Ask Codex to review the technical assessment"
@@ -713,7 +714,7 @@ Swap restaurant-specific context for:
 
 ## Consilium + Agent Teams
 
-With Agent Teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true`), consilium agents run as true parallel teammates:
+Consilium agents run as true parallel teammates (Agent Teams is stable since v2.18):
 
 ```
 Lead: Research Agent scans codebase → creates Enriched Brief
@@ -735,7 +736,7 @@ Benefits:
 
 ## Related Skills
 
-- `ralph-wiggum.md` - Autonomous execution of consilium recommendations
+- `agent-teams.md` - Parallel execution of consilium recommendations
 - `ai-agents.md` - Get second opinion from other AIs
 - `agent-teams.md` - Parallel agent coordination
 - `spec-kit` - Turn consilium output into implementation specs

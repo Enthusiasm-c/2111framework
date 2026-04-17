@@ -54,23 +54,26 @@ In `~/.claude/settings.json`:
 | Code review | high | Need to catch subtle bugs |
 | Architecture planning | high | Complex decision making |
 | Feature development | high | Default, good balance |
-| Ralph Wiggum loops | medium | Many iterations, save tokens |
 | Reference docs lookup | low | Simple retrieval |
 | Lint/format fixes | low | Mechanical, no deep thinking needed |
 | File navigation | low | Quick lookups |
 
 ---
 
-## Extended Thinking
+## Adaptive Thinking (Opus 4.7)
 
-Extended thinking is **enabled by default** in Claude Code with a budget of 31,999 tokens. No keywords or special configuration needed — every prompt gets maximum thinking automatically.
+Opus 4.7 uses **adaptive thinking** — the model itself decides how long to reason based on task difficulty. No `alwaysThinkingEnabled` flag, no `ultrathink` keyword, no manual budget tuning needed in most cases.
 
-> **Note:** The `ultrathink` keyword was deprecated in January 2026. It no longer has any effect.
+- Simple edits: fast, low thinking
+- Architecture / security / debugging: deep thinking auto-engages
+- Cost is the same whether thinking engages or not — you don't pay for unused thinking
 
-For even more thinking tokens on newer models, set:
+For cases where you want to force extra thinking budget:
 ```bash
 export MAX_THINKING_TOKENS=63999
 ```
+
+> **Deprecated:** the `ultrathink` keyword (January 2026) and `alwaysThinkingEnabled: true` setting (April 2026) have no effect on Opus 4.7. Remove them from configs.
 
 ---
 
@@ -105,4 +108,3 @@ Combine with Agent Teams for significant cost control:
 ## Related Files
 
 - `skills/mcp-usage/agent-teams.md` - Agent Teams cost control
-- `skills/mcp-usage/ralph-wiggum.md` - Ralph loops with effort tuning
