@@ -280,8 +280,8 @@ Read skills/tech-stack/react-optimization.md
 ### Bash Aliases
 
 ```bash
-cr file.tsx    # Codex code review (gpt-5.3-codex)
-gr file.tsx    # Gemini code review (gemini-3.1-pro-preview)
+cr file.tsx    # Codex code review (gpt-5.5)
+gr file.tsx    # Gemini code review (gemini-pro-latest)
 bug file.tsx   # Codex bug finder
 sec file.tsx   # Codex security audit
 perf file.tsx  # Codex performance review

@@ -57,8 +57,8 @@ alwaysApply: false
 
 | Tool | Model | Command |
 |------|-------|---------|
-| Codex | gpt-5.3-codex | `codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only` |
-| Gemini | gemini-3.1-pro-preview | `gemini -m gemini-3.1-pro-preview -p` |
+| Codex | gpt-5.5 | `codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only` |
+| Gemini | gemini-pro-latest | `gemini -m gemini-pro-latest -p` |
 
 ### Routing
 

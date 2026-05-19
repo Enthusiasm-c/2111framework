@@ -30,17 +30,17 @@ hooks:
 
 | Фраза пользователя | Claude выполняет |
 |-------------------|------------------|
-| "Запусти агента Gemini review для broken layout в странице аналитики" | `find src -name "*analytics*" -o -name "*Analytics*" \| head -5` затем `cat <files> \| gemini -m gemini-3.1-pro-preview -p "Find root cause of broken UI layout:"` |
-| "Попроси Gemini проверить UI в Dashboard" | `cat src/**/Dashboard*.tsx \| gemini -m gemini-3.1-pro-preview -p "Review UI for bugs:"` |
-| "Gemini, найди CSS проблему" | `cat <file> \| gemini -m gemini-3.1-pro-preview -p "Find CSS/styling issue:"` |
+| "Запусти агента Gemini review для broken layout в странице аналитики" | `find src -name "*analytics*" -o -name "*Analytics*" \| head -5` затем `cat <files> \| gemini -m gemini-pro-latest -p "Find root cause of broken UI layout:"` |
+| "Попроси Gemini проверить UI в Dashboard" | `cat src/**/Dashboard*.tsx \| gemini -m gemini-pro-latest -p "Review UI for bugs:"` |
+| "Gemini, найди CSS проблему" | `cat <file> \| gemini -m gemini-pro-latest -p "Find CSS/styling issue:"` |
 
 ### Codex Agent (Logic/TypeScript)
 
 | Фраза пользователя | Claude выполняет |
 |-------------------|------------------|
-| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex exec -m gpt-5.3-codex -s read-only "Find race condition:"` |
-| "Попроси Codex проверить типы" | `cat <file> \| codex exec -m gpt-5.3-codex -s read-only "Find TypeScript type errors:"` |
-| "Codex, security review" | `cat <file> \| codex exec -m gpt-5.3-codex -s read-only "Security audit: OWASP Top 10:"` |
+| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex exec -m gpt-5.5 -s read-only "Find race condition:"` |
+| "Попроси Codex проверить типы" | `cat <file> \| codex exec -m gpt-5.5 -s read-only "Find TypeScript type errors:"` |
+| "Codex, security review" | `cat <file> \| codex exec -m gpt-5.5 -s read-only "Security audit: OWASP Top 10:"` |
 
 ### Второе мнение (оба агента)
 
@@ -76,10 +76,10 @@ grep -rl "Analytics" src --include="*.tsx" | head -5
 ### Step 3: Запустить анализ
 ```bash
 # Gemini для UI
-cat <files> | gemini -m gemini-3.1-pro-preview -p "<problem description>:"
+cat <files> | gemini -m gemini-pro-latest -p "<problem description>:"
 
 # Codex для логики
-cat <files> | codex exec -m gpt-5.3-codex -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
+cat <files> | codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
 ```
 
 ### Step 4: Показать результат и предложить fix
