@@ -51,4 +51,4 @@ Then in that project: `/speckit.specify add restaurant payout dashboard ...`
 ## Relation to other skills
 - Pairs with the **Grill Me** philosophy: `/speckit.clarify` is the interrogation step.
 - Hands off to `/optimize` and `/review` after `implement`.
-- Implementation should still follow `tdd-workflow.md` (failing test first).
+- Implementation should still follow `skills/workflow/tdd-workflow.md` (failing test first).

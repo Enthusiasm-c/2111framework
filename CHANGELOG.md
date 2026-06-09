@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.20.1] - 2026-06-09
+
+### Fixed
+- `/optimize` and `/spec` shipped as flat files under `skills/workflow/` — a layout Claude Code does not load as invokable skills, so neither command ever appeared. Moved to `commands/optimize.md` and `commands/spec.md` (renamed from `spec-driven.md` so the slash name resolves to `/spec`).
+- `install.sh` now symlinks `commands/*.md` into `~/.claude/commands/` (new section 2b). Previously framework commands — including `speckit.*` — were never installed globally, only per-project. `git pull` now auto-propagates command updates the same way it already does for agents and skills.
+
 ## [2.20.0] - 2026-06-09
 
 ### Model & Runtime

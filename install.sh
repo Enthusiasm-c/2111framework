@@ -14,7 +14,7 @@ echo "Target:                       $CLAUDE_DIR"
 echo "Backups:                      $BACKUP_DIR"
 echo
 
-mkdir -p "$CLAUDE_DIR"/{agents,skills,rules,projects,hooks,memory,backups}
+mkdir -p "$CLAUDE_DIR"/{agents,skills,commands,rules,projects,hooks,memory,backups}
 mkdir -p "$BACKUP_DIR"
 
 # ---------------------------------------------------------------------------
@@ -42,6 +42,20 @@ for d in "$FRAMEWORK_DIR"/skills/*/; do
     mv "$target" "$BACKUP_DIR/skills-$name"
   fi
   ln -sfn "$d" "$target"
+done
+
+# ---------------------------------------------------------------------------
+# 2b. Commands — symlink each .md so /command + git pull auto-propagates
+# ---------------------------------------------------------------------------
+echo "Linking commands..."
+for f in "$FRAMEWORK_DIR"/commands/*.md; do
+  [ -e "$f" ] || continue
+  name=$(basename "$f")
+  target="$CLAUDE_DIR/commands/$name"
+  if [ -f "$target" ] && [ ! -L "$target" ]; then
+    mv "$target" "$BACKUP_DIR/command-$name"
+  fi
+  ln -sfn "$f" "$target"
 done
 
 # ---------------------------------------------------------------------------

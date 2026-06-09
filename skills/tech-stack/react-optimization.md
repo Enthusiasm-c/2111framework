@@ -62,4 +62,4 @@ if (count >= 10) return { error: 'Max 10 addresses' }
 
 ## How to run an optimization pass
 
-Use `/optimize <path>` — it audits against the Vercel skill, reports by priority, applies only the high-impact fixes, and measures bundle before/after. See `skills/workflow/optimize.md`.
+Use `/optimize <path>` — it audits against the Vercel skill, reports by priority, applies only the high-impact fixes, and measures bundle before/after. See `commands/optimize.md`.

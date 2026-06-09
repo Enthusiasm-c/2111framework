@@ -42,10 +42,10 @@ export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apike
 - Min Claude Code version → 2.1.160+
 
 ### New: `/optimize` — performance refactoring
-- `skills/workflow/optimize.md` — scoped audit → report → apply → verify loop against the official Vercel **react-best-practices** skill, with before/after bundle + Lighthouse measurement
+- `commands/optimize.md` — scoped audit → report → apply → verify loop against the official Vercel **react-best-practices** skill, with before/after bundle + Lighthouse measurement
 
 ### New: `/spec` — spec-driven development
-- `skills/workflow/spec-driven.md` + `commands/speckit.*` — standardized Spec → Plan → Tasks → Implement flow (GitHub Spec Kit), distributable to any project
+- `commands/spec.md` + `commands/speckit.*` — standardized Spec → Plan → Tasks → Implement flow (GitHub Spec Kit), distributable to any project
 
 ### React best practices → official Vercel skill
 - `skills/tech-stack/react-optimization.md` slimmed to project-specific patterns + pointer to `npx skills add vercel-labs/agent-skills --skill react-best-practices` (70 rules, auto-activating, maintained by Vercel)
