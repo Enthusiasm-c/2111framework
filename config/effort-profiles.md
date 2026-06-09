@@ -8,12 +8,12 @@ Effort level controls how much thinking Claude does before responding. Higher ef
 
 ## Configuration Methods
 
-### 1. Interactive Slider
+### 1. Interactive — `/effort`
 
 ```bash
-# In Claude Code session, use /model command
-/model
-# Adjust the effort slider
+# In a Claude Code session:
+/effort high      # default on Opus 4.8
+/effort xhigh     # hardest tasks (deeper reasoning, more tokens)
 ```
 
 ### 2. Environment Variable
@@ -42,7 +42,7 @@ In `~/.claude/settings.json`:
 | **medium** | Balanced analysis | ~0.75x | Moderate |
 | **high** (default) | Thorough analysis, deep reasoning | 1x | Slower |
 
-> **Note:** `max` effort level is only available via API (not in Claude Code CLI).
+> **Note:** Opus 4.8 defaults to `high` effort. Use `/effort xhigh` in-session for the hardest tasks (a tier above `high`); the `max` budget remains API-only.
 
 ---
 
@@ -60,9 +60,9 @@ In `~/.claude/settings.json`:
 
 ---
 
-## Adaptive Thinking (Opus 4.7)
+## Adaptive Thinking (Opus 4.8)
 
-Opus 4.7 uses **adaptive thinking** — the model itself decides how long to reason based on task difficulty. No `alwaysThinkingEnabled` flag, no `ultrathink` keyword, no manual budget tuning needed in most cases.
+Opus 4.8 uses **adaptive thinking** — the model itself decides how long to reason based on task difficulty. No `alwaysThinkingEnabled` flag, no `ultrathink` keyword, no manual budget tuning needed in most cases.
 
 - Simple edits: fast, low thinking
 - Architecture / security / debugging: deep thinking auto-engages
@@ -73,7 +73,7 @@ For cases where you want to force extra thinking budget:
 export MAX_THINKING_TOKENS=63999
 ```
 
-> **Deprecated:** the `ultrathink` keyword (January 2026) and `alwaysThinkingEnabled: true` setting (April 2026) have no effect on Opus 4.7. Remove them from configs.
+> **Deprecated:** the `ultrathink` keyword (January 2026) and `alwaysThinkingEnabled: true` setting (April 2026) have no effect on Opus 4.8. Remove them from configs.
 
 ---
 

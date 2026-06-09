@@ -1,5 +1,6 @@
 {
   "model": "opus",
+  "fallbackModel": "claude-sonnet-4-6",
   "hooks": {
     "SessionStart": [
       {
@@ -19,6 +20,12 @@
             "type": "command",
             "command": "bash -c 'echo \"=== SESSION INFO ===\"; echo \"Project: $(basename $(pwd))\"; echo \"Branch: $(git branch --show-current 2>/dev/null || echo N/A)\"; echo \"Status:\"; git status --short 2>/dev/null | head -10; echo \"==================\"'",
             "timeout": 5,
+            "once": true
+          },
+          {
+            "type": "command",
+            "command": "bash -c 'N=$(ls -1 *.md 2>/dev/null | wc -l | tr -d \" \"); if [ \"$N\" -gt 25 ]; then echo \"DOC HYGIENE: $N markdown files in project root — consider consolidating into .claude/docs/ to cut context noise.\"; fi'",
+            "timeout": 3,
             "once": true
           }
         ]

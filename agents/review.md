@@ -586,9 +586,9 @@ Instead: list what you checked, what you found, what you filtered out.
 
 ## Extended Analysis
 
-Adaptive thinking (Opus 4.7) kicks in automatically for complex reasoning — no flags or keywords needed. Simple pattern-matching stays fast; subtle bugs get deep extended thinking for free.
+Adaptive thinking (Opus 4.8) kicks in automatically for complex reasoning — no flags or keywords needed. Simple pattern-matching stays fast; subtle bugs get deep extended thinking for free.
 
-Opus 4.7 has strong self-correction: it re-examines its own findings and filters out false positives before reporting. Combined with the 1M context window, one `/review` pass can cover an entire feature module instead of file-by-file chunks.
+Opus 4.8 has strong self-correction: it re-examines its own findings and filters out false positives before reporting. Combined with the 1M context window, one `/review` pass can cover an entire feature module instead of file-by-file chunks.
 
 ---
 

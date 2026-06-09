@@ -1,11 +1,11 @@
-# 2111framework v2.19
+# 2111framework v2.20
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.19.0
-**Updated:** April 17, 2026
-**Requires:** Claude Code 2.1.7+, Claude Opus 4.7
+**Version:** 2.20.0
+**Updated:** June 9, 2026
+**Requires:** Claude Code 2.1.160+, Claude Opus 4.8
 
 ---
 
@@ -29,6 +29,29 @@ source ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
 ```
+
+---
+
+## What's New in v2.20
+
+### Model & Runtime → Opus 4.8
+- **Claude Opus 4.8** is now the default (released May 28, 2026) — `high` effort by default, `/effort xhigh` for the hardest tasks, fast mode ~2.5× speed
+- All agents, `config/tech-stack.md`, and `config/effort-profiles.md` updated 4.7 → 4.8
+- `config/settings.json` — added `fallbackModel` (auto-retry on overload) + a doc-hygiene startup hook
+- Fixed stale `gpt-5.3` → `gpt-5.5` in the model comparison table
+- Min Claude Code version → 2.1.160+
+
+### New: `/optimize` — performance refactoring
+- `skills/workflow/optimize.md` — scoped audit → report → apply → verify loop against the official Vercel **react-best-practices** skill, with before/after bundle + Lighthouse measurement
+
+### New: `/spec` — spec-driven development
+- `skills/workflow/spec-driven.md` + `commands/speckit.*` — standardized Spec → Plan → Tasks → Implement flow (GitHub Spec Kit), distributable to any project
+
+### React best practices → official Vercel skill
+- `skills/tech-stack/react-optimization.md` slimmed to project-specific patterns + pointer to `npx skills add vercel-labs/agent-skills --skill react-best-practices` (70 rules, auto-activating, maintained by Vercel)
+
+### Security
+- `skills/code-quality/secret-rotation.md` — secret-leak triage + rotation checklist
 
 ---
 
@@ -426,7 +449,7 @@ npm run dev          # Press Ctrl+B to run in background
 
 ## Model Comparison
 
-| Capability | Claude Opus 4.7 | Codex (gpt-5.3) | Gemini 3.1 Pro |
+| Capability | Claude Opus 4.8 | Codex (gpt-5.5) | Gemini 3.1 Pro |
 |------------|-----------------|-----------------|--------------|
 | Backend/Architecture | Best | Strong | Good |
 | Frontend UI/UX | Good | Strong | Best |
@@ -442,7 +465,7 @@ npm run dev          # Press Ctrl+B to run in background
 
 ## Claude Code Features Used
 
-This framework requires Claude Code 2.1.7+. Key features:
+This framework requires Claude Code 2.1.160+. Key features:
 
 ### Agent Frontmatter
 ```yaml
@@ -519,4 +542,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.19.0
+**Version:** 2.20.0

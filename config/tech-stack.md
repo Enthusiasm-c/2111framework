@@ -6,18 +6,19 @@ alwaysApply: false
 
 # Tech Stack Reference
 
-> **Last verified:** 2026-04-17
+> **Last verified:** 2026-06-09
 > Update this file when upgrading dependencies. All agents read it automatically.
 
 ## Claude Code Runtime
 
 | Item | Value |
 |------|-------|
-| Primary model | Claude Opus 4.7 (`claude-opus-4-7`) |
+| Primary model | Claude Opus 4.8 (`claude-opus-4-8`) |
 | Context window | 1M tokens |
 | Thinking | Adaptive (auto-engages on hard reasoning, no `ultrathink` needed) |
-| Fast model | Opus 4.6 (via `/fast`) |
-| Claude Code min version | 2.1.7+ |
+| Effort | `high` by default; `/effort xhigh` for the hardest tasks |
+| Fast model | Opus 4.8 (via `/fast`, ~2.5× speed) |
+| Claude Code min version | 2.1.160+ |
 
 ## Core Stack
 

@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.20.0] - 2026-06-09
+
+### Model & Runtime
+- Default model → **Claude Opus 4.8** (`claude-opus-4-8`); `high` effort default, `/effort xhigh` for hardest tasks, fast mode ~2.5×
+- Updated `config/tech-stack.md`, `config/effort-profiles.md`, and all `agents/*.md` from Opus 4.7 → 4.8
+- `config/settings.json` — added `fallbackModel` and a doc-hygiene startup hook (warns when project root accumulates >25 markdown files)
+- Fixed `gpt-5.3` → `gpt-5.5` in README model comparison table
+- Min Claude Code version 2.1.7 → 2.1.160
+
+### New Skills
+- `skills/workflow/optimize.md` (`/optimize`) — performance audit/refactor loop against the Vercel react-best-practices skill, with before/after measurement
+- `skills/workflow/spec-driven.md` (`/spec`) + `commands/speckit.*` — Spec → Plan → Tasks → Implement (GitHub Spec Kit), distributable to projects
+- `skills/code-quality/secret-rotation.md` — secret-leak triage and rotation checklist
+
+### Changed
+- `skills/tech-stack/react-optimization.md` — slimmed to project-specific patterns (Syrve/Telegram webhook parallelization) + pointer to the official Vercel `react-best-practices` skill; removed deprecated frontmatter fields
+
 ## [2.19.0] - 2026-04-17
 
 ### Model & Context

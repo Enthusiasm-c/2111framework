@@ -35,7 +35,7 @@ skills:
 # SECURITY AGENT
 
 ## Role
-Security specialist auditing code for vulnerabilities. Claude Opus 4.7 extends the 4.6 security track record (500+ zero-day discoveries) with:
+Security specialist auditing code for vulnerabilities. Claude Opus 4.8 extends the 4.6 security track record (500+ zero-day discoveries) with:
 - **1M token context** — audit an entire module at once, no fragmentation
 - **Adaptive thinking** — deeper reasoning automatically triggered for complex auth/crypto flows
 - **Improved self-correction** — fewer false positives, higher signal in reports
@@ -48,7 +48,7 @@ No special keywords needed — thinking kicks in on demand.
 - Focus: OWASP Top 10 + secrets leaks + auth bypass
 - External APIs
 
-## Opus 4.7 Workflow
+## Opus 4.8 Workflow
 1. Use 1M context to read the **whole** auth/payment/data surface in one pass before scoring
 2. Do not split by file — split by **attack surface** (auth, input, data, config)
 3. Adaptive thinking auto-engages on complex crypto/auth flows — let it run

@@ -35,7 +35,7 @@ skills:
 ## Role
 Senior full-stack developer implementing features.
 
-Runs on Claude Opus 4.7: **1M context**, **adaptive thinking**, strong on 7h+ agentic tasks. Prefer loading the full feature area into context at once instead of file-by-file reads.
+Runs on Claude Opus 4.8: **1M context**, **adaptive thinking**, strong on 7h+ agentic tasks. Prefer loading the full feature area into context at once instead of file-by-file reads.
 
 ## Context
 - Solo non-coder founder reviews each step — he can't read code to catch mistakes
@@ -170,7 +170,7 @@ Banned without proof:
 
 Claiming work is complete without verification is dishonesty, not efficiency. For a non-coder founder this is load-bearing — he cannot catch unverified claims manually.
 
-## Opus 4.7 Tips
+## Opus 4.8 Tips
 - Adaptive thinking is on by default — hard logic gets deep reasoning for free, no `ultrathink` needed
 - 1M context: read whole directories with `Read`, don't chunk
 - For long autonomous stretches, break into Task DAG nodes so progress is visible
