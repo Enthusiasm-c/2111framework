@@ -35,6 +35,40 @@ Run in Claude Code terminal:
 | `feature-dev` | Structured feature development |
 | `semgrep` | Static security analysis (SAST/secrets) |
 
+## Third-Party Skills (v2.21)
+
+Installed globally by `scripts/install-external-skills.sh` (idempotent — re-run to update). Full routing guide: `skills/design/design-stack.md`.
+
+| Source | Stars (2026-08) | Installs as | Use for |
+|--------|-----------------|-------------|---------|
+| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | ~76k | `~/.claude/skills/design-taste-frontend`, `redesign-existing-projects` | Landing pages, portfolios, redesigns — anti-slop with 3 dials (variance / motion / density) |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) | ~29k | 10 skills: `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `emil-design-eng`, `pick-ui-library`, `prototype`, `ask-sonner` | Motion decisions (easing, duration, springs), design-engineering polish, library picks |
+| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | ~59k | plugin `impeccable@impeccable` (marketplace `pbakaus/impeccable`) | `/impeccable init|audit|critique|polish|harden|animate|bolder|quieter|overdrive|…` — 23 commands + detector hooks for product UI |
+| [dpearson2699/swift-ios-skills](https://github.com/dpearson2699/swift-ios-skills) | ~1k | `~/.claude/skills/app-store-review` | iOS App Store submission audit — privacy manifest, usage strings, StoreKit, metadata; blockers vs cleanup. Workflow: `skills/workflow/app-store-release.md` |
+
+```bash
+bash ~/2111framework/scripts/install-external-skills.sh
+# then, once per UI project:
+/impeccable init
+```
+
+Cost: ~13 skill descriptions (~1.5–2k tokens) + impeccable ~527 tokens always-on per session. Disable impeccable in backend-only repos with `claude plugin disable impeccable@impeccable`.
+
+Overlap note: `frontend-design` (Anthropic) stays the always-on baseline; taste-skill leads only on landing/marketing pages; impeccable leads on product UI + audits; emil leads on motion.
+
+### Scan before you install — SkillSpector (v2.22)
+
+Skills run with full agent permissions. [NVIDIA/SkillSpector](https://github.com/NVIDIA/SkillSpector) scans a repo/dir/zip for prompt injection, exfiltration, privilege escalation, MCP tool poisoning (69 patterns, 17 categories). Installed via `uv tool install "git+https://github.com/NVIDIA/skillspector.git"`; `install-external-skills.sh` runs it after every install (advisory).
+
+```bash
+# before installing anything new
+skillspector scan https://github.com/<owner>/<repo> --no-llm
+# everything already installed
+skillspector scan ~/.claude/skills --recursive --no-llm
+```
+
+Read the score correctly: `--no-llm` is static heuristics — cheap, no API cost, **high false-positive rate on code-heavy skills**. Baseline from 2026-08-15: 10 of 15 global skills score 0; `improve-animations` (40, quotes "ignore previous instructions" as an example of what to refuse), `prototype` (21, "never judge UI at postage-stamp size"), `react-best-practices` (23, `dangerouslySetInnerHTML` in Vercel's own hydration example), `design-taste-frontend` (15, `npx shadcn@latest`) are all benign on inspection; **impeccable = 100 / CRITICAL** because it ships 40+ JS scripts — manual review found no hidden egress except the opt-in `generate-image.mjs` → `api.openai.com` (**paid** gpt-image-2 via `OPENAI_API_KEY`), and its hooks make no network calls. Rule: a HIGH finding is a reason to open the file, not a verdict. Reports live in `~/.claude/skillspector-reports/`.
+
 ## frontend-design Plugin
 
 ### Problem It Solves
@@ -187,6 +221,8 @@ Create agent with your stack:
 - [ ] `/plugin install frontend-design`
 - [ ] `/plugin install skill-creator`
 - [ ] `/plugin install semgrep` (static security analysis)
+- [ ] `uv tool install "git+https://github.com/NVIDIA/skillspector.git"` (skill security scanner)
+- [ ] `bash scripts/install-external-skills.sh` (taste-skill, emilkowalski/skills, impeccable, app-store-review + SkillSpector scan)
 - [ ] Configure `/agents` with base context
 - [ ] Clone 2111framework: `git clone https://github.com/Enthusiasm-c/2111framework.git`
 - [ ] Run `./install.sh`

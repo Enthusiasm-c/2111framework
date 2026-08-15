@@ -28,6 +28,9 @@ Claude Code uses `<example>` blocks in agent descriptions to decide when to proa
 | After dev modifies auth files | **security** | Medium |
 | Documentation request | **docs** | High |
 | New developer onboarding | **docs** | Medium |
+| UI review of a diff with motion/animation | **review** + `review-animations` skill (emil) | Medium |
+| "Ship to TestFlight / App Store", rejection text pasted | `app-store-review` skill → **qa** → **dev** (see `skills/workflow/app-store-release.md`) | High |
+| "Make it look premium / less AI", landing page, product UI polish | Design skills, not an agent — route per `skills/design/design-stack.md` | — |
 
 ## Routing Flow
 

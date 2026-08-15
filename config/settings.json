@@ -1,6 +1,6 @@
 {
-  "model": "opus",
-  "fallbackModel": "claude-sonnet-4-6",
+  "model": "claude-fable-5[1m]",
+  "fallbackModel": "claude-opus-5",
   "hooks": {
     "SessionStart": [
       {
@@ -123,7 +123,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'CHANGES=$(git status --short 2>/dev/null); if [ -n \"$CHANGES\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"additionalContext\\\":\\\"REMINDER: You have uncommitted changes:\\n$CHANGES\\nConsider committing before leaving.\\\"}}\"; fi'",
+            "command": "bash ~/.claude/hooks/uncommitted-reminder.sh",
             "timeout": 5
           }
         ]

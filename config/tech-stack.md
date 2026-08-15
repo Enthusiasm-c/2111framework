@@ -6,19 +6,25 @@ alwaysApply: false
 
 # Tech Stack Reference
 
-> **Last verified:** 2026-06-09
+> **Last verified:** 2026-08-15
 > Update this file when upgrading dependencies. All agents read it automatically.
 
 ## Claude Code Runtime
 
 | Item | Value |
 |------|-------|
-| Primary model | Claude Opus 4.8 (`claude-opus-4-8`) |
-| Context window | 1M tokens |
-| Thinking | Adaptive (auto-engages on hard reasoning, no `ultrathink` needed) |
-| Effort | `high` by default; `/effort xhigh` for the hardest tasks |
-| Fast model | Opus 4.8 (via `/fast`, ~2.5× speed) |
-| Claude Code min version | 2.1.160+ |
+| Primary model | **Claude Fable 5** (`claude-fable-5[1m]`) — Denis's `~/.claude/settings.json`; Mythos-class tier above Opus, $10/$50 per MTok |
+| Claude Code default | **Claude Opus 5** (`claude-opus-5`) since Claude Code 2.1.219 (Jul 24, 2026) — same feature set as Opus 4.8 at $5/$25; drop-in for agents that don't need Fable |
+| Fallback (`fallbackModel`) | `claude-opus-5` — used when the primary is overloaded (was `claude-sonnet-4-6`) |
+| Sonnet tier | Claude Sonnet 5 (`claude-sonnet-5`) — for cheap subagents; Haiku 4.5 for trivial routing |
+| Context window | 1M tokens (default and max on Fable 5 / Opus 5) |
+| Thinking | Fable 5: **always on** (adaptive, cannot be disabled). Opus 5: on by default. No `ultrathink`, no `alwaysThinkingEnabled`, no `budget_tokens` |
+| Effort | `xhigh` (Denis's `effortLevel`; also the Claude Code default). Ladder: `low` / `medium` / `high` / `xhigh` / `max` — `/effort <level>` in-session, `--effort <level>` on the CLI |
+| Cost ceiling | `claude -p ... --max-budget-usd <amount>` — hard USD cap for headless/background runs (also stops subagent spawning at the cap). See `config/effort-profiles.md` |
+| Fast mode | `/fast` — Opus 5 / Opus 4.8 only (~2.5× output speed, $10/$50). Not available on Fable 5 |
+| Claude Code min version | 2.1.233+ (subagent forking by default, cross-session `@` messaging, background `/code-review`, plugin install from zip) |
+
+Model IDs are exact strings — no date suffixes (`claude-opus-5`, never `claude-opus-5-2026…`). Retired/deprecated: Opus 4.1 (retired 2026-08-05), Sonnet 4 / Opus 4 (deprecated). Opus 4.8 / 4.7 / 4.6 and Sonnet 4.6 stay available but are one generation behind.
 
 ## Core Stack
 
@@ -58,7 +64,7 @@ alwaysApply: false
 
 | Tool | Model | Command |
 |------|-------|---------|
-| Codex | gpt-5.5 | `codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only` |
+| Codex | gpt-5.5 | `codex-ask` |
 | Gemini | gemini-pro-latest | `gemini -m gemini-pro-latest -p` |
 
 ### Routing

@@ -586,9 +586,9 @@ Instead: list what you checked, what you found, what you filtered out.
 
 ## Extended Analysis
 
-Adaptive thinking (Opus 4.8) kicks in automatically for complex reasoning — no flags or keywords needed. Simple pattern-matching stays fast; subtle bugs get deep extended thinking for free.
+Adaptive thinking (Claude 5 family — Opus 5 for this agent, Fable 5 in the main session) kicks in automatically for complex reasoning — no flags or keywords needed. Simple pattern-matching stays fast; subtle bugs get deep extended thinking for free.
 
-Opus 4.8 has strong self-correction: it re-examines its own findings and filters out false positives before reporting. Combined with the 1M context window, one `/review` pass can cover an entire feature module instead of file-by-file chunks.
+Claude 5 has strong self-correction: it re-examines its own findings and filters out false positives before reporting. Because it follows severity filters literally, this agent asks for **every** finding with confidence + severity and filters afterwards (see Scoring). Combined with the 1M context window, one `/review` pass can cover an entire feature module instead of file-by-file chunks.
 
 ---
 

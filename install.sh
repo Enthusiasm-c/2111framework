@@ -74,6 +74,24 @@ if [ -d "$FRAMEWORK_DIR/rules" ]; then
 fi
 
 # ---------------------------------------------------------------------------
+# 3b. Hook scripts — symlink config/hooks/*.sh into ~/.claude/hooks/
+#     settings.json hooks reference them as `bash ~/.claude/hooks/<name>.sh`
+# ---------------------------------------------------------------------------
+if [ -d "$FRAMEWORK_DIR/config/hooks" ]; then
+  echo "Linking hook scripts..."
+  for f in "$FRAMEWORK_DIR"/config/hooks/*.sh; do
+    [ -e "$f" ] || continue
+    name=$(basename "$f")
+    target="$CLAUDE_DIR/hooks/$name"
+    if [ -f "$target" ] && [ ! -L "$target" ]; then
+      mv "$target" "$BACKUP_DIR/hook-$name"
+    fi
+    ln -sfn "$f" "$target"
+    chmod +x "$f"
+  done
+fi
+
+# ---------------------------------------------------------------------------
 # 4. MCP config — backup existing, then replace with framework version
 # ---------------------------------------------------------------------------
 if [ -f "$CLAUDE_DIR/mcp.json" ]; then
@@ -113,7 +131,7 @@ for key in ("hooks", "model"):
     if key in fw_data:
         global_data[key] = fw_data[key]
 
-# Remove deprecated keys (no effect on Opus 4.7)
+# Remove deprecated keys (no effect on Claude 5 models)
 global_data.pop("alwaysThinkingEnabled", None)
 
 with open(global_path, "w") as f:
@@ -152,3 +170,9 @@ echo "           → run 'git pull' in the framework dir; all projects update in
 echo
 echo "To update later:   framework-update"
 echo "To rollback:       restore from $BACKUP_DIR"
+echo
+echo "Optional (v2.21): third-party design + App Store skills (taste-skill, emilkowalski/skills,"
+echo "                  impeccable plugin, app-store-review) — not symlinked, installed via npx/claude:"
+echo "                  bash $FRAMEWORK_DIR/scripts/install-external-skills.sh"
+echo "                  (runs a SkillSpector security scan afterwards if installed:"
+echo "                   uv tool install \"git+https://github.com/NVIDIA/skillspector.git\")"

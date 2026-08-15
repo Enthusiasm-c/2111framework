@@ -1,11 +1,11 @@
-# 2111framework v2.20
+# 2111framework v2.22
 
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.20.0
-**Updated:** June 9, 2026
-**Requires:** Claude Code 2.1.160+, Claude Opus 4.8
+**Version:** 2.22.0
+**Updated:** August 15, 2026
+**Requires:** Claude Code 2.1.233+, Claude 5 family (Fable 5 primary, Opus 5 default/fallback)
 
 ---
 
@@ -29,6 +29,40 @@ source ~/.zshrc
 export OPENAI_API_KEY="your-openai-key"      # https://platform.openai.com/api-keys
 export GEMINI_API_KEY="your-gemini-key"      # https://aistudio.google.com/apikey
 ```
+
+---
+
+## What's New in v2.22
+
+### Model & Runtime → Claude 5 family
+- **Claude Fable 5** (`claude-fable-5[1m]`) is the primary model in `config/settings.json` — matches Denis's live `~/.claude/settings.json`, so `install.sh` no longer downgrades the session model. **Claude Opus 5** (`claude-opus-5`, Claude Code default since 2.1.219) is the `fallbackModel` and the model behind every framework agent (`model: opus`)
+- All agents, `config/tech-stack.md`, `config/effort-profiles.md` updated Opus 4.8 → Claude 5; effort ladder is now `low / medium / high / xhigh / max` with `xhigh` as the default; thinking is always on (Fable 5) — no `ultrathink`, `alwaysThinkingEnabled`, `MAX_THINKING_TOKENS`
+- `security` agent: note on Claude 5 cybersecurity safeguards (benign audits can hit a `refusal` — rerun that surface on `claude-opus-4-8`, never skip it)
+- Min Claude Code version → 2.1.233+ (subagent forking by default, cross-session `@` messaging, background `/code-review`, plugin install from zip)
+
+### Cost ceiling — `--max-budget-usd`
+- `config/effort-profiles.md` — new section: `claude -p "…" --max-budget-usd <amount>` hard-caps any headless/background run (also stops subagent spawning at the cap; `--print` only). Rule: every unattended `claude -p` gets a cap, start at $3–10
+
+### Skill security — SkillSpector
+- Installed [NVIDIA/SkillSpector](https://github.com/NVIDIA/SkillSpector) (`uv tool install`) and scanned all 15 global skills + the impeccable plugin (static tier, no LLM cost). Result: 0 findings on 10 skills; MEDIUM/LOW on 5 (all inspected — false positives on quoted phrases and code examples); impeccable scores CRITICAL on static heuristics because it ships 40+ JS scripts — manual review: no hidden egress except the opt-in `generate-image.mjs` → `api.openai.com` (**paid** gpt-image-2, uses `OPENAI_API_KEY`), hooks make no network calls
+- `scripts/install-external-skills.sh` now runs a SkillSpector scan after installing (advisory, report saved to `~/.claude/skillspector-reports/`); `PLUGINS_SETUP.md` → "Scan before you install"
+
+---
+
+## What's New in v2.21
+
+### Design stack → 3 external skill sets + routing guide
+- **taste-skill** ([Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill), ~76k★) — `design-taste-frontend` (v2, 3 dials) + `redesign-existing-projects`, installed to `~/.claude/skills/`
+- **Skills for Designers and Engineers** ([emilkowalski/skills](https://github.com/emilkowalski/skills), ~29k★) — 10 skills: `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `emil-design-eng`, `pick-ui-library`, `prototype`, `ask-sonner`
+- **Impeccable** ([pbakaus/impeccable](https://github.com/pbakaus/impeccable), ~59k★) — plugin `impeccable@impeccable`: `/impeccable init|audit|critique|polish|harden|animate|bolder|quieter|overdrive|…` (23 commands), 4 agents, detector hooks (~527 tok always-on)
+- `skills/design/design-stack.md` — **which one when**: taste = landing pages, impeccable = product UI + audits, emil = motion, `frontend-design` = always-on baseline; per-project defaults for FIGHTSTARS / NotaApp / Ave AI / Tutorino
+
+### New: App Store release workflow (native iOS)
+- `app-store-review` skill from [dpearson2699/swift-ios-skills](https://github.com/dpearson2699/swift-ios-skills) installed globally — audits privacy manifest / required-reason APIs, usage strings, StoreKit, metadata; splits **blockers** from cleanup
+- `skills/workflow/app-store-release.md` — audit → fix blockers → archive + Validate App → TestFlight → review → rejection handling; optional `asc` CLI skills documented, not installed
+
+### Installer
+- `scripts/install-external-skills.sh` — idempotent installer for all of the above (`npx skills` + `claude plugin`); `install.sh` prints the hint. Update later with `npx skills update -g -y`
 
 ---
 
@@ -354,6 +388,14 @@ MCP Tool Search with `serverInstructions` enables lazy loading — only tool des
 |-------|-------------|
 | `consilium.md` | 6-agent product analysis board (Agent Teams compatible) |
 
+### Design (external, see `skills/design/design-stack.md`)
+| Skill | Description |
+|-------|-------------|
+| `design-stack.md` | Routing guide: frontend-design vs taste-skill vs emilkowalski/skills vs impeccable, per-project defaults, install/update (NEW v2.21) |
+| `design-taste-frontend`, `redesign-existing-projects` | Leonxlnx/taste-skill — anti-slop landing pages/redesigns with 3 dials (installed to `~/.claude/skills/`) |
+| `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `emil-design-eng`, `pick-ui-library`, `prototype`, `ask-sonner` | emilkowalski/skills — motion + design-engineering (installed to `~/.claude/skills/`) |
+| `/impeccable …` | pbakaus/impeccable plugin — 23 design commands + detector hooks |
+
 ### MCP Usage
 | Skill | Description |
 |-------|-------------|
@@ -399,6 +441,7 @@ MCP Tool Search with `serverInstructions` enables lazy loading — only tool des
 ### Workflow
 | Skill | Description |
 |-------|-------------|
+| `app-store-release.md` | iOS pre-submission workflow with the `app-store-review` skill: audit → blockers → archive/validate → TestFlight (NEW v2.21) |
 | `hooks-catalog.md` | Complete reference for all 12 hooks (NEW) |
 | `auto-memory.md` | Persistent memory system for sessions (NEW) |
 | `tdd-workflow.md` | RED-GREEN-REFACTOR for Next.js + Vitest |
@@ -449,7 +492,7 @@ npm run dev          # Press Ctrl+B to run in background
 
 ## Model Comparison
 
-| Capability | Claude Opus 4.8 | Codex (gpt-5.5) | Gemini 3.1 Pro |
+| Capability | Claude Fable 5 / Opus 5 | Codex (gpt-5.5) | Gemini 3.1 Pro |
 |------------|-----------------|-----------------|--------------|
 | Backend/Architecture | Best | Strong | Good |
 | Frontend UI/UX | Good | Strong | Best |
@@ -459,13 +502,13 @@ npm run dev          # Press Ctrl+B to run in background
 | Long Tasks (7h+) | Best | Strong | Good |
 | Self-Correction | Best | Good | Good |
 | Context Window | 1M | 400K | 2M |
-| Adaptive Thinking | Yes | No | Partial |
+| Adaptive Thinking | Yes (always on for Fable 5) | No | Partial |
 
 ---
 
 ## Claude Code Features Used
 
-This framework requires Claude Code 2.1.160+. Key features:
+This framework requires Claude Code 2.1.233+. Key features:
 
 ### Agent Frontmatter
 ```yaml
@@ -542,4 +585,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.20.0
+**Version:** 2.22.0

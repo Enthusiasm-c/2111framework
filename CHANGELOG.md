@@ -1,5 +1,48 @@
 # Changelog
 
+## [2.22.0] - 2026-08-15
+
+### Model & Runtime → Claude 5
+- `config/settings.json`: `model` `opus` → **`claude-fable-5[1m]`** (Denis's live setting — `install.sh` merges `model` into `~/.claude/settings.json`, so the old value silently downgraded the session to Opus on every reinstall); `fallbackModel` `claude-sonnet-4-6` → **`claude-opus-5`**
+- `config/tech-stack.md` — Claude Code Runtime block rewritten: Fable 5 primary, Opus 5 as Claude Code default (2.1.219, Jul 24 2026) and agent model (`model: opus`), Sonnet 5 for cheap subagents, effort ladder incl. `xhigh` default, fast mode = Opus 5/4.8 only, min Claude Code 2.1.233+, exact model IDs (no date suffixes)
+- `config/effort-profiles.md` — 5-level ladder, `xhigh` default, Claude 5 thinking notes, `MAX_THINKING_TOKENS` deprecated on Fable 5, Agent Teams cost split updated
+- `agents/{architect,developer,qa,security,review}.md` — Opus 4.8 wording → Claude 5 (Opus 5 via `model: opus`, Fable 5 in the main session); `developer` gets a scope-discipline line (Opus 5 expands scope on its own); `security` gets the refusal-fallback note; `review` notes literal severity filtering → report-everything-then-score
+- README: version, requirements, model comparison table
+
+### New: `--max-budget-usd`
+- `config/effort-profiles.md` § "Hard cost ceiling" — `claude -p "…" --max-budget-usd <amount>` for every unattended run (`--print` only; also stops subagent spawning at the cap); rule of thumb $3–10 to start, raise after `/cost`
+
+### Hooks — framework now mirrors the live global config
+- `config/hooks/uncommitted-reminder.sh` (upstreamed from `~/.claude/hooks/`, Aug 13): Stop reminder fires once per distinct dirty state and never inside a stop-hook continuation loop; `config/settings.json` Stop hook now calls `bash ~/.claude/hooks/uncommitted-reminder.sh` instead of the inline one-liner
+- `install.sh` step 3b — symlinks `config/hooks/*.sh` into `~/.claude/hooks/` (backs up non-symlink files), so hook scripts propagate with `git pull` like agents/skills
+
+### New: SkillSpector (skill security scanner)
+- Installed `NVIDIA/SkillSpector` v2.9.4 via `uv tool install git+https://github.com/NVIDIA/skillspector.git`
+- Static scan (`--no-llm`, free) of all 15 global skills + impeccable plugin, reports in `~/.claude/skillspector-reports/`. Verdict after manual inspection of every HIGH: no malicious skill; false positives on quoted "ignore previous instructions" (improve-animations), "never judge…" (prototype), `npx …@latest` and `dangerouslySetInnerHTML` code examples (taste, react-best-practices). impeccable = CRITICAL by static score (40+ JS scripts) but the only external egress is opt-in `generate-image.mjs` → `api.openai.com` (paid gpt-image-2 via `OPENAI_API_KEY`); PostToolUse/Stop hooks make no network calls
+- `scripts/install-external-skills.sh` — post-install SkillSpector scan (advisory; skips if `skillspector` missing); `PLUGINS_SETUP.md` § "Scan before you install"
+
+## [2.21.0] - 2026-08-15
+
+### New: Design stack (external skills)
+- Installed globally and documented three design/motion skill sets (verified stars 2026-08-15):
+  - **Leonxlnx/taste-skill** (~76k★) — `design-taste-frontend` (v2 experimental, 3 dials) + `redesign-existing-projects` via `npx skills add … -g -a claude-code`
+  - **emilkowalski/skills** (~29k★, "Skills for Designers and Engineers") — all 10 skills: `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `emil-design-eng`, `pick-ui-library`, `prototype`, `ask-sonner`
+  - **pbakaus/impeccable** (~59k★) — installed as **plugin** `impeccable@impeccable` (marketplace `pbakaus/impeccable`) rather than `npx impeccable install`, so its PostToolUse/Stop detector hooks live inside the plugin (`${CLAUDE_PLUGIN_ROOT}`) and are toggled with `claude plugin disable`, never merged into `settings.json` hooks that `install.sh` overwrites. ~527 tok always-on (`claude plugin details`)
+- `skills/design/design-stack.md` — routing guide (taste = landing pages, impeccable = product UI + audits, emil = motion, `frontend-design` = baseline), per-project defaults, cost/hygiene, update commands
+- `PLUGINS_SETUP.md` — "Third-Party Skills" section + checklist item
+
+### New: App Store release workflow
+- `app-store-review` skill from **dpearson2699/swift-ios-skills** (~1k★, 86 iOS 26 skills) installed globally — submission-readiness audit (PrivacyInfo.xcprivacy / required-reason APIs, usage strings, ATT, StoreKit, metadata, entitlements), blockers vs cleanup
+- `skills/workflow/app-store-release.md` — audit → fix blockers → `xcodebuild archive` + Organizer Validate → TestFlight → review → rejection handling; documents optional `rorkai/app-store-connect-cli-skills` (`asc`) and `safaiyeh/app-store-review-skill` without installing them; lists first-audit findings for Tutorino/asana-coach
+
+### Installer
+- `scripts/install-external-skills.sh` — idempotent installer for all of the above (`SKILLS_NO_TELEMETRY=1`, global scope, `claude-code` agent); `install.sh` prints a hint to run it
+- Global skills now: 13 external `~/.claude/skills/*` dirs + `react-best-practices` (v2.20) alongside the symlinked framework categories
+
+### Notes
+- Overlap accepted on purpose: `frontend-design` plugin stays enabled as always-on baseline; taste-skill leads only on landing/marketing pages. Re-A/B when taste v2 goes stable.
+- Skills CLI `--help` on a non-TTY runs the default action for `npx impeccable install` (it installed into the cwd project once during this release; reverted). Always pass `--scope`/`--providers` or use the plugin route.
+
 ## [2.20.1] - 2026-06-09
 
 ### Fixed
