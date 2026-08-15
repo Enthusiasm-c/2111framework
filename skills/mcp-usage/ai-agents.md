@@ -38,9 +38,9 @@ hooks:
 
 | Фраза пользователя | Claude выполняет |
 |-------------------|------------------|
-| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex exec -m gpt-5.5 -s read-only "Find race condition:"` |
-| "Попроси Codex проверить типы" | `cat <file> \| codex exec -m gpt-5.5 -s read-only "Find TypeScript type errors:"` |
-| "Codex, security review" | `cat <file> \| codex exec -m gpt-5.5 -s read-only "Security audit: OWASP Top 10:"` |
+| "Запусти агента Codex для race condition в auth" | `find src -name "*auth*" \| head -5` затем `cat <files> \| codex-ask "Find race condition:"` |
+| "Попроси Codex проверить типы" | `cat <file> \| codex-ask "Find TypeScript type errors:"` |
+| "Codex, security review" | `cat <file> \| codex-ask "Security audit: OWASP Top 10:"` |
 
 ### Второе мнение (оба агента)
 
@@ -79,7 +79,7 @@ grep -rl "Analytics" src --include="*.tsx" | head -5
 cat <files> | gemini -m gemini-pro-latest -p "<problem description>:"
 
 # Codex для логики
-cat <files> | codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "<problem description>:"
+cat <files> | codex-ask "<problem description>:"
 ```
 
 ### Step 4: Показать результат и предложить fix
@@ -114,7 +114,7 @@ Claude: Ищу файлы с формой...
         [находит: src/components/ContactForm.tsx]
 
         Запускаю Codex анализ...
-        [выполняет: cat ... | codex exec ...]
+        [выполняет: cat ... | codex-ask ...]
 
         Codex нашёл:
         - Line 23: onClick и onSubmit оба вызывают handleSubmit

@@ -29,19 +29,19 @@ cat >> "$SHELL_RC" << 'EOF'
 # Using strongest models: gpt-5.5 + gemini-pro-latest
 
 # Codex (OpenAI) - gpt-5.5 with high reasoning
-alias cr='codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
+alias cr='codex-ask "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers. Do NOT modify files:"'
 
 # Gemini (Google) - gemini-pro-latest
 alias gr='gemini -m gemini-pro-latest -p "You are a senior code reviewer. Analyze for bugs, race conditions, edge cases, type errors, security issues. Be specific with line numbers:"'
 
 # Quick bug finder (Codex gpt-5.5)
-alias bug='codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "Find the bug in this code. Explain root cause and suggest fix:"'
+alias bug='codex-ask "Find the bug in this code. Explain root cause and suggest fix:"'
 
 # Security audit (Codex gpt-5.5)
-alias sec='codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "Security audit: Find vulnerabilities, injection risks, auth issues, exposed secrets. OWASP Top 10 check:"'
+alias sec='codex-ask "Security audit: Find vulnerabilities, injection risks, auth issues, exposed secrets. OWASP Top 10 check:"'
 
 # Performance review (Codex gpt-5.5)
-alias perf='codex exec -m gpt-5.5 -c model_reasoning_effort=\"high\" -s read-only "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
+alias perf='codex-ask "Performance review: Find slow code, memory leaks, unnecessary renders, N+1 queries, async issues:"'
 
 # Architecture review (Gemini 3.1 Pro Preview - good for high-level)
 alias arch='gemini -m gemini-pro-latest -p "Architecture review: Analyze code structure, coupling, SOLID principles, suggest improvements:"'
