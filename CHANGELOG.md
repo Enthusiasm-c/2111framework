@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.23.0] - 2026-08-19
+
+### New: GitHub Actions minute budget (global rule)
+- `rules/github-actions.md` (`alwaysApply`, symlinked into `~/.claude/rules/` by `install.sh`) — the included minutes are one bucket for every repository of the account; what a run really costs (every push to an open PR and to main, billed per job and rounded up per job, red runs cost the same, no `timeout-minutes` = 6 h), and ten session rules: gate once on the PR, locally green before pushing to a PR, batch pushes, docs-only without CI (`paths-ignore` / `[skip ci]`), `gh run rerun --failed` only, a workflow red ≥3 runs in a row is fixed or `gh workflow disable`d, no platform builds / Lighthouse / macOS runners in CI, new workflows only from the template, audit `schedule` workflows, look at the spend before editing any workflow
+- `templates/ci-minimal.yml` — the economical workflow: `paths-ignore` docs, `concurrency` with `cancel-in-progress` for PRs only, `timeout-minutes`, `ubuntu-latest`, no build/deploy jobs (the platform does them), commented `migrate-prod` example gated on changed paths
+- `scripts/gh-actions-usage.sh [YYYY-MM] [--exact]` — runs / red / minutes per repo·workflow·event for the month across all repos (`--exact` = per-job minutes rounded up like the invoice, since `/runs/{id}/timing` returns `billable: 0` on the 2025 billing platform); prints the plan totals when the token has the `user` scope
+- Why: on 2026-08-19 two repositories used the whole 2 000-minute allowance in 19 days and Actions stopped on every repo — half of the 366 runs were red, one CI had been red on every run of the month
+
 ## [2.22.0] - 2026-08-15
 
 ### Model & Runtime → Claude 5

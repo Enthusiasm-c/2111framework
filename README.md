@@ -3,7 +3,7 @@
 **Denis's Claude Code Development Framework**
 
 **Repository:** https://github.com/Enthusiasm-c/2111framework
-**Version:** 2.22.0
+**Version:** 2.23.0
 **Updated:** August 15, 2026
 **Requires:** Claude Code 2.1.233+, Claude 5 family (Fable 5 primary, Opus 5 default/fallback)
 
@@ -211,6 +211,7 @@ bash ~/.claude/2111framework/install.sh
 - **Path-scoped instructions** using native Claude Code rules format
 - Templates for React, API routes, database, testing, git workflow
 - Generate from PROJECT_MEMORY.md with `/init-rules` skill
+- **Global rule (v2.23):** `rules/github-actions.md` — the Actions minute budget is one bucket for all repos; gate once on the PR, batch pushes, docs-only without CI, red ≥3 runs → fix or disable. Template `templates/ci-minimal.yml`, spend report `scripts/gh-actions-usage.sh [YYYY-MM] [--exact]`
 
 ### Workflow Skills:
 | Skill | Description |
@@ -585,4 +586,4 @@ npm run dev    # Press Ctrl+B for background
 
 ---
 
-**Version:** 2.22.0
+**Version:** 2.23.0

@@ -1,0 +1,64 @@
+# Минимальный экономичный CI (2111framework, rules/github-actions.md).
+# Скопировать в .github/workflows/ci.yml и подставить свои npm-скрипты.
+#
+# Чего здесь нет, и почему:
+#   - нет `build`: Vercel / EAS собирают каждый prod-коммит сами, вторая сборка
+#     в CI — те же минуты ещё раз за тот же гейт;
+#   - нет deploy-джоба: деплой делает git-интеграция платформы;
+#   - нет matrix, Lighthouse, e2e на каждый PR — это `workflow_dispatch` или
+#     расписание раз в неделю.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  workflow_dispatch:
+
+# Новый push в тот же PR отменяет его предыдущий прогон. На main ничего не
+# отменяем: прерванная миграция хуже лишней минуты.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest   # Linux ×1. macOS ×10, Windows ×2 — не использовать.
+    timeout-minutes: 15      # без этого висящий джоб живёт 6 часов
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run type-check   # tsc --noEmit, а не next build
+      - run: npm run lint
+      - run: npm test -- --ci
+
+  # То, что PR сделать не может — миграции прода, деплой на свой сервер.
+  # Бежит только на push в main, только после зелёного гейта и только когда
+  # менялись нужные файлы (проверка путей внутри, потому что paths-фильтр
+  # задаётся на весь воркфлоу, а не на джоб).
+  # migrate-prod:
+  #   needs: gate
+  #   if: github.event_name == 'push'
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with: { fetch-depth: 2 }
+  #     - id: changed
+  #       run: |
+  #         git diff --name-only HEAD^ HEAD | grep -q '^prisma/migrations/' \
+  #           && echo "run=true" >> "$GITHUB_OUTPUT" || echo "run=false" >> "$GITHUB_OUTPUT"
+  #     - if: steps.changed.outputs.run == 'true'
+  #       run: npx prisma migrate deploy
+  #       env: { DATABASE_URL: ${{ secrets.DATABASE_URL }} }
